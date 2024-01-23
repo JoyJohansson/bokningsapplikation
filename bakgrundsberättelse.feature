@@ -1,5 +1,7 @@
 Bokningssystem hotell
 
+Kund
+
 Pelle ska på semester till Las Vegas och har identifierat ett hotell 
 som han vill bo på. När han går in på deras hemsida för att boka ett 
 rum, får han möjlighet att ange vilka datum vitelsen gäller och för 
@@ -13,6 +15,12 @@ När detta är bekräftat klickar han sig vidare till betalningssidan
 (Betalningslösingen ingår inte i det här scoopet)
 
 
+
+Hotell 
+
+Hotellets bokningsportal tar emot bokningsförfrågningar från hemsidan.
+När en förfrågan kommer in hämtas tillgänliga rum för angivna datum 
+från databasen bla bla bla 
 
 
 Specifikation av verktyg:
