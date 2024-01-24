@@ -11,8 +11,7 @@ Feature: Bokningssystem - Kund
     Scenario: Omboka ett rum
     Scenario: Bekräfta ombokning
     Scenario: Redigera tillval i en bokning
-    
-    Scenario: 
+
 
         User Story:
             Som kund kan jag söka efter rum så att jag kan se tillgängligheten.
@@ -134,6 +133,8 @@ Som kund kan jag redigera en bokning så att jag kan ändra mina preferenser.
     När jag fyller i min bokningsreferens i fältet "Bokningsreferens"
     Och jag trycker på "Redigera"-knappen
     Så ser jag en sida med fält med alternativa tillägg för bokningen  *tabell*
+
+                "kan man ha två sekvenser till en user story"
 
     Givet att jag är på sidan med alternativa tillägg för bokningen
     När jag fyller i fälten med det som jag vill ändra på i bokningen *tabell*
