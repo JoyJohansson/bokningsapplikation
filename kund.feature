@@ -2,6 +2,7 @@ Feature: Bokningssystem - Kund
 
     Scenario: Söka efter tillgängliga rum 
     Scenario: Filtrera tillgängliga rum efter preferenser
+    Scenario: Tillägsval - bokning
     Scenario: Boka ett rum
     Scenario: Bekräfta bokning
     Scenario: Redigera en bokning (först relevant efter tillval??)
@@ -9,6 +10,7 @@ Feature: Bokningssystem - Kund
     Scenario: Bekräfta avbokning
     Scenario: Omboka ett rum
     Scenario: Bekräfta ombokning
+    Scenario: Redigera tillval i en bokning
     
     Scenario: 
 
