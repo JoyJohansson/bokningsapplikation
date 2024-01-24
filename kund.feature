@@ -31,21 +31,24 @@ Scenario: Söka efter tillgängliga rum
 Som kund kan jag söka efter rum så att jag kan se tillgängligheten.
 
     Givet att jag är på hotellets hemsida
-    När jag fyller i mellan vilka datum min vistelse gäller
-    Och hur många personer som ska bo i rummet
-    Och klickar på "Sök"-knappen
+    Och att jag vill söka efter rum att boka
+    När jag fyller i fältet "incheckningsdatum" 
+    Och  jag fyller i fältet"utcheckningsdatum"
+    Och jag fyller i fältet "antal personer"
+    Och jag klickar på "Sök"-knappen
     Så visas en lista med tillgängliga rum
-    Och alternativ för preferenser presenteras
+   
 
 Scenario: Filtrera tillgängliga rum efter preferenser
 
 Som kund kan jag filtrera tillgängliga rum efter mina preferenser så att jag kan se rum som passar mig.
 
-    Givet att jag ser en lista över tillgängliga rum med alternativ för preferenser
-    När jag fyller i mina preferenser *infoga tabell*
-    Och klickar på "Filtrera"-knappen
-    Så ser jag en ny lista med lediga rum efter mina preferenser
-    Och valt ett rum jag vill boka
+    Givet att jag ser en lista över tillgängliga rum 
+    Och att jag presenteras med alternativa preferenser som jag kan kryssa i     * infoga boxalternativ*
+    När jag kryssa i boxen/boxarna "alternativ 1" (osv)  *infoga valalternativen*
+    Och jag klickar på "Filtrera"-knappen
+    Så presenteras jag med en ny lista med lediga rum efter mina valda preferenser
+    Och jag väljer ett rum jag vill boka
 
 
 Scenario: Tilläggsval - bokning
