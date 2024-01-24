@@ -12,7 +12,7 @@ frukostpaket eller deras populära all-inclusivepaket.
 Efter att Pelle valt rum skickas han vidare till en sammanfattning av 
 bokningen så att han kan läsa igenom att allt han anget stämmer för att
 sedan bekräfta bokningen. Bokningsbekräftelsen skickas till mejladressen
-som kunden
+som kunden har angett.
 (Betalningslösingen ingår inte i det här scoopet)
 
 
