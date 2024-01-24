@@ -15,6 +15,7 @@ Feature: Bokningssystem - Kund
         User Story:
             Som kund kan jag söka efter rum så att jag kan se tillgängligheten.
             Som kund kan jag filtrera tillgängliga rum efter mina preferenser så att jag kan se rum som passar mig.
+            Som kund kan jag göra tillägsval i min bokning så att jag får med de bekvämligheter jag vill ha
             Som kund kan jag boka ett rum så att jag har någonstans att övernatta.
             Som kund kan jag bekräfta en bokning så att jag får rummet jag önskar.
             Som kund kan jag redigera en bokning så att jag kan ändra mina preferenser. 
@@ -22,6 +23,7 @@ Feature: Bokningssystem - Kund
             Som kund kan jag bekräfta avbokning så att jag inte debiteras.
             Som kund kan jag göra en ombokning så att jag kan ändra min bokning.    
             Som kund kan jag bekräfta min ombokning så att jag vet att ändringen är gjord.
+            Som kund kan jag redigera en bokning så att jag kan ändra mina preferenser. 
             
 Scenario: Söka efter tillgängliga rum 
 
