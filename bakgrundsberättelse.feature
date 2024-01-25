@@ -32,6 +32,10 @@ för att kunden sedan ska kunna bekräfta bokningen. Bokningsbekräftelsen skick
 (Betalningslösingen ingår inte i det här scoopet)
 
 
+Skapa databas
+-ERD-Diagram
+-Skapa tabeller och relationer
+-Mockdata
 
 
 
@@ -52,7 +56,7 @@ Bokningssystem
     - Spa-paket
     - all-inclusivepaket
     - gym    
-    - cassino
+    - casino
     - transport till och från flygplatsen
     - air conditioning
     - tvättservice
@@ -63,6 +67,9 @@ Bokningssystem
     - barntillbehör
     - biluthyrning
     - utflykt
+    - barnsäng
+    - extrasäng
+    - 
 
 
 
