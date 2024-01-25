@@ -45,9 +45,9 @@ Feature: Administration för rum hantering - Hotell
 
     Scenario: Göra en bokning
     Givet att jag är på 'Se tillgänliga rum' -sidan
-    När 
+    När jag väljer ett tillgängligt rum från listan
     Så kan jag göra en bokning på tillgänliga rum från listan
-    Och
+    Och jag bör få en bekräftelse på bokningen av kunden
 
 
     Scenario: Redigera en bokning
@@ -70,5 +70,6 @@ Feature: Administration för rum hantering - Hotell
         
 Frågor till gruppen
 "Som användare kan jag se vilka rum som är tillgängliga så att jag kan se hur stor beläggning verksamheten har."
+ Som användare ska jag kunna se en lista över tillgängliga rum Så att jag kan göra en bokning.
 
 Feature: Tillval - Hotell
