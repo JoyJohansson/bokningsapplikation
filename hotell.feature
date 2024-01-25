@@ -27,6 +27,7 @@ Feature: Administration för rum hantering - Hotell
     Så ska jag se en lista för bokade rum
     
 
+
     
 
     Scenario: Göra en bokning & se tillgängliga rum
