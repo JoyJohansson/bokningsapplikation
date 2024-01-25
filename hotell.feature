@@ -1,6 +1,6 @@
 Feature: Inloggning - Hotell
 
-    "Som användare ska jag kunna logga in, så jag kan få tillgång till det administrativa"
+    "Som anställd ska jag kunna logga in som admin, så jag kan få tillgång till det administrativa"
 
     Scenario: Logga in på hotellets webbportal
     Givet att jag är på hotellets startsida
@@ -14,12 +14,11 @@ Feature: Inloggning - Hotell
 
 Feature: Administration för rum hantering - Hotell
     
-    "Som användare ska jag kunna se vilka rum som är bokade på ett visst datum så att jag kan planera inför kundens ankomst."
+    "Som admin ska jag kunna se vilka rum som är bokade på ett visst datum så att jag kan planera inför kundens ankomst."
     
     Background:
     Givet att jag har giltigt konto
     Och att jag är inloggad
-    Och att jag är ansluten till databasen för hotellets bokningsystem
     
 
     Scenario: Se bokade rum
@@ -59,14 +58,14 @@ Feature: Administration för rum hantering - Hotell
             
             
             
-            Som hotellreceptionist kan jag göra en bokning åt kunden så att jag kan förmedla service till drop-in gäster.
-            Som hotellreceptionist kan jag redigera en bokning så att jag kan anpassa efter kundensönskemål.  
-            Som hotellreceptionist kan jag göra en avbokning av ett rum så att kunden kan ha fler avbokningsalternativ.
-            Som hotellreceptionist kan jag göra en ombokning av ett rum så att jag kan anpassa servicen efter behov. 
+            Som admin kan jag göra en bokning åt kunden så att jag kan förmedla service till drop-in gäster.
+            Som admin kan jag redigera en bokning så att jag kan anpassa efter kundensönskemål.  
+            Som admin kan jag göra en avbokning av ett rum så att kunden kan ha fler avbokningsalternativ.
+            Som admin kan jag göra en ombokning av ett rum så att jag kan anpassa servicen efter behov. 
 
         
 Frågor till gruppen
-"Som användare kan jag se vilka rum som är tillgängliga så att jag kan se hur stor beläggning verksamheten har."
- Som användare ska jag kunna se en lista över tillgängliga rum Så att jag kan göra en bokning.
+"Som admin kan jag se vilka rum som är tillgängliga så att jag kan se hur stor beläggning verksamheten har."
+ Som admin ska jag kunna se en lista över tillgängliga rum Så att jag kan göra en bokning.
 
 Feature: Tillval - Hotell
