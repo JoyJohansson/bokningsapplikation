@@ -14,7 +14,7 @@ Feature: Inloggning - Hotell
 
 Feature: Administration för rum hantering - Hotell
     
-    "Som admin ska jag kunna se vilka rum som är bokade på ett visst datum så att jag kan planera inför kundens ankomst."
+    "Som anställd ska jag kunna se vilka rum som är bokade på ett visst datum så att jag kan planera inför kundens ankomst."
     
     Background:
     Givet att jag har giltigt konto
@@ -58,14 +58,14 @@ Feature: Administration för rum hantering - Hotell
             
             
             
-            Som admin kan jag göra en bokning åt kunden så att jag kan förmedla service till drop-in gäster.
-            Som admin kan jag redigera en bokning så att jag kan anpassa efter kundensönskemål.  
-            Som admin kan jag göra en avbokning av ett rum så att kunden kan ha fler avbokningsalternativ.
-            Som admin kan jag göra en ombokning av ett rum så att jag kan anpassa servicen efter behov. 
+            Som anställd kan jag göra en bokning åt kunden så att jag kan förmedla service till drop-in gäster.
+            Som anställd kan jag redigera en bokning så att jag kan anpassa efter kundensönskemål.  
+            Som anställd kan jag göra en avbokning av ett rum så att kunden kan ha fler avbokningsalternativ.
+            Som anställd kan jag göra en ombokning av ett rum så att jag kan anpassa servicen efter behov. 
 
         
 Frågor till gruppen
-"Som admin kan jag se vilka rum som är tillgängliga så att jag kan se hur stor beläggning verksamheten har."
- Som admin ska jag kunna se en lista över tillgängliga rum Så att jag kan göra en bokning.
+"Som anställd kan jag se vilka rum som är tillgängliga så att jag kan se hur stor beläggning verksamheten har."
+ Som anställd ska jag kunna se en lista över tillgängliga rum Så att jag kan göra en bokning.
 
 Feature: Tillval - Hotell
