@@ -142,7 +142,6 @@ Scenario: Redigera tillval i en bokning (efter tillval?)
 
 Som kund kan jag redigera en bokning så att jag kan ändra mina preferenser. 
 
-
     Givet att jag är på sidan med alternativa tillägg för bokningen
     När jag fyller i fälten med det som jag vill ändra på i bokningen *tabell*
     Och trycker på "Spara"-knappen
