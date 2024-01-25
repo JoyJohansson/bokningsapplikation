@@ -124,10 +124,9 @@ Som kund kan jag göra en ombokning så att jag kan ändra min bokning.
     Så ser jag en lista över rum som överensstämmer med mina preferenser som är tillgängliga
 
 
+Scenario: Hämta bokingingsreferens för att redigera en bokning
 
-Scenario: Redigera tillval i en bokning (efter tillval?)
-
-Som kund kan jag redigera en bokning så att jag kan ändra mina preferenser. 
+Som kund kan jag hämta bokingingsreferens så att jag kan redigera en bokning.
 
     Givet att jag är på hotellets redigeringshemsida
     Och att jag har en bekräftad bokning
@@ -138,6 +137,11 @@ Som kund kan jag redigera en bokning så att jag kan ändra mina preferenser.
     Så ser jag en sida med fält med alternativa tillägg för bokningen  *tabell*
 
                 "kan man ha två sekvenser till en user story"
+
+Scenario: Redigera tillval i en bokning (efter tillval?)
+
+Som kund kan jag redigera en bokning så att jag kan ändra mina preferenser. 
+
 
     Givet att jag är på sidan med alternativa tillägg för bokningen
     När jag fyller i fälten med det som jag vill ändra på i bokningen *tabell*
