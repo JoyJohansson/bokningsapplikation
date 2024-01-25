@@ -3,13 +3,14 @@ Feature: Inloggning - Hotell
     "Som användare ska jag kunna logga in, så jag kan få tillgång till det administrativa"
 
     Scenario: Logga in på hotellets webbportal
-    Givet att jag är på www.crazyfroghotellet.com startsida
-    Och är ansluten till databasen för hotellets bokningsystem
-    När jag klickar på 'login' -knappen
-    Och jag skriver in giltigt användarmnamn
-    Och giltigt lösenord
-    Och klickar på 'logga in' -knappen
+    Givet att jag är på hotellets startsida
+    Och har giltigt konto för hotellets bokningsystem
+    När jag klickar på 'login'-knappen
+    Och jag skriver in användarmnamn i 'användarfältet'
+    Och jag skriver in lösenord i 'lösenordsfältet'
+    Och jag klickar på 'logga in'-knappen
     Så ska jag loggas in
+    Och få tillgång till Administration-sidan
 
 Feature: Administration för rum hantering - Hotell
     
@@ -23,13 +24,8 @@ Feature: Administration för rum hantering - Hotell
 
     Scenario: Se bokade rum
     När jag klickar på 'Se bokade rum' -knappen
-    Så vill jag se en lista för bokade rum
-
+    Så ska jag se en lista för bokade rum
     
-    Scenario Outline: Visa lista över bokade rum
-    Så bör jag se följande bokade rum:
-    | Rumsnummer | Datum       | Gäst       |
-    | <Rumsnummer>| <Datum>    | <Gäst>     |
 
     
 
