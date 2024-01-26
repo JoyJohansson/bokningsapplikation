@@ -13,43 +13,69 @@ Feature: Inloggning - Hotell
     Och få tillgång till Administration-sidan
 
 Feature: Administration för rum hantering - Hotell
-    
-    "Som anställd ska jag kunna se vilka rum som är bokade på ett visst datum så att jag kan planera inför kundens ankomst."
-    
+        
     Background:
     Givet att jag har giltigt konto
     Och att jag är inloggad
     
+        "Som anställd ska jag kunna se vilka rum som är bokade på ett visst datum så att jag kan planera inför kundens ankomst."
 
     Scenario: Se bokade rum
+    Givet att jag är på hotelletssida
     När jag klickar på 'Se bokade rum' -knappen
-    Så ska jag se en lista för bokade rum
+    Så ska jag se en lista över bokade rum
     
 
 
-    
+        "Som anställd kan jag se vilka rum som är tillgängliga så att jag kan se hur stor beläggning verksamheten har."
 
-    Scenario: Göra en bokning & se tillgängliga rum
-    När jag klickar på 'Se tillgängliga rum' -knappen
-    Så vill jag se en lista för lediga rum
+    Scenario: se tillgängliga rum
+    Givet att jag är hotelletssida 
+    När jag klickar på 'se tillgängliga rum' -knappen
+    Så vill jag se en lista över tillgängliga rum
     
-    Scenario Outline: Visa lista över lediga rum
-    Så bör jag se följande lediga rum:
-    | Rumsnummer  | rumstyp  | pris   |
-    | <Rumsnummer>| <rumstyp | <pris> |
-    
+        
+        'Som anställd kan jag göra en bokning åt kunden så att jag kan förmedla service till drop-in gäster.'
 
     Scenario: Göra en bokning
-    Givet att jag är på 'Se tillgänliga rum' -sidan
-    När jag väljer ett tillgängligt rum från listan
-    Så kan jag göra en bokning på tillgänliga rum från listan
-    Och jag bör få en bekräftelse på bokningen av kunden
+    Givet att det finns en kund som vill göra en bookning
+    Och att jag är på bookningssidan
+    När jag klickar ett 'tillgängligt rum' som kunden vill
+    Så klickar jag 'boka rum' knappen
+    Och få en bekräftelse på bokningen av kunden
 
+    
+        'Som anställd kan jag redigera en bokning så att jag kan anpassa efter kundensönskemål.'  
 
     Scenario: Redigera en bokning
+    Givet att jag är på bookningssidan
+    Och det finns en aktiv bokning
+    Och det finns en kund som önskar att redigera sin bookning
+    När jag klickar på 'se bookning' knappen
+    Och jag klickar på 'redigera bookning' knappen
+    Så kan jag redigera bookningen baserat på kundens önskemål
+
+
+        'Som anställd kan jag göra en avbokning av ett rum så att kunden kan ha fler avbokningsalternativ.'
+
     Scenario: Avbokning av ett rum
+    Givet att jag är på bookningssidan
+    Och det finns en aktiv bokning
+    Och det finns en kund som önskar att göra en avbokning
+    När jag klickar på 'se bookning' knappen 
+    Så kan jag klicka på 'avboka rum' knappen
+    Och få en bekräftelse av kunden
+
+
+        'Som anställd kan jag göra en ombokning av ett rum så att jag kan anpassa servicen efter behov.'
+
     Scenario: Ombokning av ett rum
-    
+    Givet att jag är på bookningssidan
+    Och det finns en aktiv bokning
+    Och det finns en kund som önskar att göra en ombokning
+    När jag klickar på 'se bookning' knappen 
+    Så kan jag klicka på 'omboka rum' knappen
+    Och få en bekräftelse av kunden
 
     
 
