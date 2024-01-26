@@ -2,7 +2,6 @@ Feature: Bokningssystem - Kund
 
     Scenario: Söka efter tillgängliga rum 
     Scenario: Filtrera tillgängliga rum efter preferenser
-    Scenario: Boka ett rum
     Scenario: Redigera en bokning
     Scenario: Avboka ett rum
     Scenario: Omboka ett rum
@@ -19,7 +18,7 @@ Feature: Bokningssystem - Kund
             
 Feature: Kund söker rum
 
-Som kund kan jag söka efter rum så att jag kan se tillgängligheten.
+Som kund kan jag söka efter rum så att jag kan se tillgängliga rum.
 
     Givet att jag är på hotellets hemsida
     När jag fyller i mellan vilka datum min vistelse gäller
@@ -35,6 +34,8 @@ Feature: Kund väljer rum
 Feature: Kund bokar rum
 
 Som kund kan jag boka ett rum så att jag har någonstans att övernatta.
+
+Scenario: Boka ett rum
 
     Givet att jag har valt ett lämpligt rum
     Och angivit mina preferenser 
