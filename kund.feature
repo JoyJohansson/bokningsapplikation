@@ -1,34 +1,8 @@
 Feature: Bokningssystem - Kund
+           
+Som kund kan jag söka efter rum så att jag kan se tillgängligheten. 
 
-    Scenario: Söka efter tillgängliga rum 
-    Scenario: Filtrera tillgängliga rum efter preferenser
-    Scenario: Tillägsval - bokning
-    Scenario: Boka ett rum
-    Scenario: Bekräfta bokning
-    Scenario: Redigera en bokning (först relevant efter tillval??)
-    Scenario: Avboka ett rum
-    Scenario: Bekräfta avbokning
-    Scenario: Omboka ett rum
-    Scenario: Bekräfta ombokning
-    Scenario: Redigera tillval i en bokning
-
-
-        User Story:
-            Som kund kan jag söka efter rum så att jag kan se tillgängligheten.
-            Som kund kan jag filtrera tillgängliga rum efter mina preferenser så att jag kan se rum som passar mig.
-            Som kund kan jag göra tillägsval i min bokning så att jag får med de bekvämligheter jag vill ha
-            Som kund kan jag boka ett rum så att jag har någonstans att övernatta.
-            Som kund kan jag bekräfta en bokning så att jag får rummet jag önskar.
-            Som kund kan jag redigera en bokning så att jag kan ändra mina preferenser. 
-            Som kund kan jag avboka ett rum så att jag inte debiteras.
-            Som kund kan jag bekräfta avbokning så att jag inte debiteras.
-            Som kund kan jag göra en ombokning så att jag kan ändra min bokning.    
-            Som kund kan jag bekräfta min ombokning så att jag vet att ändringen är gjord.
-            Som kund kan jag redigera en bokning så att jag kan ändra mina preferenser. 
-            
 Scenario: Söka efter tillgängliga rum 
-
-Som kund kan jag söka efter rum så att jag kan se tillgängligheten.
 
     Givet att jag är på hotellets hemsida
     Och att jag vill söka efter rum att boka
@@ -39,9 +13,9 @@ Som kund kan jag söka efter rum så att jag kan se tillgängligheten.
     Så visas en lista med tillgängliga rum
    
 
-Scenario: Filtrera tillgängliga rum efter preferenser
-
 Som kund kan jag filtrera tillgängliga rum efter mina preferenser så att jag kan se rum som passar mig.
+
+Scenario: Filtrera tillgängliga rum efter preferenser
 
     Givet att jag ser en lista över tillgängliga rum 
     Och att jag presenteras med alternativa preferenser som jag kan kryssa i     * infoga boxalternativ*
@@ -51,9 +25,9 @@ Som kund kan jag filtrera tillgängliga rum efter mina preferenser så att jag k
     Och jag väljer ett rum jag vill boka
 
 
-Scenario: Tilläggsval - bokning
-
 Som kund kan jag göra tillägsval i min bokning så att jag får med de bekvämligheter jag vill ha
+
+Scenario: Tilläggsval - bokning
 
     Givet att jag har valt ett rum
     När jag lagt till mina önskemål om tillval *infoga tabell*
@@ -61,9 +35,9 @@ Som kund kan jag göra tillägsval i min bokning så att jag får med de bekväm
     Så ser jag mina tillagda val i bokningssammanfattningen
 
 
-Scenario: Boka ett rum
-
 Som kund kan jag boka ett rum så att jag har någonstans att övernatta.
+
+Scenario: Boka ett rum
 
     Givet att jag ser bokningssammanfattningen
     Och att jag vill boka rummet med tillvalen
@@ -72,9 +46,9 @@ Som kund kan jag boka ett rum så att jag har någonstans att övernatta.
     Så skickas ett mail till min emailadress med länk för att bekräfta bokningen
     
 
-Scenario: Bekräfta bokning
-
 Som kund kan jag bekräfta en bokning så att jag får rummet jag önskar.
+
+Scenario: Bekräfta bokning
 
     Givet att jag fyllt i rätt emailaddress
     Och att jag vill genomföra bokningen
@@ -84,10 +58,10 @@ Som kund kan jag bekräfta en bokning så att jag får rummet jag önskar.
     Så ser jag ett meddelande "Bokningen är bekräftad"
     Och får ett email med bekräftelse och bokningsreferens.
 
-    
-Scenario: Avboka ett rum
 
 Som kund kan jag avboka ett rum så att jag inte debiteras.
+
+Scenario: Avboka ett rum
 
     Givet att jag har en bekräftad bokning
     Och är på hotellets avbokningshemsida
@@ -100,17 +74,16 @@ Som kund kan jag avboka ett rum så att jag inte debiteras.
 
 Scenario: Bekräfta avbokning
 
-Som kund kan jag bekräfta avbokning så att jag inte debiteras.
-
     Givet att jag ser detljerna för bokningen
     Och att jag vill avboka
     När jag trycker på "Bekräfta avbokning"-knappen
     Så ser jag ett meddelande "Avbokat"
     Och får ett email med bekräftelse på avbokningen.
 
-Scenario: Omboka ett rum
 
 Som kund kan jag göra en ombokning så att jag kan ändra min bokning. 
+
+Scenario: Omboka ett rum
 
     Givet att jag är på hotellets ombokningssida
     Och att jag har en bekräftad bokning
@@ -124,22 +97,21 @@ Som kund kan jag göra en ombokning så att jag kan ändra min bokning.
     Så ser jag en lista över rum som överensstämmer med mina preferenser som är tillgängliga
 
 
+Som kund kan jag redigera en bokning så att jag kan ändra mina tillval. 
 
-Scenario: Redigera tillval i en bokning (efter tillval?)
+Scenario: Komma till sidan med till
 
-Som kund kan jag redigera en bokning så att jag kan ändra mina preferenser. 
-
-    Givet att jag är på hotellets redigeringshemsida
+    Givet att jag är på hotellets startsida (K1)
     Och att jag har en bekräftad bokning
     Och att jag vill göra ändringar i min bokning
     Och att jag har en bokningsreferens
     När jag fyller i min bokningsreferens i fältet "Bokningsreferens"
     Och jag trycker på "Redigera"-knappen
-    Så ser jag en sida med fält med alternativa tillägg för bokningen  *tabell*
+    Så ser jag en sida med fält med alternativa tillägg för bokningen  *tabell* (K7)
 
-                "kan man ha två sekvenser till en user story"
+Scenario: Redigera tillval
 
-    Givet att jag är på sidan med alternativa tillägg för bokningen
+    Givet att jag är på sidan med alternativa tillägg för bokningen (K7)
     När jag fyller i fälten med det som jag vill ändra på i bokningen *tabell*
     Och trycker på "Spara"-knappen
     Så får jag ett meddelande "Ändringar sparat" på skärmen
