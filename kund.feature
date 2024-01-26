@@ -102,6 +102,7 @@ Som kund kan jag redigera en bokning så att jag kan ändra mina tillval.
 Scenario: Komma till sidan med till
 
     Givet att jag är på hotellets startsida (K1)
+
     Och att jag har en bekräftad bokning
     Och att jag vill göra ändringar i min bokning
     Och att jag har en bokningsreferens
