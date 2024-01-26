@@ -38,9 +38,15 @@ Feature: Administration för rum hantering - Hotell
         'Som anställd kan jag göra en bokning åt kunden så att jag kan förmedla service till drop-in gäster.'
 
     Scenario: Göra en bokning
-    Givet att det finns en kund som vill göra en bookning
-    Och att jag är på bookningssidan
-    När jag klickar ett 'tillgängligt rum' som kunden vill
+    Givet att jag är på bokningssidan
+    Och att det finns tillgängliga rum
+    Och att en kund vill göra en bokning
+    Och att det finns en bokningsformulär
+    När jag klickar på 'se tillgängliga rum' knappen
+    Och jag får upp en lista över tillgängliga rum
+    Och att klickar på det rum som kunden önskat
+    Och jag klickar på 'fyll i bokningsformulär' knappen
+    Och jag fyller i kundens uppgifter
     Så klickar jag 'boka rum' knappen
     Och få en bekräftelse på bokningen av kunden
 
@@ -48,12 +54,14 @@ Feature: Administration för rum hantering - Hotell
         'Som anställd kan jag redigera en bokning så att jag kan anpassa efter kundensönskemål.'  
 
     Scenario: Redigera en bokning
-    Givet att jag är på bookningssidan
+    Givet att jag är på bokningssidan
     Och det finns en aktiv bokning
-    Och det finns en kund som önskar att redigera sin bookning
-    När jag klickar på 'se bookning' knappen
-    Och jag klickar på 'redigera bookning' knappen
-    Så kan jag redigera bookningen baserat på kundens önskemål
+    Och det finns en kund som önskar att redigera sin bokning
+    När jag klickar på 'se bokning' knappen
+    Och jag klickar på 'redigera bokning' knappen
+    Så kan jag redigera bokningen baserat på kundens önskemål
+    Och få en bekräftelse av kunden
+
 
 
         'Som anställd kan jag göra en avbokning av ett rum så att kunden kan ha fler avbokningsalternativ.'
@@ -62,7 +70,7 @@ Feature: Administration för rum hantering - Hotell
     Givet att jag är på bookningssidan
     Och det finns en aktiv bokning
     Och det finns en kund som önskar att göra en avbokning
-    När jag klickar på 'se bookning' knappen 
+    När jag klickar på 'se bokning' knappen 
     Så kan jag klicka på 'avboka rum' knappen
     Och få en bekräftelse av kunden
 
@@ -70,10 +78,10 @@ Feature: Administration för rum hantering - Hotell
         'Som anställd kan jag göra en ombokning av ett rum så att jag kan anpassa servicen efter behov.'
 
     Scenario: Ombokning av ett rum
-    Givet att jag är på bookningssidan
+    Givet att jag är på bokningssidan
     Och det finns en aktiv bokning
     Och det finns en kund som önskar att göra en ombokning
-    När jag klickar på 'se bookning' knappen 
+    När jag klickar på 'se bokning' knappen 
     Så kan jag klicka på 'omboka rum' knappen
     Och få en bekräftelse av kunden
 
