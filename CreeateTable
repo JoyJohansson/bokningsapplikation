@@ -6,13 +6,24 @@ CREATE TABLE Option (
   PRIMARY KEY (Option_ID)
 );
 
+CREATE TABLE Guest_Details (
+  Guest_ID INT,
+  Name VARCHAR(255),
+  Phone INT,
+  Email VARCHAR(255),
+  PRIMARY KEY (Guest_ID)
+);
+
 CREATE TABLE Booking (
   Booking_ID INT,
   Guest_ID INT,
   Check_in_date DATE,
   Check_out_date DATE,
   Status BOOLEAN,
-  PRIMARY KEY (Booking_ID)
+  PRIMARY KEY (Booking_ID),
+  CONSTRAINT FK_Guest_Details_Guest_ID
+    FOREIGN KEY (Guest_ID)
+      REFERENCES Guest_Details(Guest_ID)
 );
 
 CREATE TABLE BookingOption (
@@ -26,16 +37,6 @@ CREATE TABLE BookingOption (
       REFERENCES Booking(Booking_ID)
 );
 
-CREATE TABLE HotelReview (
-  Review_ID SERIAL,
-  Hotel_ID INT,
-  Guest_name VARCHAR(255),
-  Rating INT,
-  Comment VARCHAR(255),
-  Date_posted DATE,
-  PRIMARY KEY (Review_ID)
-);
-
 CREATE TABLE Hotel (
   Hotel_ID INT,
   Name VARCHAR(255),
@@ -44,10 +45,27 @@ CREATE TABLE Hotel (
   Address VARCHAR(255),
   Email VARCHAR(255),
   Phone INT,
-  PRIMARY KEY (Hotel_ID),
-  CONSTRAINT FK_Hotel_Hotel_ID
+  PRIMARY KEY (Hotel_ID)
+);
+
+CREATE TABLE HotelReview (
+  Review_ID SERIAL,
+  Hotel_ID INT,
+  Guest_name VARCHAR(255),
+  Rating INT,
+  Comment VARCHAR(255),
+  Date_posted DATE,
+  PRIMARY KEY (Review_ID),
+    CONSTRAINT FK_Hotel_Hotel_ID
     FOREIGN KEY (Hotel_ID)
-      REFERENCES HotelReview(Hotel_ID)
+      REFERENCES Hotel(Hotel_ID)
+);
+
+CREATE TABLE RoomType (
+  RoomType_ID SERIAL,
+  Roomtype VARCHAR(255),
+  Capacity INT,
+  PRIMARY KEY (RoomType_ID)
 );
 
 CREATE TABLE Room (
@@ -58,8 +76,12 @@ CREATE TABLE Room (
   PRIMARY KEY (Room_ID),
   CONSTRAINT FK_Room_Hotel_ID
     FOREIGN KEY (Hotel_ID)
-      REFERENCES Hotel(Hotel_ID)
+      REFERENCES Hotel(Hotel_ID),
+  CONSTRAINT FK_RoomType_RoomType_ID
+    FOREIGN KEY (RoomType_ID)
+      REFERENCES RoomType(RoomType_ID)
 );
+
 
 CREATE TABLE BookingRoom (
   Booking_ID INT,
@@ -70,27 +92,6 @@ CREATE TABLE BookingRoom (
   CONSTRAINT FK_BookingRoom_Booking_ID
     FOREIGN KEY (Booking_ID)
       REFERENCES Booking(Booking_ID)
-);
-
-CREATE TABLE Guest_Details (
-  Guest_ID INT,
-  Name VARCHAR(255),
-  Phone INT,
-  Email VARCHAR(255),
-  PRIMARY KEY (Guest_ID),
-  CONSTRAINT FK_Guest_Details_Guest_ID
-    FOREIGN KEY (Guest_ID)
-      REFERENCES Booking(Guest_ID)
-);
-
-CREATE TABLE RoomType (
-  RoomType_ID SERIAL,
-  Roomtype VARCHAR(255),
-  Capacity INT,
-  PRIMARY KEY (RoomType_ID),
-  CONSTRAINT FK_RoomType_RoomType_ID
-    FOREIGN KEY (RoomType_ID)
-      REFERENCES Room(RoomType_ID)
 );
 
 CREATE TABLE AdminUser (
