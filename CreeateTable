@@ -54,7 +54,7 @@ CREATE TABLE Room (
   Room_ID INT,
   Hotel_ID INT,
   RoomType_ID INT,
-  PricePerNight DOUBLE,
+  PricePerNight DECIMAL,
   PRIMARY KEY (Room_ID),
   CONSTRAINT FK_Room_Hotel_ID
     FOREIGN KEY (Hotel_ID)
