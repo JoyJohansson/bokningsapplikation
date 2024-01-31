@@ -2,7 +2,7 @@ CREATE TABLE Option (
   Option_ID INT,
   Name VARCHAR(255),
   Description VARCHAR(255),
-  Price DOUBLE,
+  Price DECIMAL,
   PRIMARY KEY (Option_ID)
 );
 
