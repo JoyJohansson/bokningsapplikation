@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+{% extends "base.html" %}
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bokningsapplikation</title>
+    <title>{% block title %}Bokningsapplikation{% endblock %}</title>
 </head>
 <body>
-
+    {%block content%}
     <h2>K1</h2>
 
     <form action="process_booking.php" method="post">
@@ -28,6 +29,6 @@
 
         <button type="submit">Boka nu</button>
     </form>
-
+{%endblock%}
 </body>
 </html>
