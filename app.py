@@ -40,6 +40,10 @@ def execute_query(query, parameter=None, fetch_result=False):
 def k1():
     return render_template("k1.html")
 
+@app.route("/error")
+def error():
+    return "Something went wrong"
+
 if __name__ == "__main__":
     app.run(debug=True)
 
