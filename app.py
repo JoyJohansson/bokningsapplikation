@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from psycopg2 import connect, DatabaseError, pool
 from dotenv import load_dotenv
 import os
@@ -34,3 +34,7 @@ def execute_query(query, parameter=None, fetch_result=False):
     finally:
         if connection:
             db_pool.putconn(connection)
+
+@app.route("/")
+def k1():
+    return render_template("k1.html")
