@@ -30,7 +30,6 @@ def execute_query(query, parameter=None, fetch_result=False):
                  return cursor.rowcount > 0
              
     except DatabaseError as error:
-        logging.error(error)
         return str(error)
     finally:
         if connection:
