@@ -13,16 +13,6 @@ nav {
     font-family: 'Poppins', sans-serif;
     margin-right: 10px; /* Justera avståndet mellan knapparna om det behövs */
 }
-
-.link-button {
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    font-size: 25px;
-    border: none;
-    background: none;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-  }
   
   .link-button::before {
     margin-left: auto;
