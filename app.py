@@ -11,10 +11,10 @@ app = Flask(__name__)
 db_pool = pool.SimpleConnectionPool(
     minconn=1,
     maxconn=10,
-    dbname="postgres",
-    user="postgres",
-    host="localhost",
-    password=os.getenv("DB_CONNECT"),
+    dbname=os.getenv("DB_NAME"),
+    user=os.getenv("DB_USER"),
+    host=os.getenv("DB_HOST"),
+    password=os.getenv("DB_PASSWORD"),
 )
 
 def execute_query(query, parameter=None, fetch_result=False):
@@ -34,7 +34,10 @@ def execute_query(query, parameter=None, fetch_result=False):
     finally:
         if connection:
             db_pool.putconn(connection)
-
 @app.route("/")
 def k1():
     return render_template("k1.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
