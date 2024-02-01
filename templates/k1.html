@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bokningsapplikation{% endblock %}</title>
+</head>
+<body>
+    {%block content%}
+    <h2>K1</h2>
+
+    <form action="process_booking.php" method="post">
+        <label for="start_date">Ankomstdatum:</label>
+        <input type="date" id="start_date" name="start_date" required>
+
+        <label for="end_date">Avresedatum:</label>
+        <input type="date" id="end_date" name="end_date" required>
+
+        <label for="guests">Antal gäster:</label>
+        <select id="guests" name="guests" required>
+            <option value="1">1 gäst</option>
+            <option value="2">2 gäster</option>
+            <option value="3">3 gäster</option>
+            <option value="4">4 gäster</option>
+            <option value="5">5 gäster</option>
+            <option value="6">6 gäster</option>
+        </select>
+
+        <button type="submit">Boka nu</button>
+    </form>
+{%endblock%}
+</body>
+</html>
