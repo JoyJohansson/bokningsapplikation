@@ -34,6 +34,18 @@ def execute_query(query, parameter=None, fetch_result=False):
     finally:
         if connection:
             db_pool.putconn(connection)
-            
+
+
+query = "SELECT * FROM hotel"
+hotels = execute_query(query, fetch_result=True)
+if isinstance(hotels, list):
+        print("Query executed successfully.")
+        for hotel in hotels:
+            print(hotel)
+else:
+        print("Error executing query.")
+
 if __name__ == "__main__":
     app.run(debug=True)
+    
+
