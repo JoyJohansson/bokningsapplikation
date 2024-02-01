@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from psycopg2 import connect, DatabaseError, pool
 from dotenv import load_dotenv
 import os
@@ -34,18 +34,10 @@ def execute_query(query, parameter=None, fetch_result=False):
     finally:
         if connection:
             db_pool.putconn(connection)
-
-
-query = "SELECT * FROM hotel"
-hotels = execute_query(query, fetch_result=True)
-if isinstance(hotels, list):
-        print("Query executed successfully.")
-        for hotel in hotels:
-            print(hotel)
-else:
-        print("Error executing query.")
+@app.route("/")
+def k1():
+    return render_template("k1.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
 
