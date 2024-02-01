@@ -1,2 +1,4 @@
 dokument.txt
 venv/
+.vscode
+.env
