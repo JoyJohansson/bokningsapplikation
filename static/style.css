@@ -15,9 +15,12 @@ body {
     align-items: center;
     justify-content: center;
     background-image: url('Background.webp'); /* Lägg till din bild här */
-    background-size: flex;
-    transition: color 0.5s ease;
+    background-size: cover;
+    background-attachment: fixed; /* Håll bakgrundsbilden på samma position när du skrollar */
+    margin: 0; /* Ta bort marginaler för att undvika tomrum runt sidan */
+    padding: 0; /* Ta bort padding för att undvika tomrum runt sidan */
 }
+
 
 
 .link-button {
@@ -60,6 +63,39 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Skugga för att skapa djup */
 }
 
+.info-post {
+    display: grid; /* Använd CSS Grid för att skapa layouten */
+    grid-template-columns: auto 1fr; /* En kolumn för bilden och en för informationen */
+    align-items: center; /* Centrera innehållet vertikalt */
+    margin-bottom: 20px; /* Avstånd mellan varje post */
+}
+
+.info-post img {
+    max-width: 100%; /* Begränsa bildens bredd till 100% av förälderns bredd */
+    border-radius: 10px; /* Rundade hörn för bilden */
+    margin-right: 20px; /* Avstånd till höger om bilden */
+}
+
+.info-details {
+    padding: 10px; /* Mellanrum runt informationen */
+}
+
+.info-details h2 {
+    margin-bottom: 10px; /* Avstånd under rubriken */
+    font-size: 24px; /* Storlek på rubriken */
+    color: #333; /* Färg på rubriken */
+}
+
+.info-details p {
+    margin-bottom: 10px; /* Avstånd under varje stycke */
+    font-size: 16px; /* Storlek på texten */
+    color: #666; /* Färg på texten */
+}
+.posts-container {
+    display: flex;
+    flex-direction: column; /* Bryt inläggen till nästa rad när de inte längre får plats */
+    justify-content: space-between; /* Placera inläggen jämnt fördelat på raden */
+}
 .banner-container {
     margin-top: 10px;
     width: 50%; /* Bredden på informationen ruta */
