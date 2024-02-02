@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Inloggning{% endblock %}
+
+{% block content %}
+    <h2>Admin Inloggning</h2>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <form action="/admin/login" method="post">
+        <label for="username">Användarnamn:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Lösenord:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Logga in</button>
+    </form>
+
+    <p>Har du inget konto? <a href="{{ url_for('admin_register_page') }}">Registrera ny admin</a></p>
+
+    {% if authenticated %}
+        <!-- Användaren är autentiserad, omdirigera till admin_dashboard -->
+        {% set admin_dashboard_url = url_for('admin_dashboard') %}
+        <script>
+            window.location.href = "{{ admin_dashboard_url }}";
+        </script>
+    {% endif %}
+{% endblock %}

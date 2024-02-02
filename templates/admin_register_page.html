@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Registrera ny admin{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/error">Boka rum</a>
+        <a href="/error">Kontakt</a>
+        <a href="{{ url_for('admin_login_page') }}">Admin Login</a>
+    </nav>
+
+    <h2>Registrera ny admin</h2>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <form action="/admin/register" method="post">
+        <label for="username">Användarnamn:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Lösenord:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Registrera</button>
+    </form>
+
+    <p>Har redan ett konto? <a href="{{ url_for('admin_login_page') }}">Logga in här</a></p>
+</body>
+</html>
