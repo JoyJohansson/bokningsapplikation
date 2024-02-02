@@ -121,7 +121,7 @@ def admin_login():
         if result and bcrypt.check_password_hash(result[2], password):
             # Om lösenordet är korrekt, generera en token och lagra den i databasen
             token = generate_random_token()
-            update_token_query = "UPDATE admins SEJT token = %s WHERE id = %s"
+            update_token_query = "UPDATE admins SET token = %s WHERE id = %s"
             execute_query(update_token_query, (token, result[0]))
 
             # Sätt inloggnings-sessionen för den nya adminen
