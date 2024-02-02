@@ -44,10 +44,12 @@ def k1():
 def error():
     return render_template("error.html")
 
-@app.route("/room_info.html", methods=["GET"])
+@app.route("/room_info", methods=["GET"])
 def room_info():
-    #hämta rum-data från db
-    room = "data"
+    args = request.args
+    room_id = args["room_id"]
+    query = "SELECT * FROM room WHERE room_id = %s"
+    room = execute_query(query, (room_id,))
     return render_template("k3.html", room=room)
 
 @app.route("/book?start_date&end_date&room_id", methods=["POST"])
@@ -61,7 +63,7 @@ def book_room(start_date, end_date, room_id):
     else:
         print("Error executing query.")
 
-    return render_template("k4.html", booking_reference)
+    return render_template("k4.html", "booking_reference")
 
 if __name__ == "__main__":
     app.run(debug=True)
