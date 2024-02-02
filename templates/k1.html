@@ -5,12 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Bokningsapplikation{% endblock %}</title>
+    <script>
+        function saveDates() {
+            var start_date = document.getElementById('start_date').value;
+            var end_date = document.getElementById('end_date').value;
+            var guests = document.getElementById('guests').value;
+
+            sessionStorage.setItem('start_date', start_date);
+            sessionStorage.setItem('end_date', end_date);
+            sessionStorage.setItem('guests', guests);
+        }
+    </script>
 </head>
 <body>
-    {%block content%}
+{% block content %}
     <h2>K1</h2>
 
-    <form action="/availablerooms" method="post">
+    <form action="/K2" method="post">
         <label for="start_date">Ankomstdatum:</label>
         <input type="date" id="start_date" name="start_date" required>
 
@@ -29,6 +40,30 @@
 
         <button type="submit">Boka nu</button>
     </form>
-{%endblock%}
+
+    {% if result %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Roomtype</th>
+                    <th>Capacity</th>
+                    <th>Price per night</th>
+                </tr>
+            </thead>
+            <tbody>
+                <p>Tillgängliga rum</p>
+                {% for row in result %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="error-message">{{ error }}</p>
+    {% endif %}
+{% endblock %}
 </body>
 </html>
