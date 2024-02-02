@@ -23,8 +23,6 @@ db_pool = pool.SimpleConnectionPool(
     password=os.getenv("DB_PASSWORD"),
 )
 
-
-
 def execute_query(query, parameter=None, fetch_result=False):
     connection = None
     try:
@@ -33,7 +31,7 @@ def execute_query(query, parameter=None, fetch_result=False):
             cursor.execute(query, parameter)
             connection.commit()
             if fetch_result:
-                return cursor.fetchall()
+                return cursor.fetchone()
             else:
                  return cursor.rowcount > 0
              
@@ -43,6 +41,7 @@ def execute_query(query, parameter=None, fetch_result=False):
         if connection:
             db_pool.putconn(connection)
             
+
 
 
 # K1
@@ -61,7 +60,7 @@ def error():
 
 
 
-# 
+# Query for databas
 create_table_query = """
 CREATE TABLE IF NOT EXISTS admins (
     id SERIAL PRIMARY KEY,
@@ -115,29 +114,27 @@ def admin_login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-
         # Fråga databasen för att hämta admin med det angivna användarnamnet
         query = "SELECT * FROM hotel.admins WHERE username = %s"
         result = execute_query(query, (username,), fetch_result=True)
 
-
-        if result and bcrypt.check_password_hash(result[0]['password_hash'], password):
+        if result and bcrypt.check_password_hash(result[2], password):
             # Om lösenordet är korrekt, generera en token och lagra den i databasen
-            token = generate_random_token()  # funktionen implementera nedan
-            update_token_query = "UPDATE hotel.admins SET token = %s WHERE id = %s"
-            execute_query(update_token_query, (token, result[0]['id']))
+            token = generate_random_token()
+            update_token_query = "UPDATE admins SEJT token = %s WHERE id = %s"
+            execute_query(update_token_query, (token, result[0]))
 
-            # Sätt token i sessionen för framtida förfrågningar
+            # Sätt inloggnings-sessionen för den nya adminen
             session['admin_token'] = token
 
-
-            return redirect(url_for('admin_dashboard'))
-        else:
-            return render_template('admin_login_page.html', error="Ogiltiga inloggningsuppgifter")
-
-
+            # Sätt authenticated till True
+            authenticated = True
+            if authenticated:
+             return redirect(url_for('admin_dashboard'))
+            else:
+                return render_template('admin_login_page.html', error="Ogiltiga inloggningsuppgifter")
     return render_template('admin_login_page.html', error=None)
-
+    
 
 # implementering av funktionen generate_random_token() enligt ovan
 def generate_random_token():
