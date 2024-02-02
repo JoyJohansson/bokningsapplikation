@@ -78,7 +78,15 @@ body {
 
 .info-details {
     padding: 10px; /* Mellanrum runt informationen */
+    display: grid; /* Använd CSS Grid för att skapa layouten */
+    grid-template-columns: 1fr 1fr; /* Två kolumner */
+    grid-column-gap: 20px; /* Avstånd mellan kolumnerna */
 }
+
+.details {
+    grid-column: span 2; /* Ta upp båda kolumnerna */
+}
+
 
 .info-details h2 {
     margin-bottom: 10px; /* Avstånd under rubriken */
