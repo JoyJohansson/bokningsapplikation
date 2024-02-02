@@ -44,6 +44,25 @@ def k1():
 def error():
     return render_template("error.html")
 
+@app.route("/room_info.html", methods=["GET"])
+def room_info():
+    #hämta rum-data från db
+    room = "data"
+    return render_template("k3.html", room=room)
+
+@app.route("/book?start_date&end_date&room_id", methods=["POST"])
+def book_room(start_date, end_date, room_id):
+
+    query = "INSERT INTO booking(start_date, end_date, room_id) VALUES (%s, %s, %s)"
+    success = execute_query(query, (start_date, end_date, room_id))
+
+    if success:
+        print("Query executed successfully.")
+    else:
+        print("Error executing query.")
+
+    return render_template("k4.html", booking_reference)
+
 if __name__ == "__main__":
     app.run(debug=True)
 
