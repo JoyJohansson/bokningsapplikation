@@ -4,7 +4,7 @@ nav {
     display: flex;
     align-items: center; /* Justera objekt längs tvärsaxeln (vertikalt) */
     padding: 10px; /* Lägger till lite inre utrymme för estetiskt utseende */
-    border-radius: 10px;
+    border-radius: 0px;
     background: linear-gradient(rgba(0, 0, 0, 0.932), rgba(0, 0, 0, 0.616));
     justify-content: center;
 }
@@ -44,14 +44,36 @@ nav {
     align-items: center;
     justify-content: center;
     margin: 0;
+    background-image: url('Background.webp'); /* Lägg till din bild här */
+    background-size: cover;
 }
 
 
   .info-container {
     width: 50%; /* Bredden på informationen ruta */
     padding: 10px;
-    border-radius: 10px; /* Rundade hörn */
+    border-radius: 0px; /* Rundade hörn */
+    border-top-left-radius: 0; /* Inget rundat hörn upptill */
+    border-top-right-radius: 0; /* Inget rundat hörn upptill */
+    border-bottom-left-radius: 10px; /* Rundade hörn nertill */
+    border-bottom-right-radius: 10px; /* Rundade hörn nertill */
     background-color: rgba(255, 255, 255, 0.7); /* Bakgrundsfärg för rutan */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Skugga för att skapa djup */
 }
-  
+
+.banner-container {
+    margin-top: 10px;
+    width: 50%; /* Bredden på informationen ruta */
+    height: 250px;
+    padding: 10px;
+    border-radius: 0px; /* Rundade hörn */
+    border-top-left-radius: 10px; /* Inget rundat hörn upptill */
+    border-top-right-radius: 10px; /* Inget rundat hörn upptill */
+    border-bottom-left-radius: 0px; /* Rundade hörn nertill */
+    border-bottom-right-radius: 0px; /* Rundade hörn nertill */
+    background-color: rgba(255, 255, 255, 0.7); /* Bakgrundsfärg för rutan */
+    background-image: url('banner.webp'); /* Sökväg till din bild */
+    background-size: cover; /* Anpassa bilden för att täcka hela rutan */
+    background-position: center; /* Centrera bilden i rutan */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Skugga för att skapa djup */
+}
