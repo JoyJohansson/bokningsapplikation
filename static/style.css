@@ -1,17 +1,24 @@
 
 nav {
+    width: 50%;
     display: flex;
+    align-items: center; /* Justera objekt längs tvärsaxeln (vertikalt) */
+    padding: 10px; /* Lägger till lite inre utrymme för estetiskt utseende */
+    border-radius: 10px;
+    background: linear-gradient(rgba(0, 0, 0, 0.932), rgba(0, 0, 0, 0.616));
+    justify-content: center;
 }
 
+
 .link-button {
-    color: rgb(0, 0, 0);
+    color: rgb(248, 244, 244);
     text-decoration: none;
-    font-size: 25px;
+    font-size: 20px;
     border: none;
     background: none;
     font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    margin-right: 10px; /* Justera avståndet mellan knapparna om det behövs */
+    font-family: 'Arial Rounded MT Bold', sans-serif;
+    margin-right: 10px;
 }
   
   .link-button::before {
@@ -30,3 +37,6 @@ nav {
   .link-button:hover::after, .link-button:hover::before {
     width: 100%;
   }
+
+
+  
