@@ -13,3 +13,4 @@ INSERT INTO Room (Room_ID, Hotel_ID, RoomType_ID, PricePerNight) VALUES
 (3, 1, 1, 120.00),
 (4, 1, 1, 180.00),
 (5, 1, 1, 150.00);
+
