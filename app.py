@@ -44,6 +44,10 @@ def k1():
 def error():
     return render_template("error.html")
 
+@app.route("/availablerooms")
+def k2():
+    return render_template("k2.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
 
