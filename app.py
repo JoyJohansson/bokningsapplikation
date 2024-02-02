@@ -2,8 +2,14 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_bcrypt import Bcrypt       # pip install bcrypt (Detta är ett bibliotek för att lagra hashtaggade lösen. Skapa en tabell för att lagra admin-användarnamn och token)
 from psycopg2 import connect, DatabaseError, pool
 from dotenv import load_dotenv
+from datetime import datetime
+
 import os
 import secrets    #pip install secrets (för att kunna generera en slumpmässig token)
+import re  # re.match för att jämföra e-postadresserna med ett reguljärt uttryck.
+import time
+import random
+
 
 load_dotenv()
 
@@ -53,6 +59,54 @@ def k1():
 def error():
     return "Something went wrong"
 
+
+
+
+
+# email
+@app.route('/email', methods=['GET', 'POST'])
+def email():
+    if request.method == 'POST':
+        epost1 = request.form['epost1']
+        epost2 = request.form['epost2']
+
+        # Validera E-postadressen
+        if epost1 != epost2 or not is_valid_email(epost1):
+            return "E-postadresserna matchar inte eller är ogiltiga. Var god försök igen."
+        else:
+            booking_reference = generate_booking_reference()  # Replace this with your logic to generate a reference
+            return redirect(url_for('bekraftelse', booking_ref=booking_reference))
+
+    return render_template('e-post.html')
+
+# Funktion för att validera epostadress
+        # Använd ett reguljärt uttryck för att kontrollera e-postadressens struktur
+        # Reguljärt uttrycket (r'^[\w\.-]+@[\w\.-]+\.\w+$') kontrollerar att:
+        # Det finns minst en karaktär före "@" ([\w.-]+).
+        # Det finns minst en karaktär efter "@" ([\w.-]+).
+        # Det finns minst en punkt i den andra delen av e-postadressen (.\w+).
+def is_valid_email(email):
+    pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    if re.match(pattern, email):
+        return True
+    else:
+        return False
+
+# Bokningsbekräftelse
+@app.route('/bekraftelse')
+def bekraftelse():
+    booking_reference = request.args.get('booking_ref')
+    return f"Bokningsbekräftelse: Tack för din bokning! Bokningsreferens: {booking_reference}"
+
+# Bokningsreferens
+def generate_booking_reference():
+    # realtid timestamp
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    # generera slumpmässig sträng på 6 tecken
+    random_string = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=6))
+    # kombinera timestamp med sträng för att skapa unique bokningsreferens
+    booking_reference = f'{timestamp}{random_string}'
+    return booking_reference
 
 
 
@@ -162,6 +216,8 @@ def logout():
 @app.route("/admin/logout_page")
 def admin_logout_page():
     return render_template('admin_logout_page.html')
+
+
 
 
 
