@@ -105,8 +105,9 @@ def admin_register():
 
 # Admin login
 @app.route("/admin/login", methods=["GET"])
-def admin_login_page():
+def admin_login_page():  
     return render_template("admin_login_page.html", error=None)
+
 
 @app.route("/admin/login", methods=["POST"])
 def admin_login():
@@ -114,24 +115,29 @@ def admin_login():
         username = request.form.get("username")
         password = request.form.get("password")
 
+
         # Fråga databasen för att hämta admin med det angivna användarnamnet
-        query = "SELECT * FROM admins WHERE username = %s"
+        query = "SELECT * FROM hotel.admins WHERE username = %s"
         result = execute_query(query, (username,), fetch_result=True)
+
 
         if result and bcrypt.check_password_hash(result[0]['password_hash'], password):
             # Om lösenordet är korrekt, generera en token och lagra den i databasen
             token = generate_random_token()  # funktionen implementera nedan
-            update_token_query = "UPDATE admins SET token = %s WHERE id = %s"
+            update_token_query = "UPDATE hotel.admins SET token = %s WHERE id = %s"
             execute_query(update_token_query, (token, result[0]['id']))
 
             # Sätt token i sessionen för framtida förfrågningar
             session['admin_token'] = token
 
+
             return redirect(url_for('admin_dashboard'))
         else:
             return render_template('admin_login_page.html', error="Ogiltiga inloggningsuppgifter")
 
+
     return render_template('admin_login_page.html', error=None)
+
 
 # implementering av funktionen generate_random_token() enligt ovan
 def generate_random_token():
@@ -146,13 +152,19 @@ def admin_dashboard():
     else:
         return redirect(url_for('admin_login_page'))
 
-@app.route("/admin/logout")
+    
+
+@app.route("/admin/logout", methods=["GET", "POST"])
 def logout():
-    session.pop('admin_token', None)
-    return redirect(url_for('admin_login_page'))
+    if request.method == "POST":
+        session.pop('admin_token', None)
+        return redirect(url_for('admin_logout_page'))
+    return redirect(url_for('admin_logout_page'))
 
 
-
+@app.route("/admin/logout_page")
+def admin_logout_page():
+    return render_template('admin_logout_page.html')
 
 
 
