@@ -6,14 +6,14 @@ nav {
     padding: 10px; /* Lägger till lite inre utrymme för estetiskt utseende */
     border-radius: 0px;
     background: linear-gradient(rgba(0, 0, 0, 0.932), rgba(0, 0, 0, 0.616));
-    justify-content: center;
+    justify-content: left;
 }
 
 
 .link-button {
     color: rgb(248, 244, 244);
     text-decoration: none;
-    font-size: 20px;
+    font-size: 15px;
     border: none;
     background: none;
     font-weight: 600;
@@ -43,9 +43,8 @@ nav {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 0;
     background-image: url('Background.webp'); /* Lägg till din bild här */
-    background-size: cover;
+    background-size: flex;
 }
 
 
@@ -77,3 +76,28 @@ nav {
     background-position: center; /* Centrera bilden i rutan */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Skugga för att skapa djup */
 }
+
+.input {
+    width: 100%;
+    max-width: 100px;
+    height: 4px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1.5px solid lightgrey;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0px 0px 20px -18px;
+  }
+  
+  .input:hover {
+    border: 2px solid lightgrey;
+    box-shadow: 0px 0px 20px -17px;
+  }
+  
+  .input:active {
+    transform: scale(0.95);
+  }
+  
+  .input:focus {
+    border: 2px solid grey;
+  }
