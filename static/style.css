@@ -9,6 +9,16 @@ nav {
     justify-content: left;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url('Background.webp'); /* Lägg till din bild här */
+    background-size: flex;
+    transition: color 0.5s ease;
+}
+
 
 .link-button {
     color: rgb(248, 244, 244);
@@ -38,17 +48,7 @@ nav {
     width: 100%;
   }
 
-  body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-image: url('Background.webp'); /* Lägg till din bild här */
-    background-size: flex;
-}
-
-
-  .info-container {
+.info-container {
     width: 50%; /* Bredden på informationen ruta */
     padding: 10px;
     border-radius: 0px; /* Rundade hörn */
