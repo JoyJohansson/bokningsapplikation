@@ -21,3 +21,6 @@ CREATE TRIGGER prevent_double_booking
 BEFORE INSERT ON BookingRoom
 FOR EACH ROW
 EXECUTE FUNCTION check_room_availability();
+
+DROP FUNCTION check_room_availability;
+DROP TRIGGER prevent_double_booking ON BookingRoom;
