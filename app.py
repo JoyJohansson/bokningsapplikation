@@ -42,20 +42,11 @@ def k1():
 
 @app.route("/error")
 def error():
+<<<<<<< HEAD
     return render_template("error.html")
-
-@app.route("/K2", methods=["POST"])
-def k2():
-    guests = request.form.get("Capacity")
-    error = "För stort sällskap"
-    query = f"SELECT * FROM K2 ORDER BY pricepernight"
-    value = (guests)
-    result = execute_query(query,value,fetch_result=True)
-    
-    if result:
-        return render_template("k1.html", result=result)
-    else:
-        return render_template("error.html",error=error)    
+=======
+    return "Something went wrong"
+>>>>>>> 2fffc4bf8fff06c20acdb9738b85b77c9c5fe6d8
 
 if __name__ == "__main__":
     app.run(debug=True)
