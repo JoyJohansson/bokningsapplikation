@@ -8,6 +8,7 @@
 </head>
 <body>
     {%block content%}
+    <div class="info-container">
     <h2>K1</h2>
 
     <form action="process_booking.php" method="post">
@@ -26,9 +27,10 @@
             <option value="5">5 gäster</option>
             <option value="6">6 gäster</option>
         </select>
-
         <button type="submit">Boka nu</button>
     </form>
+    
+</div>
 {%endblock%}
 </body>
 </html>
