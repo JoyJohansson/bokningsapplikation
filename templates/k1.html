@@ -40,6 +40,7 @@
 </head>
 <body>
 {% block content %}
+<div class="info-container">
     <h2>K1</h2>
 
     <form action="/K2" method="post">
@@ -90,5 +91,6 @@
         <p class="error-message">{{ error }}</p>
     {% endif %}
 {% endblock %}
+</div>
 </body>
 </html>
