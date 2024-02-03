@@ -7,204 +7,30 @@
     <title>{% block title %}error{% endblock %}</title>
 </head>
 <body>
-    
-    {%block content%}
+    {% block content %}
     <div class="info-container">
         <h1>Katter</h1>
         <div class="posts-container">
+            {% for result in results %}
             <div class="info-post">
                 <!-- Visa rummets bild -->
-                <img src="static/nedladdning.jpeg" alt="Rum Bild">
+                <img src="{{ result.filename }}" alt="Rum Bild">
                 <div class="info-details">
-                <!-- Visa rummets information -->
-                <h2 >Dubbelrum</h2>
-                <div class="details">
-                    <p>Kapacitet:</p>
-                    <p>Antal sängar: </p>
-                    <p>Info </p>
-                    <p>Pris: </p>
-                    <button class="button-action" type="submit">Boka</button>
-                </div>            
+                    <!-- Visa rummets information -->
+                    <h2>Dubbelrum: {{ result.room_id }}</h2>
+                    <div class="details">
+                        <p>Kapacitet: {{ result.capacity }}</p>
+                        <!-- Fyll i antalet sängar här -->
+                        <p>Antal sängar: </p>
+                        <p>Info: {{ result.roomtype }}</p>
+                        <p>Pris: {{ result.pricepernight}}</p>
+                        <button class="button-action" type="submit">Boka</button>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="posts-container">
-            <div class="info-post">
-                <!-- Visa rummets bild -->
-                <img src="static/nedladdning.jpeg" alt="Rum Bild">
-                <div class="info-details">
-                <!-- Visa rummets information -->
-                <h2 >Dubbelrum</h2>
-                <div class="details">
-                    <p>Kapacitet:</p>
-                    <p>Antal sängar: </p>
-                    <p>Info </p>
-                    <p>Pris: </p>
-                    <button class="button-action" type="submit">Boka</button>
-                </div>            
-            </div>
-        </div>
-        <div class="posts-container">
-            <div class="info-post">
-                <!-- Visa rummets bild -->
-                <img src="static/nedladdning.jpeg" alt="Rum Bild">
-                <div class="info-details">
-                <!-- Visa rummets information -->
-                <h2 >Dubbelrum</h2>
-                <div class="details">
-                    <p>Kapacitet:</p>
-                    <p>Antal sängar: </p>
-                    <p>Info </p>
-                    <p>Pris: </p>
-                    <button class="button-action" type="submit">Boka</button>
-                </div>            
-            </div>
-        </div>
-        <div class="posts-container">
-            <div class="info-post">
-                <!-- Visa rummets bild -->
-                <img src="static/nedladdning.jpeg" alt="Rum Bild">
-                <div class="info-details">
-                <!-- Visa rummets information -->
-                <h2 >Dubbelrum</h2>
-                <div class="details">
-                    <p>Kapacitet:</p>
-                    <p>Antal sängar: </p>
-                    <p>Info </p>
-                    <p>Pris: </p>
-                    <button class="button-action" type="submit">Boka</button>
-                </div>            
-            </div>
-        </div>
-        <div class="posts-container">
-            <div class="info-post">
-                <!-- Visa rummets bild -->
-                <img src="static/nedladdning.jpeg" alt="Rum Bild">
-                <div class="info-details">
-                <!-- Visa rummets information -->
-                <h2 >Dubbelrum</h2>
-                <div class="details">
-                    <p>Kapacitet:</p>
-                    <p>Antal sängar: </p>
-                    <p>Info </p>
-                    <p>Pris: </p>
-                    <button class="button-action" type="submit">Boka</button>
-                </div>            
-            </div>
-        </div>
-        <div class="posts-container">
-            <div class="info-post">
-                <!-- Visa rummets bild -->
-                <img src="static/nedladdning.jpeg" alt="Rum Bild">
-                <div class="info-details">
-                <!-- Visa rummets information -->
-                <h2 >Dubbelrum</h2>
-                <div class="details">
-                    <p>Kapacitet:</p>
-                    <p>Antal sängar: </p>
-                    <p>Info </p>
-                    <p>Pris: </p>
-                    <button class="button-action" type="submit">Boka</button>
-                </div>            
-            </div>
-        </div>
-        <div class="posts-container">
-            <div class="info-post">
-                <!-- Visa rummets bild -->
-                <img src="static/nedladdning.jpeg" alt="Rum Bild">
-                <div class="info-details">
-                <!-- Visa rummets information -->
-                <h2 >Dubbelrum</h2>
-                <div class="details">
-                    <p>Kapacitet:</p>
-                    <p>Antal sängar: </p>
-                    <p>Info </p>
-                    <p>Pris: </p>
-                    <button class="button-action" type="submit">Boka</button>
-                </div>            
-            </div>
-        </div>
-        <div class="posts-container">
-            <div class="info-post">
-                <!-- Visa rummets bild -->
-                <img src="static/nedladdning.jpeg" alt="Rum Bild">
-                <div class="info-details">
-                <!-- Visa rummets information -->
-                <h2 >Dubbelrum</h2>
-                <div class="details">
-                    <p>Kapacitet:</p>
-                    <p>Antal sängar: </p>
-                    <p>Info </p>
-                    <p>Pris: </p>
-                    <button class="button-action" type="submit">Boka</button>
-                </div>            
-            </div>
-        </div>
-        <div class="posts-container">
-            <div class="info-post">
-                <!-- Visa rummets bild -->
-                <img src="static/nedladdning.jpeg" alt="Rum Bild">
-                <div class="info-details">
-                <!-- Visa rummets information -->
-                <h2 >Dubbelrum</h2>
-                <div class="details">
-                    <p>Kapacitet:</p>
-                    <p>Antal sängar: </p>
-                    <p>Info </p>
-                    <p>Pris: </p>
-                    <button class="button-action" type="submit">Boka</button>
-                </div>            
-            </div>
-        </div>
-        <div class="posts-container">
-            <div class="info-post">
-                <!-- Visa rummets bild -->
-                <img src="static/nedladdning.jpeg" alt="Rum Bild">
-                <div class="info-details">
-                <!-- Visa rummets information -->
-                <h2 >Dubbelrum</h2>
-                <div class="details">
-                    <p>Kapacitet:</p>
-                    <p>Antal sängar: </p>
-                    <p>Info </p>
-                    <p>Pris: </p>
-                    <button class="button-action" type="submit">Boka</button>
-                </div>            
-            </div>
-        </div>
-        <div class="posts-container">
-            <div class="info-post">
-                <!-- Visa rummets bild -->
-                <img src="static/nedladdning.jpeg" alt="Rum Bild">
-                <div class="info-details">
-                <!-- Visa rummets information -->
-                <h2 >Dubbelrum</h2>
-                <div class="details">
-                    <p>Kapacitet:</p>
-                    <p>Antal sängar: </p>
-                    <p>Info </p>
-                    <p>Pris: </p>
-                    <button class="button-action" type="submit">Boka</button>
-                </div>            
-            </div>
-        </div>
-        <div class="posts-container">
-            <div class="info-post">
-                <!-- Visa rummets bild -->
-                <img src="static/nedladdning.jpeg" alt="Rum Bild">
-                <div class="info-details">
-                <!-- Visa rummets information -->
-                <h2 >Dubbelrum</h2>
-                <div class="details">
-                    <p>Kapacitet:</p>
-                    <p>Antal sängar: </p>
-                    <p>Info </p>
-                    <p>Pris: </p>
-                    <button class="button-action" type="submit">Boka</button>
-                </div>            
-            </div>
+            {% endfor %}
         </div>
     </div>
-
-{%endblock%}
+    {% endblock %}
 </body>
 </html>

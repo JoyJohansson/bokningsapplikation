@@ -55,8 +55,22 @@ def k2():
     if result:
         return render_template("k1.html", result=result)
     else:
-        return render_template("error.html",error=error)    
+        return render_template("error.html",error=error)
+    
+    
 
+@app.route("/error", methods=["GET", "POST"])
+def get_room():
+    query = """
+        SELECT * FROM room_details
+    """
+    results = execute_query(query, fetch_result=True)
+    if results:
+        return render_template("error.html", results=results)
+    else:
+        return render_template("error.html", error="No data found")  # Uppdaterat: error meddelandet
+
+        
 if __name__ == "__main__":
     app.run(debug=True)
 
