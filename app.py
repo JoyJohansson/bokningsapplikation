@@ -44,7 +44,6 @@ def k1():
 def error():
     return render_template("error.html")
 
-<<<<<<< HEAD
 @app.route("/room_info", methods=["GET"])
 def room_info():
     args = request.args
@@ -65,7 +64,6 @@ def book_room(start_date, end_date, room_id):
         print("Error executing query.")
 
     return render_template("k4.html", "booking_reference")
-=======
 @app.route("/K2", methods=["POST"])
 def k2():
     guests = request.form.get("Capacity")
@@ -78,7 +76,6 @@ def k2():
         return render_template("k1.html", result=result)
     else:
         return render_template("error.html",error=error)    
->>>>>>> K2
 
 if __name__ == "__main__":
     app.run(debug=True)
