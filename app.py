@@ -40,9 +40,17 @@ def execute_query(query, parameter=None, fetch_result=False):
 def k1():
     return render_template("k1.html")
 
-@app.route("/error")
-def error():
-    return render_template("error.html")
+@app.route("/error", methods=["GET", "POST"])
+def get_room():
+    query = """
+    SELECT * FROM room_details
+    """
+    results = execute_query(query,fetch_result=True)
+    print(results)
+    if results:
+        return render_template("error.html", results=results)
+    else:
+        return render_template("error.html", error="No data found") 
 
 @app.route("/K2", methods=["POST"])
 def k2():
@@ -59,16 +67,7 @@ def k2():
     
     
 
-@app.route("/error", methods=["GET", "POST"])
-def get_room():
-    query = """
-        SELECT * FROM room_details
-    """
-    results = execute_query(query, fetch_result=True)
-    if results:
-        return render_template("error.html", results=results)
-    else:
-        return render_template("error.html", error="No data found")  # Uppdaterat: error meddelandet
+ # Uppdaterat: error meddelandet
 
         
 if __name__ == "__main__":

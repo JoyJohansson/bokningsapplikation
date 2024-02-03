@@ -15,8 +15,9 @@ INSERT INTO Room (Room_ID, Hotel_ID, RoomType_ID, PricePerNight) VALUES
 (5, 1, 1, 150.00);
 
 CREATE VIEW room_details AS
-SELECT room.room_id AS room_id, roomtype.roomtype AS roomtype, files.filename as filename, roomtype.Capacity as capacity, room.pricepernight  
+SELECT room.room_id, roomtype.roomtype, files.filename, roomtype.Capacity, room.pricepernight  
 FROM files
 JOIN room ON files.room_id = room.room_id
 JOIN roomtype ON room.roomtype_id = roomtype.roomtype_id;
 
+SELECT * FROM room_details
