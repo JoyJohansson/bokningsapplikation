@@ -9,12 +9,12 @@
 <body>
     {% block content %}
     <div class="info-container">
-        <h1>Rooms</h1>
+        <h1>Katter i hatter</h1>
         <div class="posts-container">
             {%for result in results%}
             <div class="info-post">
                 <!-- Visa rummets bild -->
-                <img src="data:image/webp;base64,{{ result.file_content_base64 }}" alt="{{ result.filename }}" style="max-width: 300px; max-height: 300px;">
+                <img src="data:image/webp;base64,{{ result.file_content_base64 }}" alt="{{ result.filename }}" style="max-width: 200px; max-height: 200px;">
                 <div class="info-details">
                     <!-- Visa rummets information -->
                     <h2>{{ result.roomtype }}</h2>
