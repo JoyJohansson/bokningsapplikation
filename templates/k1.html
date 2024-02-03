@@ -5,19 +5,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Bokningsapplikation{% endblock %}</title>
+    <script>
+        function saveDates() {
+            var start_date = document.getElementById('start_date').value;
+            var end_date = document.getElementById('end_date').value;
+            var guests = document.getElementById('guests').value;
+
+            sessionStorage.setItem('start_date', start_date);
+            sessionStorage.setItem('end_date', end_date);
+            sessionStorage.setItem('guests', guests);
+        }
+    </script>
+    <script>
+        function validateForm() {
+            var guests = parseInt(document.getElementById('guests').value);
+            var checkboxes = document.getElementsByName('selected_prices[]');
+    
+            var selectedRooms = 0;
+    
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    selectedRooms++;
+                }
+            }
+    
+            if (selectedRooms > 3 || (selectedRooms * 2) > guests && guests > 1) {
+                alert("Du kan inte boka mer än 3 rum eller överskrida det maximala antalet gäster (6).");
+                return false;
+            }
+    
+            return true;
+        }
+    </script>
 </head>
 <body>
-    {%block content%}
-    <div class="info-container">
-        
+{% block content %}
     <h2>K1</h2>
 
-    <form action="process_booking.php" method="post">
+    <form action="/K2" method="post">
         <label for="start_date">Ankomstdatum:</label>
-        <input class="input" type="date" id="start_date" name="start_date" required>
+        <input type="date" id="start_date" name="start_date" required>
 
         <label for="end_date">Avresedatum:</label>
-        <input class="input" type="date" id="end_date" name="end_date" required>
+        <input type="date" id="end_date" name="end_date" required>
 
         <label for="guests">Antal gäster:</label>
         <select id="guests" name="guests" required>
@@ -28,13 +58,37 @@
             <option value="5">5 gäster</option>
             <option value="6">6 gäster</option>
         </select>
-        <button class="button-action" type="submit">Boka nu</button>
-    </form>
-    for 
-        
-        <!-- Lägg till andra detaljer om rummet här -->
-    </div>
 
-{%endblock%}
+        <button type="submit">Se rum</button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Välj rum</th>
+                    <th>Roomtype</th>
+                    <th>Capacity</th>
+                    <th>Price per night</th>
+                </tr>
+            </thead>
+            <tbody>
+                <p>Tillgängliga rum</p>
+                {% for row in result %}
+                    <tr>
+                        <td><input type="checkbox" name="selected_prices[]" value="{{ row[2] }}"></td>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit">Boka valda rum</button>
+    </form>
+
+    {% if result %}
+    {% else %}
+        <p class="error-message">{{ error }}</p>
+    {% endif %}
+{% endblock %}
 </body>
 </html>
