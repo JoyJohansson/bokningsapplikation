@@ -4,9 +4,14 @@
 <head>
     <div class="banner-container"></div>
     <nav>
-        <a class="link-button" href="/">Home</a>
-        <a class="link-button" href="/error">Kontakt</a> 
-        <a class="link-button" href="/error">Admin</a>
+        <div class="nav-left">
+            <a class="link-button" href="/">Home</a>
+            <a class="link-button" href="/error">Kontakt</a> 
+        </div>
+
+        <div class="nav-right">
+            <a class="link-button" href="/error">Admin</a> 
+        </div>   
     </nav>
     
     <meta charset="UTF-8">
@@ -14,9 +19,10 @@
     <title>{%block title%}Startsida{%endblock%}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <div class="gray-background"></div>
-<body class="flexible-rounded-body">
-    {%block content%}
-    {%endblock%}
-</body>
+    <body class="flexible-rounded-body">
+        {%block content%}
+        {%endblock%}
+    </body>
 </html>

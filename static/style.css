@@ -6,7 +6,15 @@ nav {
     padding: 10px; /* Lägger till lite inre utrymme för estetiskt utseende */
     border-radius: 0px;
     background: linear-gradient(rgba(0, 0, 0, 0.932), rgba(0, 0, 0, 0.616));
-    justify-content: left;
+    justify-content: space-between;
+}
+
+.nav-left {
+  display: flex;
+}
+
+.nav-right {
+  display: flex;
 }
 
 body {
