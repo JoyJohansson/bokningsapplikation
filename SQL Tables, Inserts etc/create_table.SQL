@@ -88,6 +88,7 @@ CREATE TABLE Files (
     Filetype VARCHAR(100) NOT NULL,
     Filesize INT NOT NULL,
     Upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    File_content BYTEA,
     Room_ID INT REFERENCES Room(Room_ID)
 );
 

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from psycopg2 import connect, DatabaseError, pool
 from dotenv import load_dotenv
 import os
+import base64
 
 load_dotenv()
 
@@ -43,14 +44,31 @@ def k1():
 @app.route("/error", methods=["GET", "POST"])
 def get_room():
     query = """
-    SELECT * FROM room_details
+    SELECT room_id, roomtype, filename, filetype, file_content, capacity, pricepernight
+    FROM room_details
     """
-    results = execute_query(query,fetch_result=True)
-    print(results)
+    results = execute_query(query, fetch_result=True)
+    
     if results:
-        return render_template("error.html", results=results)
+        converted_results = []
+        for result in results:
+            room_id, roomtype, filename, filetype, file_content, capacity, pricepernight = result
+            # Konvertera BYTEA-data till Base64-kodad sträng
+            file_content_base64 = base64.b64encode(file_content).decode('utf-8')
+            # Lägg till konverterad data till resultatlistan
+            converted_result = {
+                'room_id': room_id,
+                'roomtype': roomtype,
+                'filename': filename,
+                'filetype': filetype,
+                'file_content_base64': file_content_base64,
+                'capacity': capacity,
+                'pricepernight': pricepernight
+            }
+            converted_results.append(converted_result)
+        return render_template("error.html", results=converted_results)
     else:
-        return render_template("error.html", error="No data found") 
+        return render_template("error.html", error="No data found")
 
 @app.route("/K2", methods=["POST"])
 def k2():
@@ -63,7 +81,7 @@ def k2():
     if result:
         return render_template("k1.html", result=result)
     else:
-        return render_template("error.html",error=error)
+        return render_template("error.html",error=error)   
     
     
 

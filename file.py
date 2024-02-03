@@ -17,7 +17,7 @@ conn= psycopg2.connect(
 cur = conn.cursor()
 
 # Öppna filen och läs dess innehåll
-with open('static/nedladdning.jpeg', 'rb') as file:
+with open('static/img/rum.webp', 'rb') as file:
     file_content = file.read()
 
 # SQL-kommando för att infoga filen i tabellen Files
@@ -25,10 +25,10 @@ sql = """INSERT INTO Files (Filename, Filetype, Filesize, File_content, room_id)
          VALUES (%s, %s, %s, %s, %s)"""
 
 # Definiera värden för SQL-kommandot
-filename = 'edf36bef-b50f-4e98-9de8-8e3c4add39aa.webp'
+filename = 'rum'
 filetype = 'image/webp'
 filesize = len(file_content)
-room_id = 4
+room_id = 1
 
 # Utför INSERT-operationen
 cur.execute(sql, (filename, filetype, filesize, file_content, room_id))
