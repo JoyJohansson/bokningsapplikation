@@ -118,5 +118,10 @@ CREATE TABLE EditPermission (
       REFERENCES AdminUser(Admin_ID)
 );
 
-
+CREATE TABLE IF NOT EXISTS admins (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(256) NOT NULL,
+    token VARCHAR(256)
+);
 

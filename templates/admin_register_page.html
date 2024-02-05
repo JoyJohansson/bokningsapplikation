@@ -3,6 +3,7 @@
 {% block title %}Registrera ny admin{% endblock %}
 
 {% block content %}
+<div class="info-container">
     <h2>Registrera ny admin</h2>
 
     {% if error %}
@@ -20,5 +21,6 @@
     </form>
 
     <p>Har redan ett konto? <a href="{{ url_for('admin_login_page') }}">Logga in här</a></p>
+</div>
 {% endblock %}
 

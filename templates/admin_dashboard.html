@@ -3,6 +3,7 @@
 {% block title %}Admin Kontrollpanel{% endblock %}
 
 {% block content %}
+<div class="info-container">
     <h1>Välkommen till Kontrollpanellen för admin</h1>
     
     <p>Detta är ett säkert område för administrativa uppgifter.</p>
@@ -16,7 +17,7 @@
     <form action="{{ url_for('logout') }}" method="post">
         <button type="submit">Logga ut</button>
     </form>
-
+</div>
     <!--innehåll -->
 
 {% endblock %}
