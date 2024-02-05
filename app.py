@@ -2,8 +2,15 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_bcrypt import Bcrypt       # pip install bcrypt (Detta är ett bibliotek för att lagra hashtaggade lösen. Skapa en tabell för att lagra admin-användarnamn och token)
 from psycopg2 import connect, DatabaseError, pool
 from dotenv import load_dotenv
+from datetime import datetime
+
 import os
+import base64
 import secrets    #pip install secrets (för att kunna generera en slumpmässig token)
+import re  # re.match för att jämföra e-postadresserna med ett reguljärt uttryck.
+import time
+import random
+
 
 load_dotenv()
 
@@ -31,7 +38,7 @@ def execute_query(query, parameter=None, fetch_result=False):
             cursor.execute(query, parameter)
             connection.commit()
             if fetch_result:
-                return cursor.fetchone()
+                return cursor.fetchall()
             else:
                  return cursor.rowcount > 0
              
@@ -49,29 +56,97 @@ def execute_query(query, parameter=None, fetch_result=False):
 def k1():
     return render_template("k1.html")
 
-@app.route("/error")
-def error():
-    return "Something went wrong"
 
 
 
 
 
+# email
+@app.route('/email', methods=['GET', 'POST'])
+def email():
+    if request.method == 'POST':
+        epost1 = request.form['epost1']
+        epost2 = request.form['epost2']
+        booking_reference = generate_booking_reference()  # Replace this with your logic to generate a reference
+        return redirect(url_for('bekraftelse', booking_ref=booking_reference))
+    return render_template('e-post.html')
+
+
+# Bokningsbekräftelse
+@app.route('/bekraftelse')
+def bekraftelse():
+    booking_reference = request.args.get('booking_ref')
+    return f"Bokningsbekräftelse: Tack för din bokning! Bokningsreferens: {booking_reference}"
+
+# Bokningsreferens
+def generate_booking_reference():
+    # realtid timestamp
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    # generera slumpmässig sträng på 6 tecken
+    random_string = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=6))
+    # kombinera timestamp med sträng för att skapa unique bokningsreferens
+    booking_reference = f'{timestamp}{random_string}'
+    return booking_reference
 
 
 
-# Query for databas
-create_table_query = """
-CREATE TABLE IF NOT EXISTS admins (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password_hash VARCHAR(256) NOT NULL,
-    token VARCHAR(256)
-);
-"""
-execute_query(create_table_query, (), fetch_result=False)
 
 
+@app.route("/error", methods=["GET", "POST"])
+def get_room():
+    query = """
+    SELECT room_id, roomtype, filename, filetype, file_content, capacity, pricepernight
+    FROM room_details
+    """
+    results = execute_query(query, fetch_result=True)
+    
+    if results:
+        converted_results = []
+        for result in results:
+            room_id, roomtype, filename, filetype, file_content, capacity, pricepernight = result
+            # Konvertera BYTEA-data till Base64-kodad sträng
+            file_content_base64 = base64.b64encode(file_content).decode('utf-8')
+            # Lägg till konverterad data till resultatlistan
+            converted_result = {
+                'room_id': room_id,
+                'roomtype': roomtype,
+                'filename': filename,
+                'filetype': filetype,
+                'file_content_base64': file_content_base64,
+                'capacity': capacity,
+                'pricepernight': pricepernight
+            }
+            converted_results.append(converted_result)
+        return render_template("error.html", results=converted_results)
+    else:
+        return render_template("error.html", error="No data found")
+      
+      
+      
+      
+      
+
+
+@app.route("/K2", methods=["POST"])
+def k2():
+    guests = request.form.get("Capacity")
+    error = "För stort sällskap"
+    query = f"SELECT * FROM K2 ORDER BY pricepernight"
+    value = (guests)
+    result = execute_query(query,value,fetch_result=True)
+    
+    if result:
+        return render_template("k1.html", result=result)
+    else:
+        return render_template("error.html",error=error)   
+
+
+      
+      
+      
+      
+      
+      
 # Admin registrering
 @app.route("/admin/register", methods=["GET"])
 def admin_register_page():
@@ -100,8 +175,7 @@ def admin_register():
 
     return render_template('admin_register_page.html', error=None)
 
-
-
+  
 # Admin login
 @app.route("/admin/login", methods=["GET"])
 def admin_login_page():  
@@ -110,7 +184,6 @@ def admin_login_page():
 
 @app.route("/admin/login", methods=["POST"])
 def admin_login():
-    if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
 
@@ -133,7 +206,7 @@ def admin_login():
              return redirect(url_for('admin_dashboard'))
             else:
                 return render_template('admin_login_page.html', error="Ogiltiga inloggningsuppgifter")
-    return render_template('admin_login_page.html', error=None)
+        return render_template('admin_login_page.html', error=None)
     
 
 # implementering av funktionen generate_random_token() enligt ovan
