@@ -2,9 +2,15 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_bcrypt import Bcrypt       # pip install bcrypt (Detta är ett bibliotek för att lagra hashtaggade lösen. Skapa en tabell för att lagra admin-användarnamn och token)
 from psycopg2 import connect, DatabaseError, pool
 from dotenv import load_dotenv
+from datetime import datetime
+
 import os
 import base64
 import secrets    #pip install secrets (för att kunna generera en slumpmässig token)
+import re  # re.match för att jämföra e-postadresserna med ett reguljärt uttryck.
+import time
+import random
+
 
 load_dotenv()
 
@@ -50,6 +56,42 @@ def execute_query(query, parameter=None, fetch_result=False):
 def k1():
     return render_template("k1.html")
 
+
+
+
+
+
+# email
+@app.route('/email', methods=['GET', 'POST'])
+def email():
+    if request.method == 'POST':
+        epost1 = request.form['epost1']
+        epost2 = request.form['epost2']
+        booking_reference = generate_booking_reference()  # Replace this with your logic to generate a reference
+        return redirect(url_for('bekraftelse', booking_ref=booking_reference))
+    return render_template('e-post.html')
+
+
+# Bokningsbekräftelse
+@app.route('/bekraftelse')
+def bekraftelse():
+    booking_reference = request.args.get('booking_ref')
+    return f"Bokningsbekräftelse: Tack för din bokning! Bokningsreferens: {booking_reference}"
+
+# Bokningsreferens
+def generate_booking_reference():
+    # realtid timestamp
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    # generera slumpmässig sträng på 6 tecken
+    random_string = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=6))
+    # kombinera timestamp med sträng för att skapa unique bokningsreferens
+    booking_reference = f'{timestamp}{random_string}'
+    return booking_reference
+
+
+
+
+
 @app.route("/error", methods=["GET", "POST"])
 def get_room():
     query = """
@@ -78,6 +120,11 @@ def get_room():
         return render_template("error.html", results=converted_results)
     else:
         return render_template("error.html", error="No data found")
+      
+      
+      
+      
+      
 
 
 @app.route("/K2", methods=["POST"])
@@ -94,6 +141,12 @@ def k2():
         return render_template("error.html",error=error)   
 
 
+      
+      
+      
+      
+      
+      
 # Admin registrering
 @app.route("/admin/register", methods=["GET"])
 def admin_register_page():
@@ -122,8 +175,7 @@ def admin_register():
 
     return render_template('admin_register_page.html', error=None)
 
-
-
+  
 # Admin login
 @app.route("/admin/login", methods=["GET"])
 def admin_login_page():  
@@ -183,6 +235,7 @@ def logout():
 @app.route("/admin/logout_page")
 def admin_logout_page():
     return render_template('admin_logout_page.html')
+
 
 
 if __name__ == "__main__":
