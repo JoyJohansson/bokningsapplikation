@@ -110,7 +110,6 @@ def admin_login_page():
 
 @app.route("/admin/login", methods=["POST"])
 def admin_login():
-    if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
 
