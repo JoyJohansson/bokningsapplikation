@@ -51,7 +51,7 @@ def k1():
 
 @app.route("/error")
 def error():
-    return "Something went wrong"
+    return render_template("error.html")
 
 
 

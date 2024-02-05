@@ -1,0 +1,32 @@
+
+nav {
+    display: flex;
+}
+
+.link-button {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 25px;
+    border: none;
+    background: none;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    margin-right: 10px; /* Justera avståndet mellan knapparna om det behövs */
+}
+  
+  .link-button::before {
+    margin-left: auto;
+  }
+  
+  .link-button::after, .link-button::before {
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: #f44336;
+    display: block;
+    transition: 0.5s;
+  }
+  
+  .link-button:hover::after, .link-button:hover::before {
+    width: 100%;
+  }
