@@ -3,6 +3,7 @@ from flask_bcrypt import Bcrypt       # pip install bcrypt (Detta är ett biblio
 from psycopg2 import connect, DatabaseError, pool
 from dotenv import load_dotenv
 import os
+import base64
 import secrets    #pip install secrets (för att kunna generera en slumpmässig token)
 
 load_dotenv()
@@ -49,16 +50,48 @@ def execute_query(query, parameter=None, fetch_result=False):
 def k1():
     return render_template("k1.html")
 
-@app.route("/error")
-def error():
-    return render_template("error.html")
+@app.route("/error", methods=["GET", "POST"])
+def get_room():
+    query = """
+    SELECT room_id, roomtype, filename, filetype, file_content, capacity, pricepernight
+    FROM room_details
+    """
+    results = execute_query(query, fetch_result=True)
+    
+    if results:
+        converted_results = []
+        for result in results:
+            room_id, roomtype, filename, filetype, file_content, capacity, pricepernight = result
+            # Konvertera BYTEA-data till Base64-kodad sträng
+            file_content_base64 = base64.b64encode(file_content).decode('utf-8')
+            # Lägg till konverterad data till resultatlistan
+            converted_result = {
+                'room_id': room_id,
+                'roomtype': roomtype,
+                'filename': filename,
+                'filetype': filetype,
+                'file_content_base64': file_content_base64,
+                'capacity': capacity,
+                'pricepernight': pricepernight
+            }
+            converted_results.append(converted_result)
+        return render_template("error.html", results=converted_results)
+    else:
+        return render_template("error.html", error="No data found")
 
 
-
-
-
-
-
+@app.route("/K2", methods=["POST"])
+def k2():
+    guests = request.form.get("Capacity")
+    error = "För stort sällskap"
+    query = f"SELECT * FROM K2 ORDER BY pricepernight"
+    value = (guests)
+    result = execute_query(query,value,fetch_result=True)
+    
+    if result:
+        return render_template("k1.html", result=result)
+    else:
+        return render_template("error.html",error=error)   
 
 # Query for databas
 create_table_query = """
@@ -132,7 +165,7 @@ def admin_login():
              return redirect(url_for('admin_dashboard'))
             else:
                 return render_template('admin_login_page.html', error="Ogiltiga inloggningsuppgifter")
-    return render_template('admin_login_page.html', error=None)
+        return render_template('admin_login_page.html', error=None)
     
 
 # implementering av funktionen generate_random_token() enligt ovan
@@ -161,7 +194,6 @@ def logout():
 @app.route("/admin/logout_page")
 def admin_logout_page():
     return render_template('admin_logout_page.html')
-
 
 
 if __name__ == "__main__":

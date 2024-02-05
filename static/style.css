@@ -1,17 +1,46 @@
 
 nav {
+    width: 50%;
     display: flex;
+    align-items: center; /* Justera objekt längs tvärsaxeln (vertikalt) */
+    padding: 10px; /* Lägger till lite inre utrymme för estetiskt utseende */
+    border-radius: 0px;
+    background: linear-gradient(rgba(0, 0, 0, 0.932), rgba(0, 0, 0, 0.616));
+    justify-content: space-between;
 }
 
+.nav-left {
+  display: flex;
+}
+
+.nav-right {
+  display: flex;
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url('Background.webp'); /* Lägg till din bild här */
+    background-size: cover;
+    background-attachment: fixed; /* Håll bakgrundsbilden på samma position när du skrollar */
+    margin: 0; /* Ta bort marginaler för att undvika tomrum runt sidan */
+    padding: 0; /* Ta bort padding för att undvika tomrum runt sidan */
+}
+
+
+
 .link-button {
-    color: rgb(0, 0, 0);
+    color: rgb(248, 244, 244);
     text-decoration: none;
-    font-size: 25px;
+    font-size: 15px;
     border: none;
     background: none;
     font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    margin-right: 10px; /* Justera avståndet mellan knapparna om det behövs */
+    font-family: 'Arial Rounded MT Bold', sans-serif;
+    margin-right: 10px;
 }
   
   .link-button::before {
@@ -29,4 +58,121 @@ nav {
   
   .link-button:hover::after, .link-button:hover::before {
     width: 100%;
+  }
+
+.info-container {
+    width: 50%; /* Bredden på informationen ruta */
+    padding: 10px;
+    border-radius: 0px; /* Rundade hörn */
+    border-top-left-radius: 0; /* Inget rundat hörn upptill */
+    border-top-right-radius: 0; /* Inget rundat hörn upptill */
+    border-bottom-left-radius: 10px; /* Rundade hörn nertill */
+    border-bottom-right-radius: 10px; /* Rundade hörn nertill */
+    background-color: rgba(255, 255, 255, 0.7); /* Bakgrundsfärg för rutan */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Skugga för att skapa djup */
+}
+
+.info-post {
+    display: grid; /* Använd CSS Grid för att skapa layouten */
+    grid-template-columns: auto 1fr; /* En kolumn för bilden och en för informationen */
+    align-items: center; /* Centrera innehållet vertikalt */
+    margin-bottom: 20px; /* Avstånd mellan varje post */
+}
+
+.info-post img {
+    max-width: 100%; /* Begränsa bildens bredd till 100% av förälderns bredd */
+    border-radius: 10px; /* Rundade hörn för bilden */
+    margin-right: 20px; /* Avstånd till höger om bilden */
+}
+
+.info-details {
+    padding: 10px; /* Mellanrum runt informationen */
+    display: grid; /* Använd CSS Grid för att skapa layouten */
+    grid-template-columns: 1fr 1fr; /* Två kolumner */
+    grid-column-gap: 20px; /* Avstånd mellan kolumnerna */
+}
+
+.details {
+    grid-column: span 2; /* Ta upp båda kolumnerna */
+}
+
+
+.info-details h2 {
+    margin-bottom: 10px; /* Avstånd under rubriken */
+    font-size: 24px; /* Storlek på rubriken */
+    color: #333; /* Färg på rubriken */
+}
+
+.info-details p {
+    margin-bottom: 10px; /* Avstånd under varje stycke */
+    font-size: 16px; /* Storlek på texten */
+    color: #666; /* Färg på texten */
+}
+.posts-container {
+    display: flex;
+    flex-direction: column; /* Bryt inläggen till nästa rad när de inte längre får plats */
+    justify-content: space-between; /* Placera inläggen jämnt fördelat på raden */
+}
+.banner-container {
+    margin-top: 10px;
+    width: 50%; /* Bredden på informationen ruta */
+    height: 250px;
+    padding: 10px;
+    border-radius: 0px; /* Rundade hörn */
+    border-top-left-radius: 10px; /* Inget rundat hörn upptill */
+    border-top-right-radius: 10px; /* Inget rundat hörn upptill */
+    border-bottom-left-radius: 0px; /* Rundade hörn nertill */
+    border-bottom-right-radius: 0px; /* Rundade hörn nertill */
+    background-color: rgba(255, 255, 255, 0.7); /* Bakgrundsfärg för rutan */
+    background-image: url('banner.webp'); /* Sökväg till din bild */
+    background-size: cover; /* Anpassa bilden för att täcka hela rutan */
+    background-position: center; /* Centrera bilden i rutan */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Skugga för att skapa djup */
+}
+
+.reviews {
+  flex: 0 0 300px; /* Bredden på recensionssektionen */
+  background-color: #f9f9f9;
+  padding: 20px;
+  margin-left: 20px;
+}
+
+.input {
+    width: 100%;
+    max-width: 100px;
+    height: 4px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1.5px solid lightgrey;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0px 0px 20px -18px;
+  }
+  
+  .input:hover {
+    border: 2px solid lightgrey;
+    box-shadow: 0px 0px 20px -17px;
+  }
+  
+  .input:active {
+    transform: scale(0.95);
+  }
+  
+  .input:focus {
+    border: 2px solid grey;
+  }
+
+  .button-action {
+    color: #fff;
+    padding: 0.7em 1.7em;
+    font-size: 11px;
+    border-radius: 0.5em;
+    background: #504b4b;
+    border: 1px solid #212121;
+    transition: all 0.3s;
+  }
+  
+  .button-action:active {
+    color: #666;
+    box-shadow: inset 4px 4px 12px #000, inset -4px -4px 12px #1f1f1f;
   }
