@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Registrera ny admin{% endblock %}
+
+{% block content %}
+<div class="info-container">
+    <h2>Registrera ny admin</h2>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <form action="/admin/register" method="post">
+        <label for="username">Användarnamn:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Lösenord:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Registrera</button>
+    </form>
+
+    <p>Har redan ett konto? <a href="{{ url_for('admin_login_page') }}">Logga in här</a></p>
+</div>
+{% endblock %}
+

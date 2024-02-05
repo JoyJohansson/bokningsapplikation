@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <nav>
-        <a class="link-button" href="/">Home</a>
-        <a class="link-button" href="/error">Kontakt</a> 
-        <a class="link-button" href="/error">Admin</a>
-    </nav>
 
+<head>
+    <div class="banner-container"></div>
+    <nav>
+
+        <div class="nav-left">
+            <a class="link-button" href="/">Home</a>
+            <a class="link-button" href="/error">Kontakt</a>
+        </div>
+
+
+        <div class="nav-right">
+            <a class="link-button" href="{{ url_for('admin_login_page') }}">Admin Login</a>
+        </div>   
+    </nav>
+   
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{%block title%}Startsida{%endblock%}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    {%block content%}
-    {%endblock%}
-</body>
+</head> 
+<div class="gray-background"></div>
+    <body class="flexible-rounded-body">
+            {%block content%}
+            {%endblock%}    
+    </body>
 </html>
