@@ -82,6 +82,15 @@ CREATE TABLE Room (
       REFERENCES RoomType(RoomType_ID)
 );
 
+CREATE TABLE Files (
+    File_ID SERIAL PRIMARY KEY,
+    Filename VARCHAR(255) NOT NULL,
+    Filetype VARCHAR(100) NOT NULL,
+    Filesize INT NOT NULL,
+    Upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    File_content BYTEA,
+    Room_ID INT REFERENCES Room(Room_ID)
+);
 
 CREATE TABLE BookingRoom (
   Booking_ID INT,
@@ -109,5 +118,10 @@ CREATE TABLE EditPermission (
       REFERENCES AdminUser(Admin_ID)
 );
 
-
+CREATE TABLE IF NOT EXISTS admins (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(256) NOT NULL,
+    token VARCHAR(256)
+);
 

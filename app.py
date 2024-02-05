@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from datetime import datetime
 
 import os
+import base64
 import secrets    #pip install secrets (för att kunna generera en slumpmässig token)
 import re  # re.match för att jämföra e-postadresserna med ett reguljärt uttryck.
 import time
@@ -37,7 +38,7 @@ def execute_query(query, parameter=None, fetch_result=False):
             cursor.execute(query, parameter)
             connection.commit()
             if fetch_result:
-                return cursor.fetch()
+                return cursor.fetchall()
             else:
                  return cursor.rowcount > 0
              
@@ -55,9 +56,6 @@ def execute_query(query, parameter=None, fetch_result=False):
 def k1():
     return render_template("k1.html")
 
-@app.route("/error")
-def error():
-    return "Something went wrong"
 
 
 
@@ -94,20 +92,61 @@ def generate_booking_reference():
 
 
 
+@app.route("/error", methods=["GET", "POST"])
+def get_room():
+    query = """
+    SELECT room_id, roomtype, filename, filetype, file_content, capacity, pricepernight
+    FROM room_details
+    """
+    results = execute_query(query, fetch_result=True)
+    
+    if results:
+        converted_results = []
+        for result in results:
+            room_id, roomtype, filename, filetype, file_content, capacity, pricepernight = result
+            # Konvertera BYTEA-data till Base64-kodad sträng
+            file_content_base64 = base64.b64encode(file_content).decode('utf-8')
+            # Lägg till konverterad data till resultatlistan
+            converted_result = {
+                'room_id': room_id,
+                'roomtype': roomtype,
+                'filename': filename,
+                'filetype': filetype,
+                'file_content_base64': file_content_base64,
+                'capacity': capacity,
+                'pricepernight': pricepernight
+            }
+            converted_results.append(converted_result)
+        return render_template("error.html", results=converted_results)
+    else:
+        return render_template("error.html", error="No data found")
+      
+      
+      
+      
+      
 
 
-# Query for databas
-create_table_query = """
-CREATE TABLE IF NOT EXISTS admins (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password_hash VARCHAR(256) NOT NULL,
-    token VARCHAR(256)
-);
-"""
-execute_query(create_table_query, (), fetch_result=False)
+@app.route("/K2", methods=["POST"])
+def k2():
+    guests = request.form.get("Capacity")
+    error = "För stort sällskap"
+    query = f"SELECT * FROM K2 ORDER BY pricepernight"
+    value = (guests)
+    result = execute_query(query,value,fetch_result=True)
+    
+    if result:
+        return render_template("k1.html", result=result)
+    else:
+        return render_template("error.html",error=error)   
 
 
+      
+      
+      
+      
+      
+      
 # Admin registrering
 @app.route("/admin/register", methods=["GET"])
 def admin_register_page():
@@ -136,8 +175,7 @@ def admin_register():
 
     return render_template('admin_register_page.html', error=None)
 
-
-
+  
 # Admin login
 @app.route("/admin/login", methods=["GET"])
 def admin_login_page():  
@@ -146,7 +184,6 @@ def admin_login_page():
 
 @app.route("/admin/login", methods=["POST"])
 def admin_login():
-    if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
 
@@ -169,7 +206,7 @@ def admin_login():
              return redirect(url_for('admin_dashboard'))
             else:
                 return render_template('admin_login_page.html', error="Ogiltiga inloggningsuppgifter")
-    return render_template('admin_login_page.html', error=None)
+        return render_template('admin_login_page.html', error=None)
     
 
 # implementering av funktionen generate_random_token() enligt ovan
@@ -198,8 +235,6 @@ def logout():
 @app.route("/admin/logout_page")
 def admin_logout_page():
     return render_template('admin_logout_page.html')
-
-
 
 
 
