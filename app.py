@@ -1,14 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask_bcrypt import Bcrypt       # pip install bcrypt (Detta är ett bibliotek för att lagra hashtaggade lösen. Skapa en tabell för att lagra admin-användarnamn och token)
+from flask_bcrypt import Bcrypt 
 from psycopg2 import connect, DatabaseError, pool
 from dotenv import load_dotenv
 from datetime import datetime
-
 import os
 import base64
-import secrets    #pip install secrets (för att kunna generera en slumpmässig token)
-import re  # re.match för att jämföra e-postadresserna med ett reguljärt uttryck.
-import time
+import secrets 
 import random
 
 
@@ -16,7 +13,7 @@ load_dotenv()
 
 app = Flask(__name__)
 
-app.secret_key = secrets.token_urlsafe(16)  # hemlig nyckel
+app.secret_key = secrets.token_urlsafe(16)
 bcrypt = Bcrypt(app)
 
 
@@ -67,7 +64,7 @@ def email():
     if request.method == 'POST':
         epost1 = request.form['epost1']
         epost2 = request.form['epost2']
-        booking_reference = generate_booking_reference()  # Replace this with your logic to generate a reference
+        booking_reference = generate_booking_reference()
         return redirect(url_for('bekraftelse', booking_ref=booking_reference))
     return render_template('e-post.html')
 
