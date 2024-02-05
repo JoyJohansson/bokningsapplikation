@@ -42,6 +42,8 @@
 {% block content %}
     <h2>K1</h2>
 
+    
+
     <form action="/K2" method="post">
         <label for="start_date">Ankomstdatum:</label>
         <input type="date" id="start_date" name="start_date" required>
@@ -63,11 +65,11 @@
 
         
     </form>
-
-    {% if result %}
-    {% else %}
-        <p class="error-message">{{ error }}</p>
-    {% endif %}
+    {%for row in results%}
+    <p>{{row[0]}}</p>
+    <p>{{row[1]}}</p>
+    <p>{{row[2]}}</p>
+    {%endfor%}
 {% endblock %}
 </body>
 </html>

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Bokningsapplikation{% endblock %}</title>
+    
 <table>
     <thead>
         <tr>
@@ -18,7 +19,6 @@
         <p>Tillgängliga rum</p>
         {% for row in result %}
             <tr>
-                <td><input type="checkbox" name="selected_prices[]" value="{{ row[2] }}"></td>
                 <td>{{ row[0] }}</td>
                 <td>{{ row[1] }}</td>
                 <td>{{ row[2] }}</td>

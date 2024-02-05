@@ -36,9 +36,16 @@ def execute_query(query, parameter=None, fetch_result=False):
             db_pool.putconn(connection)
             
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def k1():
-    return render_template("k1.html")
+    query = "SELECT * FROM K2"
+    results = execute_query(query, fetch_result=True)
+    
+    if results:
+        return render_template("k1.html", results=results)
+    else:
+        return render_template("k1.html", error="hejdå")
+
 
 @app.route("/error")
 def error():
@@ -46,16 +53,15 @@ def error():
 
 @app.route("/K2", methods=["POST"])
 def k2():
-    guests = request.form.get("Capacity")
+    guests = request.form.get("guests")
     error = "För stort sällskap"
-    query = f"SELECT * FROM K2 ORDER BY pricepernight"
-    value = (guests)
-    result = execute_query(query,value,fetch_result=True)
-    
+    query = "SELECT * FROM K2"
+    result = execute_query(query,fetch_result=True)
+    print(result)
     if result:
         return render_template("k2_available_rooms.html", result=result)
     else:
-        return render_template("error.html",error=error)    
+        return render_template("k1.html",error=error)    
 
 if __name__ == "__main__":
     app.run(debug=True)
