@@ -165,7 +165,7 @@ def admin_login():
              return redirect(url_for('admin_dashboard'))
             else:
                 return render_template('admin_login_page.html', error="Ogiltiga inloggningsuppgifter")
-    return render_template('admin_login_page.html', error=None)
+        return render_template('admin_login_page.html', error=None)
     
 
 # implementering av funktionen generate_random_token() enligt ovan
