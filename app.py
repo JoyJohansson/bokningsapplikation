@@ -32,7 +32,7 @@ def execute_query(query, parameter=None, fetch_result=False):
             cursor.execute(query, parameter)
             connection.commit()
             if fetch_result:
-                return cursor.fetchone()
+                return cursor.fetchall()
             else:
                  return cursor.rowcount > 0
              
@@ -92,17 +92,6 @@ def k2():
         return render_template("k1.html", result=result)
     else:
         return render_template("error.html",error=error)   
-
-# Query for databas
-create_table_query = """
-CREATE TABLE IF NOT EXISTS admins (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password_hash VARCHAR(256) NOT NULL,
-    token VARCHAR(256)
-);
-"""
-execute_query(create_table_query, (), fetch_result=False)
 
 
 # Admin registrering
