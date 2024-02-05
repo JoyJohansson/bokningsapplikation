@@ -37,7 +37,7 @@ def execute_query(query, parameter=None, fetch_result=False):
             cursor.execute(query, parameter)
             connection.commit()
             if fetch_result:
-                return cursor.fetchone()
+                return cursor.fetch()
             else:
                  return cursor.rowcount > 0
              
@@ -69,28 +69,10 @@ def email():
     if request.method == 'POST':
         epost1 = request.form['epost1']
         epost2 = request.form['epost2']
-
-        # Validera E-postadressen
-        if epost1 != epost2 or not is_valid_email(epost1):
-            return "E-postadresserna matchar inte eller är ogiltiga. Var god försök igen."
-        else:
-            booking_reference = generate_booking_reference()  # Replace this with your logic to generate a reference
-            return redirect(url_for('bekraftelse', booking_ref=booking_reference))
-
+        booking_reference = generate_booking_reference()  # Replace this with your logic to generate a reference
+        return redirect(url_for('bekraftelse', booking_ref=booking_reference))
     return render_template('e-post.html')
 
-# Funktion för att validera epostadress
-        # Använd ett reguljärt uttryck för att kontrollera e-postadressens struktur
-        # Reguljärt uttrycket (r'^[\w\.-]+@[\w\.-]+\.\w+$') kontrollerar att:
-        # Det finns minst en karaktär före "@" ([\w.-]+).
-        # Det finns minst en karaktär efter "@" ([\w.-]+).
-        # Det finns minst en punkt i den andra delen av e-postadressen (.\w+).
-def is_valid_email(email):
-    pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
-    if re.match(pattern, email):
-        return True
-    else:
-        return False
 
 # Bokningsbekräftelse
 @app.route('/bekraftelse')
