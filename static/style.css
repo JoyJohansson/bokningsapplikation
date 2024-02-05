@@ -17,6 +17,7 @@ nav {
   display: flex;
 }
 
+
 body {
     display: flex;
     flex-direction: column;
@@ -127,6 +128,13 @@ body {
     background-size: cover; /* Anpassa bilden för att täcka hela rutan */
     background-position: center; /* Centrera bilden i rutan */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Skugga för att skapa djup */
+}
+
+.reviews {
+  flex: 0 0 300px; /* Bredden på recensionssektionen */
+  background-color: #f9f9f9;
+  padding: 20px;
+  margin-left: 20px;
 }
 
 .input {
