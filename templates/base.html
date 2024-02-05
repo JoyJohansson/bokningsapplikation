@@ -4,13 +4,15 @@
 <head>
     <div class="banner-container"></div>
     <nav>
+
         <div class="nav-left">
             <a class="link-button" href="/">Home</a>
             <a class="link-button" href="/error">Kontakt</a>
         </div>
 
+
         <div class="nav-right">
-            <a class="link-button" href="/error">Admin</a> 
+            <a class="link-button" href="{{ url_for('admin_login_page') }}">Admin Login</a>
         </div>   
     </nav>
     
@@ -25,4 +27,6 @@
         {%block content%}
         {%endblock%}
     </body>
+  </div>
+</div>
 </html>
