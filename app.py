@@ -50,7 +50,8 @@ def k2():
     error = "För stort sällskap"
     query = f"SELECT * FROM K2 ORDER BY pricepernight"
     value = (guests)
-    result = execute_query(query,value,fetch_result=True)
+    result = execute_query(query,fetch_result=True)
+    
     
     if result:
         return render_template("k2_available_rooms.html", result=result)
