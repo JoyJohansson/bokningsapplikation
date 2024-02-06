@@ -13,51 +13,16 @@ import databas
 load_dotenv()
 
 app = Flask(__name__)
-
 app.secret_key = secrets.token_urlsafe(16)
 bcrypt = Bcrypt(app)
+
 
 # K1
 @app.route("/")
 def k1():
     return render_template("k1.html")
 
-
-
-
-
-
-# email
-@app.route('/email', methods=['GET', 'POST'])
-def email():
-    if request.method == 'POST':
-        epost1 = request.form['epost1']
-        epost2 = request.form['epost2']
-        booking_reference = generate_booking_reference()
-        return redirect(url_for('bekraftelse', booking_ref=booking_reference))
-    return render_template('e-post.html')
-
-
-# Bokningsbekräftelse
-@app.route('/bekraftelse')
-def bekraftelse():
-    booking_reference = request.args.get('booking_ref')
-    return f"Bokningsbekräftelse: Tack för din bokning! Bokningsreferens: {booking_reference}"
-
-# Bokningsreferens
-def generate_booking_reference():
-    # realtid timestamp
-    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-    # generera slumpmässig sträng på 6 tecken
-    random_string = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=6))
-    # kombinera timestamp med sträng för att skapa unique bokningsreferens
-    booking_reference = f'{timestamp}{random_string}'
-    return booking_reference
-
-
-
-
-
+#TODO ändra route
 @app.route("/error", methods=["GET", "POST"])
 def get_room():
     query = """
@@ -87,12 +52,7 @@ def get_room():
     else:
         return render_template("error.html", error="No data found")
       
-      
-      
-      
-      
-
-
+#TODO mer beskrivande route?
 @app.route("/K2", methods=["POST"])
 def k2():
     guests = request.form.get("Capacity")
@@ -107,10 +67,33 @@ def k2():
         return render_template("error.html",error=error)   
 
 
-      
-      
-      
-      
+# email
+@app.route('/email', methods=['GET', 'POST'])
+def email():
+    if request.method == 'POST':
+        epost1 = request.form['epost1']
+        epost2 = request.form['epost2']
+        booking_reference = generate_booking_reference()
+        return redirect(url_for('bekraftelse', booking_ref=booking_reference))
+    return render_template('e-post.html')
+
+
+# Bokningsbekräftelse
+#TODO engelska?
+@app.route('/bekraftelse')
+def bekraftelse():
+    booking_reference = request.args.get('booking_ref')
+    return f"Bokningsbekräftelse: Tack för din bokning! Bokningsreferens: {booking_reference}"
+
+# Bokningsreferens
+def generate_booking_reference():
+    # realtid timestamp
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    # generera slumpmässig sträng på 6 tecken
+    random_string = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=6))
+    # kombinera timestamp med sträng för att skapa unique bokningsreferens
+    booking_reference = f'{timestamp}{random_string}'
+    return booking_reference
       
       
 # Admin registrering
@@ -132,7 +115,7 @@ def admin_register():
 
         # Sätt in admin i databasen
         insert_query = "INSERT INTO admins (username, password_hash, token) VALUES (%s, %s, %s) RETURNING id"
-        admin_id = databas.execute_insert_query(insert_query, (username, password_hash, token), fetch_result=True)
+        admin_id = databas.execute_query_fetchone(insert_query, (username, password_hash, token), fetch_result=True)
 
         # Sätt inloggnings-sessionen för den nya adminen
         session['admin_token'] = token
@@ -154,8 +137,9 @@ def admin_login():
         password = request.form.get("password")
 
         # Fråga databasen för att hämta admin med det angivna användarnamnet
-        query = "SELECT * FROM hotel.admins WHERE username = %s"
+        query = "SELECT * FROM admins WHERE username = %s"
         result = databas.execute_query_fetchone(query, (username,), fetch_result=True)
+        print(result)
 
         if result and bcrypt.check_password_hash(result[2], password):
             # Om lösenordet är korrekt, generera en token och lagra den i databasen
@@ -188,7 +172,6 @@ def admin_dashboard():
     else:
         return redirect(url_for('admin_login_page'))
 
-    
 
 @app.route("/admin/logout", methods=["GET", "POST"])
 def logout():
@@ -201,7 +184,6 @@ def logout():
 @app.route("/admin/logout_page")
 def admin_logout_page():
     return render_template('admin_logout_page.html')
-
 
 
 if __name__ == "__main__":
