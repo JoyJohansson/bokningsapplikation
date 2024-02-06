@@ -133,7 +133,7 @@ def k2():
     result = execute_query(query,value,fetch_result=True)
     
     if result:
-        return render_template("k1.html", result=result)
+        return render_template("k2.html", result=result)
     else:
         return render_template("error.html",error=error)   
 
