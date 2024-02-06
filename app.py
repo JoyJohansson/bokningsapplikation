@@ -119,31 +119,7 @@ def get_room():
         return render_template("error.html", error="No data found")
       
       
-      
-      
-      
-
-
-@app.route("/K2", methods=["POST"])
-def k2():
-    guests = request.form.get("Capacity")
-    error = "För stort sällskap"
-    query = f"SELECT * FROM K2 ORDER BY pricepernight"
-    value = (guests)
-    result = execute_query(query,value,fetch_result=True)
-    
-    if result:
-        return render_template("k1.html", result=result)
-    else:
-        return render_template("error.html",error=error)   
-
-
-      
-      
-      
-      
-      
-      
+     
 # Admin registrering
 @app.route("/admin/register", methods=["GET"])
 def admin_register_page():
@@ -234,6 +210,20 @@ def admin_logout_page():
     return render_template('admin_logout_page.html')
 
 
+@app.route("/K2", methods=["POST"])
+def k2():
+    guests = request.form.get("guests")
+    error = "För stort sällskap"
+    query = "SELECT Roomtype FROM K2 WHERE Capacity >= %s ORDER BY PricePerNight"
+    value = (guests)
+    result = execute_query(query,value,fetch_result=True)
+    
+    if result:
+        return render_template("k1.html", result=result)
+    else:
+        return render_template("error.html",error=error) 
+
+
 
 @app.route("/room_info", methods=["GET"])
 def room_info():
@@ -242,6 +232,7 @@ def room_info():
     query = "SELECT * FROM room WHERE room_id = %s"
     room = execute_query(query, (room_id,))
     return render_template("k3.html", room=room)
+
 
 @app.route("/book?start_date&end_date&room_id", methods=["POST"])
 def book_room(start_date, end_date, room_id):
@@ -254,19 +245,7 @@ def book_room(start_date, end_date, room_id):
     else:
         print("Error executing query.")
 
-    return render_template("k4.html", "booking_reference")
-@app.route("/K2", methods=["POST"])
-def k2():
-    guests = request.form.get("Capacity")
-    error = "För stort sällskap"
-    query = f"SELECT * FROM K2 ORDER BY pricepernight"
-    value = (guests)
-    result = execute_query(query,value,fetch_result=True)
-    
-    if result:
-        return render_template("k1.html", result=result)
-    else:
-        return render_template("error.html",error=error)    
+    return render_template("k4.html", "booking_reference") 
 
 if __name__ == "__main__":
     app.run(debug=True)

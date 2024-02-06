@@ -16,27 +16,6 @@
             sessionStorage.setItem('guests', guests);
         }
     </script>
-    <script>
-        function validateForm() {
-            var guests = parseInt(document.getElementById('guests').value);
-            var checkboxes = document.getElementsByName('selected_prices[]');
-    
-            var selectedRooms = 0;
-    
-            for (var i = 0; i < checkboxes.length; i++) {
-                if (checkboxes[i].checked) {
-                    selectedRooms++;
-                }
-            }
-    
-            if (selectedRooms > 3 || (selectedRooms * 2) > guests && guests > 1) {
-                alert("Du kan inte boka mer än 3 rum eller överskrida det maximala antalet gäster (6).");
-                return false;
-            }
-    
-            return true;
-        }
-    </script>
 </head>
 <body>
 {% block content %}
@@ -64,40 +43,31 @@
 
         <table>
             <thead>
+                {% if result %}
                 <tr>
                     <th>Välj rum</th>
-                    <th>Roomtype</th>
-                    <th>Capacity</th>
-                    <th>Price per night</th>
                 </tr>
             </thead>
             <tbody>
                 <p>Tillgängliga rum</p>
-                {% for row in result %}
-                    <tr>
-                        <td><input type="checkbox" name="selected_prices[]" value="{{ row[2] }}"></td>
-                        <td>{{ row[0] }}</td>
-                        <td>{{ row[1] }}</td>
-                        <td>{{ row[2] }}</td>
-                    </tr>
-                {% endfor %}
+{% for row in result %}
+    <tr>
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td><img src="static/img/08e5b9ba-8d64-4c2f-b31a-ba803e022655.webp" alt="Room Image" width="300"></td>
+        <td>
+            <a href="/room_info?room_id={{ row[0] }}" class="btn btn-info">
+                View Details
+            </a>
+        </td>
+    </tr>
+{% endfor %}
             </tbody>
         </table>
-        <button type="submit">Boka valda rum</button>
     </form>
-    
-    <form> 
-        <label for="booking_reference">Bokningsreferens:</label>
-        <input type="text" id="booking_reference" name="booking_reference" required>
-
-        <button type="submit">Se bokning</button>
-    </form>
-
-    {% if result %}
-    {% else %}
-        <p class="error-message">{{ error }}</p>
     {% endif %}
-{% endblock %}
 </div>
+{% endblock %}
 </body>
 </html>
