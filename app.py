@@ -51,7 +51,7 @@ def get_room():
     else:
         return render_template("error.html", error="No data found")
       
-#TODO mer beskrivande route?
+
 #TODO mer beskrivande route?
 @app.route("/K2", methods=["POST"])
 def k2():
