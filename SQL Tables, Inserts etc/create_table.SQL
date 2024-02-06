@@ -26,6 +26,8 @@ CREATE TABLE Booking (
       REFERENCES Guest_Details(Guest_ID)
 );
 
+ALTER TABLE Booking ADD COlUMN booking_reference VARCHAR(255);
+
 CREATE TABLE BookingOption (
   Booking_ID INT,
   Option_ID INT,

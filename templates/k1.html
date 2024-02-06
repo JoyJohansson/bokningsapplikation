@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 {% extends "base.html" %}
 <html lang="sv">
 <head>
@@ -14,6 +13,25 @@
             sessionStorage.setItem('start_date', start_date);
             sessionStorage.setItem('end_date', end_date);
             sessionStorage.setItem('guests', guests);
+        }
+
+        async function getBooking() {
+            var bookingReference = document.getElementById('booking_reference').value;
+            try {
+                const response = await fetch(`/get_booking/${bookingReference}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    console.log(data);
+                    window.location.href = '/bekraftelse';
+                } else {
+                    alert(data.error || 'Bokning hittades inte.');
+                }
+            } catch (error) {
+                console.error('Fel vid asynkront anrop:', error);
+                alert('Något gick fel vid hämtning av bokningen.');
+            }
+            return false;
         }
     </script>
     <script>
@@ -40,64 +58,64 @@
 </head>
 <body>
 {% block content %}
-<div class="info-container">
-    <h2>K1</h2>
+    <div class="info-container">
+        <h2>K1</h2>
 
-    <form action="/K2" method="post">
-        <label for="start_date">Ankomstdatum:</label>
-        <input type="date" id="start_date" name="start_date" required>
+        <form action="/K2" method="post" onsubmit="return validateForm(); saveDates();">
+            <label for="start_date">Ankomstdatum:</label>
+            <input type="date" id="start_date" name="start_date" required>
 
-        <label for="end_date">Avresedatum:</label>
-        <input type="date" id="end_date" name="end_date" required>
+            <label for="end_date">Avresedatum:</label>
+            <input type="date" id="end_date" name="end_date" required>
 
-        <label for="guests">Antal gäster:</label>
-        <select id="guests" name="guests" required>
-            <option value="1">1 gäst</option>
-            <option value="2">2 gäster</option>
-            <option value="3">3 gäster</option>
-            <option value="4">4 gäster</option>
-            <option value="5">5 gäster</option>
-            <option value="6">6 gäster</option>
-        </select>
+            <label for="guests">Antal gäster:</label>
+            <select id="guests" name="guests" required>
+                <option value="1">1 gäst</option>
+                <option value="2">2 gäster</option>
+                <option value="3">3 gäster</option>
+                <option value="4">4 gäster</option>
+                <option value="5">5 gäster</option>
+                <option value="6">6 gäster</option>
+            </select>
 
-        <button type="submit">Se rum</button>
+            <button type="submit">Se rum</button>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Välj rum</th>
-                    <th>Roomtype</th>
-                    <th>Capacity</th>
-                    <th>Price per night</th>
-                </tr>
-            </thead>
-            <tbody>
-                <p>Tillgängliga rum</p>
-                {% for row in result %}
+            <table>
+                <thead>
                     <tr>
-                        <td><input type="checkbox" name="selected_prices[]" value="{{ row[2] }}"></td>
-                        <td>{{ row[0] }}</td>
-                        <td>{{ row[1] }}</td>
-                        <td>{{ row[2] }}</td>
+                        <th>Välj rum</th>
+                        <th>Roomtype</th>
+                        <th>Capacity</th>
+                        <th>Price per night</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <button type="submit">Boka valda rum</button>
-    </form>
-    
-    <form> 
-        <label for="booking_reference">Bokningsreferens:</label>
-        <input type="text" id="booking_reference" name="booking_reference" required>
+                </thead>
+                <tbody>
+                    <p>Tillgängliga rum</p>
+                    {% for row in result %}
+                        <tr>
+                            <td><input type="checkbox" name="selected_prices[]" value="{{ row[2] }}"></td>
+                            <td>{{ row[0] }}</td>
+                            <td>{{ row[1] }}</td>
+                            <td>{{ row[2] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit">Boka valda rum</button>
+        </form>
+        
+        <form onsubmit="return getBooking();">
+            <label for="booking_reference">Bokningsreferens:</label>
+            <input type="text" id="booking_reference" name="booking_reference" required>
 
-        <button type="submit">Se bokning</button>
-    </form>
+            <button type="submit">Se bokning</button>
+        </form>
 
-    {% if result %}
-    {% else %}
-        <p class="error-message">{{ error }}</p>
-    {% endif %}
+        {% if result %}
+        {% else %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+    </div>
 {% endblock %}
-</div>
 </body>
 </html>
