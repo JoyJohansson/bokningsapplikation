@@ -36,7 +36,9 @@
 </head>
 <body>
 {% block content %}
-    <h2>K1</h2>
+<div class="info-container">
+    <h2>Välkommen till Crazy Frog Hotel </h2>
+    <h2>Ange datum för din vistelse</h2>
 
     <form action="/K2" method="post">
         <label for="start_date">Ankomstdatum:</label>
@@ -64,7 +66,9 @@
     
     {% else %}
         <p class="error-message">{{ error }}</p>
+
     {% endif %}
+</div>    
 {% endblock %}
 </body>
 </html>
