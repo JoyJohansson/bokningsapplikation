@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_bcrypt import Bcrypt 
-from psycopg2 import connect, DatabaseError, pool
 from dotenv import load_dotenv
 from datetime import datetime
 import os
@@ -53,6 +52,7 @@ def get_room():
         return render_template("error.html", error="No data found")
       
 #TODO mer beskrivande route?
+#TODO mer beskrivande route?
 @app.route("/K2", methods=["POST"])
 def k2():
     query = """
@@ -96,6 +96,7 @@ def email():
     return render_template('e-post.html')
 
 
+
 # Bokningsbekräftelse
 #TODO engelska?
 @app.route('/bekraftelse')
@@ -118,7 +119,7 @@ def generate_booking_reference():
 @app.route("/get_booking/<booking_reference>", methods=["GET"])
 def get_booking(booking_reference):
     query = "SELECT * FROM bookings WHERE booking_reference = %s"
-    result = execute_query(query, (booking_reference,), fetch_result=True)
+    result = databas.execute_query_fetchone(query, (booking_reference,), fetch_result=True)
 
     if result:
         # Returnera bokningsinformation som JSON
@@ -135,24 +136,10 @@ def mark_booking_as_cancelled(booking_reference):
     # Uppdatera databasen för att markera bokningen som avbokad med en timestamp
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     update_query = "UPDATE bookings SET cancelled_at = %s WHERE booking_reference = %s"
-    execute_query(update_query, (timestamp, booking_reference))
+    databas.execute_insert_query(update_query, (timestamp, booking_reference))
 
 
-# Avbokning
-@app.route("/cancel_booking", methods=["POST"])
-def cancel_booking_api():
-    try:
-        booking_reference = request.form.get("booking_reference")
-
-        # Markera bokningen som avbokad i databasen
-        mark_booking_as_cancelled(booking_reference)
-
-        return jsonify({"message": "Bokning avbokad framgångsrikt"})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-     
-     
-     
+      
       
 # Admin registrering
 @app.route("/admin/register", methods=["GET"])
