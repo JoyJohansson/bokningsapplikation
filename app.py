@@ -55,16 +55,34 @@ def get_room():
 #TODO mer beskrivande route?
 @app.route("/K2", methods=["POST"])
 def k2():
-    guests = request.form.get("Capacity")
-    error = "För stort sällskap"
-    query = f"SELECT * FROM K2 ORDER BY pricepernight"
-    value = (guests)
-    result = databas.execute_query_fetchall(query,value,fetch_result=True)
+    query = """
+    SELECT room_id, roomtype, filename, filetype, file_content, capacity, pricepernight
+    FROM room_details
+    """
+    results = databas.execute_query_fetchall(query, fetch_result=True)
     
-    if result:
-        return render_template("k1.html", result=result)
+    if results:
+        converted_results = []
+        for result in results:
+            room_id, roomtype, filename, filetype, file_content, capacity, pricepernight = result
+            # Konvertera BYTEA-data till Base64-kodad sträng
+            file_content_base64 = base64.b64encode(file_content).decode('utf-8')
+            # Lägg till konverterad data till resultatlistan
+            converted_result = {
+                'room_id': room_id,
+                'roomtype': roomtype,
+                'filename': filename,
+                'filetype': filetype,
+                'file_content_base64': file_content_base64,
+                'capacity': capacity,
+                'pricepernight': pricepernight
+            }
+            converted_results.append(converted_result)
+        return render_template("k2.html", results=converted_results)
     else:
-        return render_template("error.html",error=error)   
+        return render_template("error.html", error="No data found")
+      
+      
 
 
 # email
