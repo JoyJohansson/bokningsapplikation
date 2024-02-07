@@ -7,90 +7,28 @@ import os
 import base64
 import secrets 
 import random
+import databas
 
 
 load_dotenv()
 
 app = Flask(__name__)
-
 app.secret_key = secrets.token_urlsafe(16)
 bcrypt = Bcrypt(app)
-
-
-# Set up a connection pool
-db_pool = pool.SimpleConnectionPool(
-    minconn=1,
-    maxconn=10,
-    dbname=os.getenv("DB_NAME"),
-    user=os.getenv("DB_USER"),
-    host=os.getenv("DB_HOST"),
-    password=os.getenv("DB_PASSWORD"),
-)
-
-def execute_query(query, parameter=None, fetch_result=False):
-    connection = None
-    try:
-        connection = db_pool.getconn()
-        with connection, connection.cursor() as cursor:
-            cursor.execute(query, parameter)
-            connection.commit()
-            if fetch_result:
-                return cursor.fetchall()
-            else:
-                 return cursor.rowcount > 0
-             
-    except DatabaseError as error:
-        return str(error)
-    finally:
-        if connection:
-            db_pool.putconn(connection)
-            
-
-
 
 # K1
 @app.route("/")
 def k1():
     return render_template("k1.html")
 
-# email
-@app.route('/email', methods=['GET', 'POST'])
-def email():
-    if request.method == 'POST':
-        epost1 = request.form['epost1']
-        epost2 = request.form['epost2']
-        booking_reference = generate_booking_reference()
-        return redirect(url_for('bekraftelse', booking_ref=booking_reference))
-    return render_template('e-post.html')
-
-
-# Bokningsbekräftelse
-@app.route('/bekraftelse')
-def bekraftelse():
-    booking_reference = request.args.get('booking_ref')
-    return f"Bokningsbekräftelse: Tack för din bokning! Bokningsreferens: {booking_reference}"
-
-# Bokningsreferens
-def generate_booking_reference():
-    # realtid timestamp
-    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-    # generera slumpmässig sträng på 6 tecken
-    random_string = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=6))
-    # kombinera timestamp med sträng för att skapa unique bokningsreferens
-    booking_reference = f'{timestamp}{random_string}'
-    return booking_reference
-
-
-
-
-
+#TODO ändra route
 @app.route("/error", methods=["GET", "POST"])
 def get_room():
     query = """
     SELECT room_id, roomtype, filename, filetype, file_content, capacity, pricepernight
     FROM room_details
     """
-    results = execute_query(query, fetch_result=True)
+    results = databas.execute_query_fetchall(query, fetch_result=True)
     
     if results:
         converted_results = []
@@ -113,8 +51,64 @@ def get_room():
     else:
         return render_template("error.html", error="No data found")
       
+#TODO mer beskrivande route?
+@app.route("/K2", methods=["POST"])
+def k2():
+    query = """
+    SELECT room_id, roomtype, filename, filetype, file_content, capacity, pricepernight
+    FROM room_details
+    """
+    results = databas.execute_query_fetchall(query, fetch_result=True)
+    
+    if results:
+        converted_results = []
+        for result in results:
+            room_id, roomtype, filename, filetype, file_content, capacity, pricepernight = result
+            # Konvertera BYTEA-data till Base64-kodad sträng
+            file_content_base64 = base64.b64encode(file_content).decode('utf-8')
+            # Lägg till konverterad data till resultatlistan
+            converted_result = {
+                'room_id': room_id,
+                'roomtype': roomtype,
+                'filename': filename,
+                'filetype': filetype,
+                'file_content_base64': file_content_base64,
+                'capacity': capacity,
+                'pricepernight': pricepernight
+            }
+            converted_results.append(converted_result)
+        return render_template("k2.html", results=converted_results)
+    else:
+        return render_template("error.html", error="No data found")
       
-     
+# email
+@app.route('/email', methods=['GET', 'POST'])
+def email():
+    if request.method == 'POST':
+        epost1 = request.form['epost1']
+        epost2 = request.form['epost2']
+        booking_reference = generate_booking_reference()
+        return redirect(url_for('bekraftelse', booking_ref=booking_reference))
+    return render_template('e-post.html')
+
+
+# Bokningsbekräftelse
+#TODO engelska?
+@app.route('/bekraftelse')
+def bekraftelse():
+    booking_reference = request.args.get('booking_ref')
+    return f"Bokningsbekräftelse: Tack för din bokning! Bokningsreferens: {booking_reference}"
+
+# Bokningsreferens
+def generate_booking_reference():
+    # realtid timestamp
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    # generera slumpmässig sträng på 6 tecken
+    random_string = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=6))
+    # kombinera timestamp med sträng för att skapa unique bokningsreferens
+    booking_reference = f'{timestamp}{random_string}'
+    return booking_reference
+
 # Admin registrering
 @app.route("/admin/register", methods=["GET"])
 def admin_register_page():
@@ -134,7 +128,7 @@ def admin_register():
 
         # Sätt in admin i databasen
         insert_query = "INSERT INTO admins (username, password_hash, token) VALUES (%s, %s, %s) RETURNING id"
-        admin_id = execute_query(insert_query, (username, password_hash, token), fetch_result=True)
+        admin_id = databas.execute_query_fetchone(insert_query, (username, password_hash, token), fetch_result=True)
 
         # Sätt inloggnings-sessionen för den nya adminen
         session['admin_token'] = token
@@ -156,14 +150,15 @@ def admin_login():
         password = request.form.get("password")
 
         # Fråga databasen för att hämta admin med det angivna användarnamnet
-        query = "SELECT * FROM hotel.admins WHERE username = %s"
-        result = execute_query(query, (username,), fetch_result=True)
+        query = "SELECT * FROM admins WHERE username = %s"
+        result = databas.execute_query_fetchone(query, (username,), fetch_result=True)
+        print(result)
 
         if result and bcrypt.check_password_hash(result[2], password):
             # Om lösenordet är korrekt, generera en token och lagra den i databasen
             token = generate_random_token()
             update_token_query = "UPDATE admins SET token = %s WHERE id = %s"
-            execute_query(update_token_query, (token, result[0]))
+            databas.execute_insert_query(update_token_query, (token, result[0]))
 
             # Sätt inloggnings-sessionen för den nya adminen
             session['admin_token'] = token
@@ -189,8 +184,7 @@ def admin_dashboard():
         return render_template('admin_dashboard.html')
     else:
         return redirect(url_for('admin_login_page'))
-
-    
+      
 
 @app.route("/admin/logout", methods=["GET", "POST"])
 def logout():
@@ -204,14 +198,13 @@ def logout():
 def admin_logout_page():
     return render_template('admin_logout_page.html')
 
-
 @app.route("/K2", methods=["POST"])
 def k2():
     guests = request.form.get("guests")
     error = "För stort sällskap"
     query = "SELECT Roomtype,Room_ID FROM K2 WHERE Capacity >= %s ORDER BY PricePerNight"
     value = (guests)
-    result = execute_query(query,value,fetch_result=True)
+    result = databas.execute_query_fetchall(query,value,fetch_result=True)
     
     if result:
         return render_template("k1.html", result=result)
@@ -225,10 +218,10 @@ def room_info():
     args = request.args
     room_id = args["room_id"]
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
-    room = execute_query(query, (room_id,), fetch_result=True)
+    room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
     print (room)
     print(room_id)
-    return render_template("k3.html", room=room[0])
+    return render_template("k3.html", room=room)
 
 
 @app.route("/book", methods=["POST"])
@@ -236,10 +229,8 @@ def book_room():
     args = request.form
     room_id = args["room_id"]
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
-    room = execute_query(query, (room_id,), fetch_result=True)
-    return render_template("k4.html", room=room[0])
-
-   
+    room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
+    return render_template("k4.html", room=room)
 
 if __name__ == "__main__":
     app.run(debug=True)
