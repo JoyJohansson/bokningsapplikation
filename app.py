@@ -225,8 +225,15 @@ def room_info():
 
 @app.route("/book", methods=["POST"])
 def book_room():
-    args = request.form
+    args = request.args
     room_id = args["room_id"]
+    email = request.form["email"]
+    check_in_date = request.form["check_in_date"]
+    check_out_date = request.form["check_out_date"]
+    #TODO lägg till room_id i db booking
+    insert_query = """INSERT INTO booking (guest_id, check_in_date, check_out_date, status)
+                    VALUES (%s, %s, %s, true)"""
+    databas.execute_insert_query(insert_query, (email, check_in_date, check_out_date))
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
     return render_template("k4.html", room=room)
