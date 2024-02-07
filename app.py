@@ -198,20 +198,6 @@ def logout():
 def admin_logout_page():
     return render_template('admin_logout_page.html')
 
-@app.route("/K2", methods=["POST"])
-def k2():
-    guests = request.form.get("guests")
-    error = "För stort sällskap"
-    query = "SELECT Roomtype,Room_ID FROM K2 WHERE Capacity >= %s ORDER BY PricePerNight"
-    value = (guests)
-    result = databas.execute_query_fetchall(query,value,fetch_result=True)
-    
-    if result:
-        return render_template("k1.html", result=result)
-    else:
-        return render_template("error.html",error=error) 
-
-
 
 @app.route("/room_info", methods=["GET"])
 def room_info():
