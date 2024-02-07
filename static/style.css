@@ -1,6 +1,6 @@
 
 nav {
-    width: 50%;
+    width: 90%;
     display: flex;
     align-items: center; /* Justera objekt längs tvärsaxeln (vertikalt) */
     padding: 10px; /* Lägger till lite inre utrymme för estetiskt utseende */
@@ -61,7 +61,7 @@ body {
   }
 
 .info-container {
-    width: 50%; /* Bredden på informationen ruta */
+    width: 90%; /* Bredden på informationen ruta */
     padding: 10px;
     border-radius: 0px; /* Rundade hörn */
     border-top-left-radius: 0; /* Inget rundat hörn upptill */
@@ -115,7 +115,7 @@ body {
 }
 .banner-container {
     margin-top: 10px;
-    width: 50%; /* Bredden på informationen ruta */
+    width: 90%; /* Bredden på informationen ruta */
     height: 250px;
     padding: 10px;
     border-radius: 0px; /* Rundade hörn */

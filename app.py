@@ -214,7 +214,7 @@ def admin_logout_page():
 def k2():
     guests = request.form.get("guests")
     error = "För stort sällskap"
-    query = "SELECT Roomtype FROM K2 WHERE Capacity >= %s ORDER BY PricePerNight"
+    query = "SELECT Roomtype,Room_ID FROM K2 WHERE Capacity >= %s ORDER BY PricePerNight"
     value = (guests)
     result = execute_query(query,value,fetch_result=True)
     
@@ -229,23 +229,22 @@ def k2():
 def room_info():
     args = request.args
     room_id = args["room_id"]
-    query = "SELECT * FROM room WHERE room_id = %s"
-    room = execute_query(query, (room_id,))
-    return render_template("k3.html", room=room)
+    query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
+    room = execute_query(query, (room_id,), fetch_result=True)
+    print (room)
+    print(room_id)
+    return render_template("k3.html", room=room[0])
 
 
-@app.route("/book?start_date&end_date&room_id", methods=["POST"])
-def book_room(start_date, end_date, room_id):
+@app.route("/book", methods=["POST"])
+def book_room():
+    args = request.form
+    room_id = args["room_id"]
+    query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
+    room = execute_query(query, (room_id,), fetch_result=True)
+    return render_template("k4.html", room=room[0])
 
-    query = "INSERT INTO booking(start_date, end_date, room_id) VALUES (%s, %s, %s)"
-    success = execute_query(query, (start_date, end_date, room_id))
-
-    if success:
-        print("Query executed successfully.")
-    else:
-        print("Error executing query.")
-
-    return render_template("k4.html", "booking_reference") 
+   
 
 if __name__ == "__main__":
     app.run(debug=True)

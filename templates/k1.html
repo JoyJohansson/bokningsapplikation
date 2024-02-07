@@ -53,11 +53,10 @@
 {% for row in result %}
     <tr>
         <td>{{ row[0] }}</td>
-        <td>{{ row[1] }}</td>
-        <td>{{ row[2] }}</td>
+        
         <td><img src="static/img/08e5b9ba-8d64-4c2f-b31a-ba803e022655.webp" alt="Room Image" width="300"></td>
         <td>
-            <a href="/room_info?room_id={{ row[0] }}" class="btn btn-info">
+            <a href="/room_info?room_id={{ row[1] }}" class="btn btn-info">
                 View Details
             </a>
         </td>
