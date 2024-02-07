@@ -225,15 +225,27 @@ def room_info():
 
 @app.route("/book", methods=["POST"])
 def book_room():
-    args = request.args
+    args = request.form
     room_id = args["room_id"]
-    email = request.form["email"]
-    check_in_date = request.form["check_in_date"]
-    check_out_date = request.form["check_out_date"]
+    query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
+    room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
+    return render_template("k4.html", room=room)
+
+@app.route("/save_booking", methods=["POST"])
+def save_booking():
+    room_id = request.form.get("room_id")
+    email = request.form.get("email")
+    check_in_date = request.form.get("start_date")
+    check_out_date = request.form.get("end_date")
+
+    create_guest_query = """INSERT INTO guest_details (guest_id, name, phone, email)
+                        VALUES (2, 'John Doe', 123, 'email')"""
+    guest_saved = databas.execute_insert_query(create_guest_query, (email,))
+    print(guest_saved)
     #TODO lägg till room_id i db booking
     insert_query = """INSERT INTO booking (guest_id, check_in_date, check_out_date, status)
-                    VALUES (%s, %s, %s, true)"""
-    databas.execute_insert_query(insert_query, (email, check_in_date, check_out_date))
+                    VALUES (1, %s, %s, True)"""
+    databas.execute_insert_query(insert_query, (check_in_date, check_out_date))
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
     return render_template("k4.html", room=room)

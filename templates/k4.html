@@ -13,7 +13,7 @@
     <p><strong>Room Type:</strong> {{ room[1] }}</p>
     <p><strong>Price Per Night:</strong> {{ room[2] }}</p>
 
-    <form method="post" action="/book" id="book-form">
+    <form method="post" action="/save_booking" id="book-form">
         <input type="hidden" name="room_id" value="{{ room[0] }}">
         <input type="hidden" name="room_type" value="{{ room[1] }}">
         <input type="hidden" name="price_per_night" value="{{ room[2] }}">
