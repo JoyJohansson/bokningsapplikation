@@ -20,12 +20,8 @@
                     <!-- Visa rummets information -->
                     <h2>{{ result.roomtype }}</h2>
                     <div class="details">
-                        <p>Kapacitet: {{ result.room_id }}</p>
-                        <!-- Fyll i antalet sängar här -->
-                        <p>Antal sängar: </p>
-                        <p>Info: </p>
                         <p>Pris: {{result.pricepernight}}$</p>
-                        <button class="button-action" type="submit">Boka</button>
+                        <button class="button-action" onclick="location.href='/room_info?room_id={{ result.room_id }}'" type="submit">Visa detaljer</button>
                     </div>
                 </div>
             </div>
