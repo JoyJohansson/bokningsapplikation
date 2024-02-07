@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Room Details{% endblock %}
+
+{% block content %}
+<div class="info-container">
+    <img src="static/img/08e5b9ba-8d64-4c2f-b31a-ba803e022655.webp" alt="Room Image" width="500">
+    <div class="room-info">
+        <h2>Room Details</h2>
+        <p><strong>Room ID:</strong> {{ room[0] }}</p>
+        <p><strong>Room Type:</strong> {{ room[1] }}</p>
+        <p><strong>Price Per Night:</strong> {{ room[2] }}</p>
+
+    </div>
+    <form action="/book" method="post" id="book-form">
+        <input type="hidden" name="room_id" value="{{ room[0] }}">
+        <input type="hidden" name="room_type" value="{{ room[1] }}">
+        <input type="hidden" name="price_per_night" value="{{ room[2] }}">
+        <button id="book-button">Book This Room</button>
+    </form>
+
+{% endblock %}

@@ -59,16 +59,32 @@
 
         <button type="submit">Se rum</button>
 
+        <table>
+            <thead>
+                {% if result %}
+                <tr>
+                    <th>Välj rum</th>
+                </tr>
+            </thead>
+            <tbody>
+                <p>Tillgängliga rum</p>
+{% for row in result %}
+    <tr>
+        <td>{{ row[0] }}</td>
         
+        <td><img src="static/img/08e5b9ba-8d64-4c2f-b31a-ba803e022655.webp" alt="Room Image" width="300"></td>
+        <td>
+            <a href="/room_info?room_id={{ row[1] }}" class="btn btn-info">
+                View Details
+            </a>
+        </td>
+    </tr>
+{% endfor %}
+            </tbody>
+        </table>
     </form>
-
-    {% if result %}
-    
-    {% else %}
-        <p class="error-message">{{ error }}</p>
-
     {% endif %}
-</div>    
+</div>
 {% endblock %}
 </body>
 </html>

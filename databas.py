@@ -1,4 +1,3 @@
-import secrets
 from psycopg2 import connect, DatabaseError, pool
 from dotenv import load_dotenv
 import os
