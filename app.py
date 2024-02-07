@@ -53,11 +53,6 @@ def execute_query(query, parameter=None, fetch_result=False):
 def k1():
     return render_template("k1.html")
 
-
-
-
-
-
 # email
 @app.route('/email', methods=['GET', 'POST'])
 def email():

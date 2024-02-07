@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Default Date Example</title>
+</head>
+<body>
+
+    <label for="dateInput">Select a date:</label>
+    <input type="date" id="dateInput">
+
+    <script>
+        const dateInput = document.getElementById('dateInput');
+
+        // Get the saved date from Local Storage
+        const savedDate = sessionStorage.getItem('defaultDate');
+
+        // Set the default value of the input field to the saved date or today's date if not available
+        dateInput.value = savedDate || new Date().toISOString().split('T')[0];
+
+        // Save the date to Local Storage whenever the user changes it
+        dateInput.addEventListener('input', function() {
+            const selectedDate = dateInput.value;
+            sessionStorage.setItem('defaultDate', selectedDate);
+        });
+    </script>
+
+</body>
+</html>

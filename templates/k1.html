@@ -5,24 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Bokningsapplikation{% endblock %}</title>
-    <script>
-        function saveDates() {
-            var start_date = document.getElementById('start_date').value;
-            var end_date = document.getElementById('end_date').value;
-            var guests = document.getElementById('guests').value;
-
-            sessionStorage.setItem('start_date', start_date);
-            sessionStorage.setItem('end_date', end_date);
-            sessionStorage.setItem('guests', guests);
-        }
-    </script>
 </head>
 <body>
 {% block content %}
 <div class="info-container">
     <h2>K1</h2>
 
-    <form action="/K2" method="post">
+    <form action="/K2" method="post" onsubmit="saveDates()">
         <label for="start_date">Ankomstdatum:</label>
         <input type="date" id="start_date" name="start_date" required>
 
@@ -40,6 +29,26 @@
         </select>
 
         <button type="submit">Se rum</button>
+        <script>
+            // Save values to sessionStorage when the form is submitted
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelector('form').addEventListener('submit', function (event) {
+                    const start_date = document.getElementById('start_date').value;
+                    const end_date = document.getElementById('end_date').value;
+                    const guests = document.getElementById('guests').value;
+    
+                    // Save values to sessionStorage
+                    sessionStorage.setItem('start_date', start_date);
+                    sessionStorage.setItem('end_date', end_date);
+                    sessionStorage.setItem('guests', guests);
+                    
+            // Log values to the console for debugging
+            console.log('Start Date:', start_date);
+            console.log('End Date:', end_date);
+            console.log('Guests:', guests);
+        });
+                });
+        </script>
 
         <table>
             <thead>
