@@ -7,7 +7,7 @@ CREATE TABLE Option (
 );
 
 CREATE TABLE Guest_Details (
-  Guest_ID INT,
+  Guest_ID SERIAL,
   Name VARCHAR(255),
   Phone INT,
   Email VARCHAR(255),

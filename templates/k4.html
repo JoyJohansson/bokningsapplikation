@@ -34,9 +34,10 @@
     <p><strong>Price Per Night:</strong> <span id="booked-price-per-night"></span></p>
     <p><strong>Name:</strong> <span id="booked-name"></span></p>
     <p><strong>Email:</strong> <span id="booked-email"></span></p>
-    <p><strong>Start Date:</strong> <span id="booked-start-date"></span></p>
-    <p><strong>End Date:</strong> <span id="booked-end-date"></span></p>
-    <p><strong>Guests:</strong> <span id="booked-guests"></span></p>
+    <p><strong>Start Date:</strong> <p>{{start_date}}</p>
+    <p><strong>End Date:</strong> <p>{{end_date}}</p>
+    <p><strong>Guests: <span id="booked-guests"></span></p>
+  
 </div>
 
 <script>
@@ -73,7 +74,7 @@
         document.getElementById("confirmation-container").style.display = "block";
 
         // Visar sparade datumen i bokningsbekräftelsen
-        document.getElementById("booked-start-date").innerText = sessionStorage.getItem('start_date');
+        document.getElementById("booked-start-date").innerText = sessionStorage.getItem('{start_date}');
         document.getElementById("booked-end-date").innerText = sessionStorage.getItem('end_date');
         document.getElementById("booked-guests").innerText = sessionStorage.getItem('guests');
 

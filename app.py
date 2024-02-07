@@ -19,6 +19,7 @@ bcrypt = Bcrypt(app)
 # K1
 @app.route("/")
 def k1():
+    
     return render_template("k1.html")
 
 #TODO ändra route
@@ -54,6 +55,8 @@ def get_room():
 #TODO mer beskrivande route?
 @app.route("/K2", methods=["POST"])
 def k2():
+    session["start_date"] = request.form["start_date"]
+    session["end_date"] = request.form["end_date"]
     query = """
     SELECT room_id, roomtype, filename, filetype, file_content, capacity, pricepernight
     FROM room_details
@@ -90,7 +93,7 @@ def k2w():
     result = databas.execute_query_fetchall(query,value,fetch_result=True)
     
     if result:
-        return render_template("k1.html", result=result)
+        return render_template("k1.html", result=result, )
     else:
         return render_template("error.html",error=error) 
 
@@ -195,7 +198,8 @@ def generate_random_token():
 @app.route("/admin/dashboard")
 def admin_dashboard():
     if 'admin_token' in session:
-        return render_template('admin_dashboard.html')
+        admin_token = session['admin_token']
+        return render_template('admin_dashboard.html',admin_token=admin_token)
     else:
         return redirect(url_for('admin_login_page'))
       
@@ -225,11 +229,13 @@ def room_info():
 
 @app.route("/book", methods=["POST"])
 def book_room():
+    start_date = session.get("start_date")
+    end_date = session.get("end_date")
     args = request.form
-    room_id = args["room_id"]
+    room_id = args["room_id"] 
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
-    return render_template("k4.html", room=room)
+    return render_template("k4.html", room=room,start_date=start_date,end_date=end_date)
 
 if __name__ == "__main__":
     app.run(debug=True)
