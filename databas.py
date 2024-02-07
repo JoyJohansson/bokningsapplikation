@@ -14,8 +14,56 @@ db_pool = pool.SimpleConnectionPool(
     password=os.getenv("DB_PASSWORD"),
 )
 
-def execute_query(query, parameter=None, fetch_result=False):
-    # ... (Same as in the original file)
+def execute_query_fetchall(query, parameter=None, fetch_result=False):
+    connection = None
+    try:
+        connection = db_pool.getconn()
+        with connection, connection.cursor() as cursor:
+            cursor.execute(query, parameter)
+            connection.commit()
+            if fetch_result:
+                return cursor.fetchall()
+            else:
+                 return cursor.rowcount > 0
+             
+    except DatabaseError as error:
+        return str(error)
+    finally:
+        if connection:
+            db_pool.putconn(connection)
+
+def execute_query_fetchone(query, parameter=None, fetch_result=False):
+    connection = None
+    try:
+        connection = db_pool.getconn()
+        with connection, connection.cursor() as cursor:
+            cursor.execute(query, parameter)
+            connection.commit()
+            if fetch_result:
+                return cursor.fetchone()
+            else:
+                 return cursor.rowcount > 0
+             
+    except DatabaseError as error:
+        return str(error)
+    finally:
+        if connection:
+            db_pool.putconn(connection)
+
+def execute_insert_query(query, parameter=None, fetch_result=False):
+    connection = None
+    try:
+        connection = db_pool.getconn()
+        with connection, connection.cursor() as cursor:
+            cursor.execute(query, parameter)
+            connection.commit()
+            return cursor.rowcount > 0
+             
+    except DatabaseError as error:
+        return str(error)
+    finally:
+        if connection:
+            db_pool.putconn(connection)
 
 def generate_random_token():
     return secrets.token_urlsafe()

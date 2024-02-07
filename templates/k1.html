@@ -1,9 +1,5 @@
-<!DOCTYPE html>
 {% extends "base.html" %}
-<html lang="sv">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{% block title %}Bokningsapplikation{% endblock %}</title>
     <script>
         function saveDates() {
@@ -16,11 +12,33 @@
             sessionStorage.setItem('guests', guests);
         }
     </script>
+    <script>
+        function validateForm() {
+            var guests = parseInt(document.getElementById('guests').value);
+            var checkboxes = document.getElementsByName('selected_prices[]');
+    
+            var selectedRooms = 0;
+    
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    selectedRooms++;
+                }
+            }
+    
+            if (selectedRooms > 3 || (selectedRooms * 2) > guests && guests > 1) {
+                alert("Du kan inte boka mer än 3 rum eller överskrida det maximala antalet gäster (6).");
+                return false;
+            }
+    
+            return true;
+        }
+    </script>
 </head>
 <body>
 {% block content %}
 <div class="info-container">
-    <h2>K1</h2>
+    <h2>Välkommen till Crazy Frog Hotel </h2>
+    <h2>Ange datum för din vistelse</h2>
 
     <form action="/K2" method="post">
         <label for="start_date">Ankomstdatum:</label>
