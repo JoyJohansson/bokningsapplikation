@@ -233,16 +233,20 @@ def book_room():
 
 @app.route("/save_booking", methods=["POST"])
 def save_booking():
+    print("save_booking")
     room_id = request.form.get("room_id")
     email = request.form.get("email")
     check_in_date = request.form.get("start_date")
     check_out_date = request.form.get("end_date")
-
+    #TODO guest_id som en autoincrementerad serial
+    #TODO fixa queryn
     create_guest_query = """INSERT INTO guest_details (guest_id, name, phone, email)
-                        VALUES (2, 'John Doe', 123, 'email')"""
+                        VALUES (3, 'John Doe', 123, %s)"""
     guest_saved = databas.execute_insert_query(create_guest_query, (email,))
     print(guest_saved)
     #TODO lägg till room_id i db booking
+    #TODO få denna query att funka
+    #TODO status som en warchar
     insert_query = """INSERT INTO booking (guest_id, check_in_date, check_out_date, status)
                     VALUES (1, %s, %s, True)"""
     databas.execute_insert_query(insert_query, (check_in_date, check_out_date))

@@ -13,7 +13,7 @@
     <p><strong>Room Type:</strong> {{ room[1] }}</p>
     <p><strong>Price Per Night:</strong> {{ room[2] }}</p>
 
-    <form method="post" action="/save_booking" id="book-form">
+    <form action="/save_booking" method="post" id="book-form">
         <input type="hidden" name="room_id" value="{{ room[0] }}">
         <input type="hidden" name="room_type" value="{{ room[1] }}">
         <input type="hidden" name="price_per_night" value="{{ room[2] }}">
@@ -21,7 +21,7 @@
         <input type="text" id="name" name="name" required><br>
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required><br>
-        <button type="button" id="book-button">Book Room</button>
+        <button id="book-button" type="submit">Book Room</button>
     </form>
 </div>
 
