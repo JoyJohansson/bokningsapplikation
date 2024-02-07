@@ -7,10 +7,21 @@
     <title>{% block title %}Bokningsapplikation{% endblock %}</title>
 </head>
 <body>
+
     {% block content %}
     <div class="info-container">
         <h1>Tillgängliga rum</h1>
-        
+            
+<div>
+    <p><strong>Start Date:</strong> <span id="booked-start-date"></span></p>
+    <p><strong>End Date:</strong> <span id="booked-end-date"></span></p>
+    <p><strong>Guests:</strong> <span id="booked-guests"></span></p>
+</div>
+<script>
+    document.getElementById("booked-start-date").innerText = sessionStorage.getItem('start_date');
+        document.getElementById("booked-end-date").innerText = sessionStorage.getItem('end_date');
+        document.getElementById("booked-guests").innerText = sessionStorage.getItem('guests');
+</script>
         <div class="posts-container">
             {%for result in results%}
             <div class="info-post">

@@ -8,7 +8,7 @@
     <h2>Välkommen till Crazy Frog Hotel </h2>
     <h2>Ange datum för din vistelse</h2>
 
-    <form action="/K2" method="post" onsubmit="saveDates()">
+    <form action="/K2" method="post">
         <label for="start_date">Ankomstdatum:</label>
         <input type="date" id="start_date" name="start_date" required>
 
@@ -53,6 +53,7 @@
                 <tr>
                     <th>Välj rum</th>
                 </tr>
+                {% endif %}
             </thead>
             <tbody>
                 <p>Tillgängliga rum</p>

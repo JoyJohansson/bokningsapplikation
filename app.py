@@ -146,7 +146,7 @@ def admin_register():
 
     return render_template('admin_register_page.html', error=None)
 
-  
+
 # Admin login
 @app.route("/admin/login", methods=["POST"])
 def admin_login():
@@ -220,6 +220,15 @@ def book_room():
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
     return render_template("k4.html", room=room)
+
+@app.route("/admin/register", methods=["GET"])
+def admin_register_page():
+    return render_template("admin_register_page.html", error=None)
+
+
+@app.route("/admin/login", methods=["GET"])
+def admin_login_page():
+    return render_template("admin_login_page.html", error=None)
 
 if __name__ == "__main__":
     app.run(debug=True)
