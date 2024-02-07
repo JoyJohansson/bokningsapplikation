@@ -64,15 +64,19 @@
 
         <table>
             <thead>
+                
                 <tr>
+                    {%if result%}
                     <th>Välj rum</th>
                     <th>Roomtype</th>
                     <th>Capacity</th>
                     <th>Price per night</th>
+                
                 </tr>
             </thead>
             <tbody>
                 <p>Tillgängliga rum</p>
+                
                 {% for row in result %}
                     <tr>
                         <td><input type="checkbox" name="selected_prices[]" value="{{ row[2] }}"></td>
@@ -84,7 +88,9 @@
             </tbody>
         </table>
         <button type="submit">Boka valda rum</button>
+       
     </form>
+    
     
     <form> 
         <label for="booking_reference">Bokningsreferens:</label>
@@ -92,7 +98,7 @@
 
         <button type="submit">Se bokning</button>
     </form>
-
+    {%endif%}
     {% if result %}
     {% else %}
         <p class="error-message">{{ error }}</p>

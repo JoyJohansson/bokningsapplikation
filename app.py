@@ -96,7 +96,6 @@ def get_room():
     FROM room_details
     """
     results = execute_query(query, fetch_result=True)
-    
     if results:
         converted_results = []
         for result in results:
