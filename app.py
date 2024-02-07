@@ -81,6 +81,19 @@ def k2():
     else:
         return render_template("error.html", error="No data found")
       
+###@app.route("/K2", methods=["POST"])
+def k2w():
+    guests = request.form.get("guests")
+    error = "För stort sällskap"
+    query = "SELECT Roomtype,Room_ID FROM K2 WHERE Capacity >= %s ORDER BY PricePerNight"
+    value = (guests)
+    result = databas.execute_query_fetchall(query,value,fetch_result=True)
+    
+    if result:
+        return render_template("k1.html", result=result)
+    else:
+        return render_template("error.html",error=error) 
+
 # email
 @app.route('/email', methods=['GET', 'POST'])
 def email():
@@ -197,6 +210,9 @@ def logout():
 @app.route("/admin/logout_page")
 def admin_logout_page():
     return render_template('admin_logout_page.html')
+
+
+
 
 
 @app.route("/room_info", methods=["GET"])
