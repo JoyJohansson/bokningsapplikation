@@ -123,10 +123,6 @@ def generate_booking_reference():
     return booking_reference
 
 # Admin registrering
-@app.route("/admin/register", methods=["GET"])
-def admin_register_page():
-    return render_template("admin_register_page.html", error=None)
-
 @app.route("/admin/register", methods=["POST"])
 def admin_register():
     if request.method == "POST":
@@ -152,11 +148,6 @@ def admin_register():
 
   
 # Admin login
-@app.route("/admin/login", methods=["GET"])
-def admin_login_page():  
-    return render_template("admin_login_page.html", error=None)
-
-
 @app.route("/admin/login", methods=["POST"])
 def admin_login():
         username = request.form.get("username")
@@ -210,10 +201,6 @@ def logout():
 @app.route("/admin/logout_page")
 def admin_logout_page():
     return render_template('admin_logout_page.html')
-
-
-
-
 
 @app.route("/room_info", methods=["GET"])
 def room_info():
