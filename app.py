@@ -123,6 +123,11 @@ def generate_booking_reference():
     return booking_reference
 
 # Admin registrering
+@app.route("/admin/register", methods=["GET"])
+def admin_register_page():
+    return render_template("admin_register_page.html", error=None)
+
+# Admin registrering
 @app.route("/admin/register", methods=["POST"])
 def admin_register():
     if request.method == "POST":
@@ -146,6 +151,11 @@ def admin_register():
 
     return render_template('admin_register_page.html', error=None)
 
+
+# Admin login
+@app.route("/admin/login", methods=["GET"])
+def admin_login_page():  
+    return render_template("admin_login_page.html", error=None)
   
 # Admin login
 @app.route("/admin/login", methods=["POST"])
