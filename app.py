@@ -12,6 +12,7 @@ import databas
 
 load_dotenv()
 
+
 app = Flask(__name__)
 app.secret_key = secrets.token_urlsafe(16)
 bcrypt = Bcrypt(app)
@@ -20,6 +21,9 @@ bcrypt = Bcrypt(app)
 @app.route("/")
 def k1():
     return render_template("k1.html")
+
+def generate_random_code():
+    return random.randint(100000, 999999)
 
 #TODO ändra route
 @app.route("/error", methods=["GET", "POST"])
@@ -54,6 +58,8 @@ def get_room():
 #TODO mer beskrivande route?
 @app.route("/K2", methods=["POST"])
 def k2():
+    session["start_date"] = request.form["start_date"]
+    session["end_date"] = request.form["end_date"]
     query = """
     SELECT room_id, roomtype, filename, filetype, file_content, capacity, pricepernight
     FROM room_details
@@ -234,22 +240,27 @@ def book_room():
 @app.route("/save_booking", methods=["POST"])
 def save_booking():
     print("save_booking")
+    
     room_id = request.form.get("room_id")
     email = request.form.get("email")
-    check_in_date = request.form.get("start_date")
-    check_out_date = request.form.get("end_date")
+    name = request.form.get("name")
+    start_date = session.get("start_date")
+    end_date = session.get("end_date")
+    bookingID = generate_random_code()
     #TODO guest_id som en autoincrementerad serial
     #TODO fixa queryn
-    create_guest_query = """INSERT INTO guest_details (guest_id, name, phone, email)
-                        VALUES (3, 'John Doe', 123, %s)"""
-    guest_saved = databas.execute_insert_query(create_guest_query, (email,))
+    create_guest_query = """INSERT INTO guest_details (name, email)
+                        VALUES (%s, %s)"""
+    guest_saved = databas.execute_insert_query(create_guest_query, (name,email))
     print(guest_saved)
     #TODO lägg till room_id i db booking
     #TODO få denna query att funka
+    query = "SELECT Guest_ID FROM guest_details WHERE name = %s"
+    result = databas.execute_query_fetchone(query,(name,),fetch_result=True)
     #TODO status som en warchar
-    insert_query = """INSERT INTO booking (guest_id, check_in_date, check_out_date, status)
-                    VALUES (1, %s, %s, True)"""
-    databas.execute_insert_query(insert_query, (check_in_date, check_out_date))
+    insert_query = """INSERT INTO booking (booking_id, guest_id,room_id, check_in_date, check_out_date, status)
+                    VALUES (%s,%s, %s,%s,%s, True)"""
+    databas.execute_insert_query(insert_query, (bookingID,result,room_id,start_date, end_date,))
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
     return render_template("k4.html", room=room)
