@@ -60,6 +60,8 @@ def get_room():
 def k2():
     session["start_date"] = request.form["start_date"]
     session["end_date"] = request.form["end_date"]
+    selected_guests = request.form['guests']
+    session['selected_guests'] = selected_guests
     query = """
     SELECT room_id, roomtype, filename, filetype, file_content, capacity, pricepernight
     FROM room_details
@@ -240,12 +242,13 @@ def book_room():
 @app.route("/save_booking", methods=["POST"])
 def save_booking():
     print("save_booking")
-    
+    print(session)
     room_id = request.form.get("room_id")
     email = request.form.get("email")
     name = request.form.get("name")
     start_date = session.get("start_date")
     end_date = session.get("end_date")
+    selected_guests = session.get("guests")
     bookingID = generate_random_code()
     #TODO guest_id som en autoincrementerad serial
     #TODO fixa queryn
@@ -263,7 +266,7 @@ def save_booking():
     databas.execute_insert_query(insert_query, (bookingID,result,room_id,start_date, end_date,))
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
-    return render_template("k4.html", room=room)
+    return render_template("k4.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email)
 
 if __name__ == "__main__":
     app.run(debug=True)
