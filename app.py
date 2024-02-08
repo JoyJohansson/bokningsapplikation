@@ -264,6 +264,7 @@ def save_booking():
     insert_query = """INSERT INTO booking (booking_id, guest_id,room_id, check_in_date, check_out_date, status)
                     VALUES (%s,%s, %s,%s,%s, True)"""
     databas.execute_insert_query(insert_query, (bookingID,result,room_id,start_date, end_date,))
+    #TODO göra en view så vi får upp booking från Databasen
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
     return render_template("k4.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email)
