@@ -20,13 +20,12 @@ bcrypt = Bcrypt(app)
 # K1
 @app.route("/")
 def k1():
-    return render_template("k1.html")
+    return render_template("k1_start.html")
 
 def generate_random_code():
     return random.randint(100000, 999999)
 
-#TODO ändra route
-@app.route("/error", methods=["GET", "POST"])
+@app.route("/contacts", methods=["GET", "POST"])
 def get_room():
     query = """
     SELECT room_id, roomtype, filename, filetype, file_content, capacity, pricepernight
@@ -51,17 +50,15 @@ def get_room():
                 'pricepernight': pricepernight
             }
             converted_results.append(converted_result)
-        return render_template("error.html", results=converted_results)
+        return render_template("contacts.html", results=converted_results)
     else:
-        return render_template("error.html", error="No data found")
+        return render_template("contacts.html", error="No data found")
       
-#TODO mer beskrivande route?
-@app.route("/K2", methods=["POST"])
+@app.route("/available_rooms", methods=["POST"])
 def k2():
     session["start_date"] = request.form["start_date"]
     session["end_date"] = request.form["end_date"]
-    selected_guests = request.form['guests']
-    session['selected_guests'] = selected_guests
+    session["selected_guests"] = request.form["guests"]
     query = """
     SELECT room_id, roomtype, filename, filetype, file_content, capacity, pricepernight
     FROM room_details
@@ -85,22 +82,9 @@ def k2():
                 'pricepernight': pricepernight
             }
             converted_results.append(converted_result)
-        return render_template("k2.html", results=converted_results)
+        return render_template("k2_available_rooms.html", results=converted_results)
     else:
-        return render_template("error.html", error="No data found")
-      
-###@app.route("/K2", methods=["POST"])
-def k2w():
-    guests = request.form.get("guests")
-    error = "För stort sällskap"
-    query = "SELECT Roomtype,Room_ID FROM K2 WHERE Capacity >= %s ORDER BY PricePerNight"
-    value = (guests)
-    result = databas.execute_query_fetchall(query,value,fetch_result=True)
-    
-    if result:
-        return render_template("k1.html", result=result)
-    else:
-        return render_template("error.html",error=error) 
+        return render_template("contacts.html", error="No data found")
 
 # email
 @app.route('/email', methods=['GET', 'POST'])
@@ -228,7 +212,7 @@ def room_info():
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
     print (room)
     print(room_id)
-    return render_template("k3.html", room=room)
+    return render_template("k3_room_info.html", room=room)
 
 
 @app.route("/book", methods=["POST"])
@@ -237,7 +221,7 @@ def book_room():
     room_id = args["room_id"]
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
-    return render_template("k4.html", room=room)
+    return render_template("k4_booking_confirmation.html", room=room)
 
 @app.route("/save_booking", methods=["POST"])
 def save_booking():
@@ -248,7 +232,7 @@ def save_booking():
     name = request.form.get("name")
     start_date = session.get("start_date")
     end_date = session.get("end_date")
-    selected_guests = session.get("guests")
+    selected_guests = session.get("selected_guests")
     bookingID = generate_random_code()
     #TODO guest_id som en autoincrementerad serial
     #TODO fixa queryn
@@ -267,7 +251,7 @@ def save_booking():
     #TODO göra en view så vi får upp booking från Databasen
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
-    return render_template("k4.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email)
+    return render_template("k4_booking_confirmation.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email)
 
 if __name__ == "__main__":
     app.run(debug=True)
