@@ -68,3 +68,4 @@ def execute_insert_query(query, parameter=None, fetch_result=False):
 
 def generate_random_token():
     return secrets.token_urlsafe()
+

@@ -7,3 +7,5 @@ JOIN roomtype ON room.roomtype_id = roomtype.roomtype_id;
 drop VIEW room_details
 
 SELECT * FROM room_details
+
+SELECT * from booking
