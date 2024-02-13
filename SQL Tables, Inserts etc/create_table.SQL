@@ -51,10 +51,11 @@ CREATE TABLE Room (
 CREATE TABLE Booking (
   Booking_ID VARCHAR(250),
   Guest_ID INT,
-  room_id INT,
+  Room_ID INT,
   Check_in_date DATE,
   Check_out_date DATE,
   Status BOOLEAN,
+  Cancelled BOOLEAN,
   PRIMARY KEY (Booking_ID),
   CONSTRAINT FK_Guest_Details_Guest_ID
     FOREIGN KEY (Guest_ID)
@@ -63,7 +64,6 @@ CREATE TABLE Booking (
     FOREIGN KEY (Room_ID)
       REFERENCES Room(Room_ID)
 );
-
 
 
 CREATE TABLE HotelReview (
