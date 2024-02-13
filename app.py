@@ -94,15 +94,15 @@ def email():
         epost2 = request.form['epost2']
         booking_reference = generate_booking_reference()
         return redirect(url_for('bekraftelse', booking_ref=booking_reference))
-    return render_template('e-post.html')
+    return render_template('k4_booking_confirmation.html')
 
 
 # Bokningsbekräftelse
 #TODO engelska?
 @app.route('/bekraftelse')
 def bekraftelse():
-    booking_reference = request.args.get('booking_id')
-    return f"Bokningsbekräftelse: Tack för din bokning! Bokningsreferens: {booking_id}"
+    booking_reference = request.args.get('booking_ID')
+    return f"Bokningsbekräftelse: You´re booking is confirmed. You´re bookningsreference is: {booking_reference}"
 
 # Bokningsreferens
 def generate_booking_reference():
