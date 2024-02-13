@@ -49,7 +49,7 @@ CREATE TABLE Room (
 );
 
 CREATE TABLE Booking (
-  Booking_ID INT,
+  Booking_ID VARCHAR(250),
   Guest_ID INT,
   room_id INT,
   Check_in_date DATE,
@@ -80,7 +80,7 @@ CREATE TABLE HotelReview (
 );
 
 CREATE TABLE BookingOption (
-  Booking_ID INT,
+  Booking_ID VARCHAR(250),
   Option_ID INT,
   CONSTRAINT FK_BookingOption_Option_ID
     FOREIGN KEY (Option_ID)
@@ -91,7 +91,7 @@ CREATE TABLE BookingOption (
 );
 
 CREATE TABLE BookingRoom (
-  Booking_ID INT,
+  Booking_ID VARCHAR(250),
   Room_ID INT,
   CONSTRAINT FK_BookingRoom_Room_ID
     FOREIGN KEY (Room_ID)
@@ -110,7 +110,7 @@ CREATE TABLE AdminUser (
 
 CREATE TABLE EditPermission (
   Admin_ID INT,
-  Booking_ID INT,
+  Booking_ID VARCHAR(250),
   CONSTRAINT FK_EditPermission_Admin_ID
     FOREIGN KEY (Admin_ID)
       REFERENCES AdminUser(Admin_ID)
