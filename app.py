@@ -101,8 +101,8 @@ def email():
 #TODO engelska?
 @app.route('/bekraftelse')
 def bekraftelse():
-    booking_reference = request.args.get('booking_ref')
-    return f"Bokningsbekräftelse: Tack för din bokning! Bokningsreferens: {booking_reference}"
+    booking_reference = request.args.get('booking_id')
+    return f"Bokningsbekräftelse: Tack för din bokning! Bokningsreferens: {booking_id}"
 
 # Bokningsreferens
 def generate_booking_reference():
@@ -233,7 +233,7 @@ def save_booking():
     start_date = session.get("start_date")
     end_date = session.get("end_date")
     selected_guests = session.get("selected_guests")
-    bookingID = generate_random_code()
+    bookingID = generate_booking_reference()
     #TODO guest_id som en autoincrementerad serial
     #TODO fixa queryn
     create_guest_query = """INSERT INTO guest_details (name, email)

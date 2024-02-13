@@ -26,7 +26,7 @@ CREATE TABLE Booking (
       REFERENCES Guest_Details(Guest_ID)
 );
 
-ALTER TABLE Booking ADD COlUMN booking_reference VARCHAR(255);
+
 
 CREATE TABLE BookingOption (
   Booking_ID INT,
@@ -87,16 +87,6 @@ CREATE TABLE Booking (
       REFERENCES Room(Room_ID)
 );
 
-CREATE TABLE BookingOption (
-  Booking_ID INT,
-  Option_ID INT,
-  CONSTRAINT FK_BookingOption_Option_ID
-    FOREIGN KEY (Option_ID)
-      REFERENCES Option(Option_ID),
-  CONSTRAINT FK_BookingOption_Booking_ID
-    FOREIGN KEY (Booking_ID)
-      REFERENCES Booking(Booking_ID)
-);
 
 
 CREATE TABLE HotelReview (
