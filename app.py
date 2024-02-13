@@ -233,7 +233,7 @@ def save_booking():
     start_date = session.get("start_date")
     end_date = session.get("end_date")
     selected_guests = session.get("selected_guests")
-    bookingID = generate_random_code()
+    bookingID = generate_booking_reference()
     #TODO guest_id som en autoincrementerad serial
     #TODO fixa queryn
     create_guest_query = """INSERT INTO guest_details (name, email)

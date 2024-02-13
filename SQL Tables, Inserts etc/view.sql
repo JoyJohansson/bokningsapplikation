@@ -4,8 +4,3 @@ FROM files
 JOIN room ON files.room_id = room.room_id
 JOIN roomtype ON room.roomtype_id = roomtype.roomtype_id;
 
-drop VIEW room_details
-
-SELECT * FROM room_details
-
-SELECT * from booking
