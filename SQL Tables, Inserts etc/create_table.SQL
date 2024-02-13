@@ -7,13 +7,14 @@ CREATE TABLE Option (
 );
 
 CREATE TABLE Guest_Details (
-  Guest_ID INT,
+  Guest_ID SERIAL,
   Name VARCHAR(255),
   Phone INT,
   Email VARCHAR(255),
   PRIMARY KEY (Guest_ID)
 );
 
+<<<<<<< HEAD
 CREATE TABLE Booking (
   Booking_ID INT,
   Guest_ID INT,
@@ -39,6 +40,8 @@ CREATE TABLE BookingOption (
       REFERENCES Booking(Booking_ID)
 );
 
+=======
+>>>>>>> main
 CREATE TABLE Hotel (
   Hotel_ID INT,
   Name VARCHAR(255),
@@ -48,19 +51,6 @@ CREATE TABLE Hotel (
   Email VARCHAR(255),
   Phone INT,
   PRIMARY KEY (Hotel_ID)
-);
-
-CREATE TABLE HotelReview (
-  Review_ID SERIAL,
-  Hotel_ID INT,
-  Guest_name VARCHAR(255),
-  Rating INT,
-  Comment VARCHAR(255),
-  Date_posted DATE,
-  PRIMARY KEY (Review_ID),
-    CONSTRAINT FK_Hotel_Hotel_ID
-    FOREIGN KEY (Hotel_ID)
-      REFERENCES Hotel(Hotel_ID)
 );
 
 CREATE TABLE RoomType (
@@ -84,6 +74,48 @@ CREATE TABLE Room (
       REFERENCES RoomType(RoomType_ID)
 );
 
+CREATE TABLE Booking (
+  Booking_ID INT,
+  Guest_ID INT,
+  room_id INT,
+  Check_in_date DATE,
+  Check_out_date DATE,
+  Status BOOLEAN,
+  PRIMARY KEY (Booking_ID),
+  CONSTRAINT FK_Guest_Details_Guest_ID
+    FOREIGN KEY (Guest_ID)
+      REFERENCES Guest_Details(Guest_ID),
+  CONSTRAINT FK_Room_Room_ID
+    FOREIGN KEY (Room_ID)
+      REFERENCES Room(Room_ID)
+);
+
+CREATE TABLE BookingOption (
+  Booking_ID INT,
+  Option_ID INT,
+  CONSTRAINT FK_BookingOption_Option_ID
+    FOREIGN KEY (Option_ID)
+      REFERENCES Option(Option_ID),
+  CONSTRAINT FK_BookingOption_Booking_ID
+    FOREIGN KEY (Booking_ID)
+      REFERENCES Booking(Booking_ID)
+);
+
+
+CREATE TABLE HotelReview (
+  Review_ID SERIAL,
+  Hotel_ID INT,
+  Guest_name VARCHAR(255),
+  Rating INT,
+  Comment VARCHAR(255),
+  Date_posted DATE,
+  PRIMARY KEY (Review_ID),
+    CONSTRAINT FK_Hotel_Hotel_ID
+    FOREIGN KEY (Hotel_ID)
+      REFERENCES Hotel(Hotel_ID)
+);
+
+
 CREATE TABLE Files (
     File_ID SERIAL PRIMARY KEY,
     Filename VARCHAR(255) NOT NULL,
@@ -93,6 +125,9 @@ CREATE TABLE Files (
     File_content BYTEA,
     Room_ID INT REFERENCES Room(Room_ID)
 );
+
+
+
 
 CREATE TABLE BookingRoom (
   Booking_ID INT,

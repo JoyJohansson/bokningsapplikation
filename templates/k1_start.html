@@ -1,8 +1,5 @@
 {% extends "base.html" %}
-<html lang="sv">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{% block title %}Bokningsapplikation{% endblock %}</title>
     <script>
         function saveDates() {
@@ -58,12 +55,22 @@
 </head>
 <body>
 {% block content %}
+<<<<<<< HEAD:templates/k1.html
     <div class="info-container">
         <h2>K1</h2>
 
         <form action="/K2" method="post" onsubmit="return validateForm(); saveDates();">
             <label for="start_date">Ankomstdatum:</label>
             <input type="date" id="start_date" name="start_date" required>
+=======
+<div class="info-container">
+    <h2>Välkommen till Crazy Frog Hotel </h2>
+    <h2>Ange datum för din vistelse</h2>
+
+    <form action="/available_rooms" method="post">
+        <label for="start_date">Ankomstdatum:</label>
+        <input type="date" id="start_date" name="start_date" required>
+>>>>>>> main:templates/k1_start.html
 
             <label for="end_date">Avresedatum:</label>
             <input type="date" id="end_date" name="end_date" required>
@@ -78,6 +85,7 @@
                 <option value="6">6 gäster</option>
             </select>
 
+<<<<<<< HEAD:templates/k1.html
             <button type="submit">Se rum</button>
 
             <table>
@@ -116,6 +124,11 @@
             <p class="error-message">{{ error }}</p>
         {% endif %}
     </div>
+=======
+        <button type="submit">Se rum</button>
+    </form>
+</div>
+>>>>>>> main:templates/k1_start.html
 {% endblock %}
 </body>
 </html>
