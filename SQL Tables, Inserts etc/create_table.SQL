@@ -14,6 +14,34 @@ CREATE TABLE Guest_Details (
   PRIMARY KEY (Guest_ID)
 );
 
+<<<<<<< HEAD
+CREATE TABLE Booking (
+  Booking_ID INT,
+  Guest_ID INT,
+  Check_in_date DATE,
+  Check_out_date DATE,
+  Status BOOLEAN,
+  PRIMARY KEY (Booking_ID),
+  CONSTRAINT FK_Guest_Details_Guest_ID
+    FOREIGN KEY (Guest_ID)
+      REFERENCES Guest_Details(Guest_ID)
+);
+
+ALTER TABLE Booking ADD COlUMN booking_reference VARCHAR(255);
+
+CREATE TABLE BookingOption (
+  Booking_ID INT,
+  Option_ID INT,
+  CONSTRAINT FK_BookingOption_Option_ID
+    FOREIGN KEY (Option_ID)
+      REFERENCES Option(Option_ID),
+  CONSTRAINT FK_BookingOption_Booking_ID
+    FOREIGN KEY (Booking_ID)
+      REFERENCES Booking(Booking_ID)
+);
+
+=======
+>>>>>>> main
 CREATE TABLE Hotel (
   Hotel_ID INT,
   Name VARCHAR(255),
