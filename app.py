@@ -101,7 +101,7 @@ def email():
 #TODO engelska?
 @app.route('/bekraftelse')
 def bekraftelse():
-    booking_reference = request.args.get('booking_ID')
+    booking_reference = request.args.get('booking_ref')
     return f"Bokningsbekräftelse: You´re booking is confirmed. You´re bookningsreference is: {booking_reference}"
 
 # Bokningsreferens
@@ -233,7 +233,7 @@ def save_booking():
     start_date = session.get("start_date")
     end_date = session.get("end_date")
     selected_guests = session.get("selected_guests")
-    bookingID = generate_booking_reference()
+    booking_ID = generate_booking_reference()
     #TODO guest_id som en autoincrementerad serial
     #TODO fixa queryn
     create_guest_query = """INSERT INTO guest_details (name, email)
@@ -247,7 +247,7 @@ def save_booking():
     #TODO status som en warchar
     insert_query = """INSERT INTO booking (booking_id, guest_id,room_id, check_in_date, check_out_date, status)
                     VALUES (%s,%s, %s,%s,%s, True)"""
-    databas.execute_insert_query(insert_query, (bookingID,result,room_id,start_date, end_date,))
+    databas.execute_insert_query(insert_query, (booking_ID,result,room_id,start_date, end_date,))
     #TODO göra en view så vi får upp booking från Databasen
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
