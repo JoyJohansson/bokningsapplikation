@@ -55,14 +55,6 @@
 </head>
 <body>
 {% block content %}
-<<<<<<< HEAD:templates/k1.html
-    <div class="info-container">
-        <h2>K1</h2>
-
-        <form action="/K2" method="post" onsubmit="return validateForm(); saveDates();">
-            <label for="start_date">Ankomstdatum:</label>
-            <input type="date" id="start_date" name="start_date" required>
-=======
 <div class="info-container">
     <h2>Välkommen till Crazy Frog Hotel </h2>
     <h2>Ange datum för din vistelse</h2>
@@ -70,7 +62,6 @@
     <form action="/available_rooms" method="post">
         <label for="start_date">Ankomstdatum:</label>
         <input type="date" id="start_date" name="start_date" required>
->>>>>>> main:templates/k1_start.html
 
             <label for="end_date">Avresedatum:</label>
             <input type="date" id="end_date" name="end_date" required>
@@ -85,50 +76,17 @@
                 <option value="6">6 gäster</option>
             </select>
 
-<<<<<<< HEAD:templates/k1.html
-            <button type="submit">Se rum</button>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Välj rum</th>
-                        <th>Roomtype</th>
-                        <th>Capacity</th>
-                        <th>Price per night</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <p>Tillgängliga rum</p>
-                    {% for row in result %}
-                        <tr>
-                            <td><input type="checkbox" name="selected_prices[]" value="{{ row[2] }}"></td>
-                            <td>{{ row[0] }}</td>
-                            <td>{{ row[1] }}</td>
-                            <td>{{ row[2] }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <button type="submit">Boka valda rum</button>
-        </form>
-        
-        <form onsubmit="return getBooking();">
-            <label for="booking_reference">Bokningsreferens:</label>
-            <input type="text" id="booking_reference" name="booking_reference" required>
-
-            <button type="submit">Se bokning</button>
-        </form>
-
-        {% if result %}
-        {% else %}
-            <p class="error-message">{{ error }}</p>
-        {% endif %}
-    </div>
-=======
         <button type="submit">Se rum</button>
     </form>
+
+    <form onsubmit="return getBooking();">
+        <label for="booking_reference">Bokningsreferens:</label>
+        <input type="text" id="booking_reference" name="booking_reference" required>
+
+        <button type="submit">Se bokning</button>
+    </form>
+
 </div>
->>>>>>> main:templates/k1_start.html
 {% endblock %}
 </body>
 </html>
