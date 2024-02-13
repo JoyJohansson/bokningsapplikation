@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}Formulär för avbokning{% endblock %}
 
@@ -11,10 +11,18 @@
 </form>
 
 <script>
-    async function cancelBooking() {
-        var bookingReference = document.getElementById('booking_reference').value;
+    async function isValidBookingReference(booking_reference) {
+        // Implementera logik för att validera bokningsreferensen här
+        // Till exempel kan du kontrollera om bokningsreferensen följer ett visst mönster
 
-        if (!isValidBookingReference(bookingReference)) {
+        // Returnera true om bokningsreferensen är giltig, annars false
+        return true; // För tillfället returneras alltid true, eftersom den faktiska valideringen inte är implementerad
+    }
+
+    async function cancelBooking() {
+        var booking_reference = document.getElementById('booking_reference').value;
+
+        if (!await isValidBookingReference(booking_reference)) {
             alert('Ogiltig bokningsreferens. Var god försök igen.');
             return false;
         }
@@ -25,19 +33,22 @@
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
-                body: `booking_reference=${bookingReference}`,
+                body: `booking_reference=${booking_reference}`,
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                alert(data.message);
+                // Använd pop-up-meddelande istället för vanlig dialogruta
+                window.alert(data.message);
             } else {
-                alert(data.error || 'Fel vid avbokning.');
+                // Använd pop-up-meddelande istället för vanlig dialogruta
+                window.alert(data.error || 'Fel vid avbokning.');
             }
         } catch (error) {
             console.error('Fel vid asynkront anrop:', error);
-            alert('Något gick fel vid avbokningen.');
+            // Använd pop-up-meddelande istället för vanlig dialogruta
+            window.alert('Något gick fel vid avbokningen.');
         }
 
         return false;

@@ -94,7 +94,7 @@ def email():
         epost2 = request.form['epost2']
         booking_reference = generate_booking_reference()
         return redirect(url_for('bekraftelse', booking_ref=booking_reference))
-    return render_template('e-post.html')
+    return render_template('k4_booking_details.html')
 
 
 # Bokningsbekräftelse
@@ -102,7 +102,7 @@ def email():
 @app.route('/bekraftelse')
 def bekraftelse():
     booking_reference = request.args.get('booking_ref')
-    return f"Bokningsbekräftelse: Tack för din bokning! Bokningsreferens: {booking_reference}"
+    return f"Bokningsbekräftelse: Your booking is confirmed. Your bookningsreference is: {booking_reference}"
 
 # Bokningsreferens
 def generate_booking_reference():
@@ -221,7 +221,7 @@ def book_room():
     room_id = args["room_id"]
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
-    return render_template("k4_booking_confirmation.html", room=room)
+    return render_template("k4_booking_details.html", room=room)
 
 @app.route("/save_booking", methods=["POST"])
 def save_booking():
@@ -251,7 +251,35 @@ def save_booking():
     #TODO göra en view så vi får upp booking från Databasen
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
-    return render_template("k4_booking_confirmation.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email)
+    return render_template("k4_booking_details.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email)
+
+
+# Hämta bokning via bokningsreferens
+@app.route("/get_booking/<booking_reference>", methods=["GET"])
+def get_booking(booking_reference):
+    query = "SELECT * FROM booking WHERE booking_ID = %s"
+    result = databas.execute_query_fetchone(query, (booking_reference,), fetch_result=True)
+
+    if result:
+        # Returnera bokningsinformation som JSON
+        booking_info = {
+            "booking_reference": result[0],
+            "room_id": result[2],
+        }
+        return jsonify(booking_info)
+    else:
+        return jsonify({"error": "Booking not found"}), 404
+
+
+def mark_booking_as_cancelled(booking_reference):
+    # Uppdatera databasen för att markera bokningen som avbokad med en timestamp
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    update_query = "UPDATE booking SET cancelled_at = %s WHERE booking_reference = %s"
+    databas.execute_insert_query(update_query, (timestamp, booking_reference))
+
+
+
+
 
 
 # Hämta bokning via bokningsreferens
