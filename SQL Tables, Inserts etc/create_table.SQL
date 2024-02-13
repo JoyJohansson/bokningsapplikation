@@ -14,7 +14,6 @@ CREATE TABLE Guest_Details (
   PRIMARY KEY (Guest_ID)
 );
 
-<<<<<<< HEAD
 CREATE TABLE Booking (
   Booking_ID INT,
   Guest_ID INT,
@@ -40,8 +39,6 @@ CREATE TABLE BookingOption (
       REFERENCES Booking(Booking_ID)
 );
 
-=======
->>>>>>> main
 CREATE TABLE Hotel (
   Hotel_ID INT,
   Name VARCHAR(255),
@@ -116,18 +113,6 @@ CREATE TABLE HotelReview (
 );
 
 
-CREATE TABLE Files (
-    File_ID SERIAL PRIMARY KEY,
-    Filename VARCHAR(255) NOT NULL,
-    Filetype VARCHAR(100) NOT NULL,
-    Filesize INT NOT NULL,
-    Upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    File_content BYTEA,
-    Room_ID INT REFERENCES Room(Room_ID)
-);
-
-
-
 
 CREATE TABLE BookingRoom (
   Booking_ID INT,
@@ -160,5 +145,17 @@ CREATE TABLE IF NOT EXISTS admins (
     username VARCHAR(50) UNIQUE NOT NULL,
     password_hash VARCHAR(256) NOT NULL,
     token VARCHAR(256)
+);
+
+
+
+CREATE TABLE Files (
+    File_ID SERIAL PRIMARY KEY,
+    Filename VARCHAR(255) NOT NULL,
+    Filetype VARCHAR(100) NOT NULL,
+    Filesize INT NOT NULL,
+    Upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    File_content BYTEA,
+    Room_ID INT REFERENCES Room(Room_ID)
 );
 
