@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Book Room</title>
-</head>
-<body>
+{% extends "base.html" %}   
 {% block content %}
 
 <div class="info-container" id="confirmation-container" style="display: block;">
-    <h1>Booking Confirmation</h1>
-    <p>Thank you for booking!</p>
+    <h1>Booking details</h1>
     <p>Your booking details:</p>
     <p><strong>Room ID:</strong>{{room[0]}}</p>
     <p><strong>Room Type:</strong>{{room[1]}}</p>
@@ -18,17 +12,18 @@
     <p><strong>Start Date:</strong> {{start_date}}</span></p>
     <p><strong>End Date:</strong>{{end_date}} </p>
     <p><strong>Guests:</strong> {{selected_guests}}</p>
+
+
+    <form action="/email" method="post" onsubmit="return kontrolleraEpost()">
+        <label for="epost1">E-postadress:</label>
+        <input type="email" id="epost1" name="epost1" required>
+
+        <label for="epost2">Bekräfta e-postadress:</label>
+        <input type="email" id="epost2" name="epost2" required>
+
+        <input type="submit" value="Skicka">
+    </form>
 </div>
-
-<form action="/email" method="post" onsubmit="return kontrolleraEpost()">
-    <label for="epost1">E-postadress:</label>
-    <input type="email" id="epost1" name="epost1" required>
-
-    <label for="epost2">Bekräfta e-postadress:</label>
-    <input type="email" id="epost2" name="epost2" required>
-
-    <input type="submit" value="Skicka">
-</form>
 
 <script>
     function kontrolleraEpost() {
@@ -43,9 +38,7 @@
             return true;
         }
     }
-</script>
 
-<script>
     document.getElementById("book-button").addEventListener("click", function() {
         var nameInput = document.getElementById("name");
         var emailInput = document.getElementById("email");
@@ -86,5 +79,4 @@
     });
 </script>
 {% endblock %}
-</body>
-</html>
+

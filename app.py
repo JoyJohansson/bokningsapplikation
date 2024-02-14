@@ -102,7 +102,7 @@ def email():
 @app.route('/bekraftelse')
 def bekraftelse():
     booking_reference = request.args.get('booking_ref')
-    return f"Bokningsbekräftelse: You´re booking is confirmed. You´re bookningsreference is: {booking_reference}"
+    return render_template('bokningsbekräftelse.html', booking_ref=booking_reference)
 
 # Bokningsreferens
 def generate_booking_reference():
