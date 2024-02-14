@@ -103,15 +103,15 @@ def email():
         epost2 = request.form['epost2']
         booking_reference = generate_booking_reference()
         return redirect(url_for('bekraftelse', booking_ref=booking_reference))
-    return render_template('e-post.html')
+    return render_template('k4_booking_confirmation.html')
 
 
 # Bokningsbekräftelse
 #TODO engelska?
 @app.route('/bekraftelse')
 def bekraftelse():
-    booking_reference = request.args.get('booking_id')
-    return f"Bokningsbekräftelse: Tack för din bokning! Bokningsreferens: {booking_id}"
+    booking_reference = request.args.get('booking_ref')
+    return render_template('bokningsbekräftelse.html', booking_ref=booking_reference)
 
 # Bokningsreferens
 def generate_booking_reference():
@@ -123,6 +123,7 @@ def generate_booking_reference():
     booking_reference = f'{timestamp}{random_string}'
     return booking_reference
 
+#
 # Admin registrering
 @app.route("/admin/register", methods=["GET"])
 def admin_register_page():
@@ -242,7 +243,7 @@ def save_booking():
     start_date = session.get("start_date")
     end_date = session.get("end_date")
     selected_guests = session.get("selected_guests")
-    bookingID = generate_booking_reference()
+    booking_ID = generate_booking_reference()
     #TODO guest_id som en autoincrementerad serial
     #TODO fixa queryn
     create_guest_query = """INSERT INTO guest_details (name, email)
@@ -256,21 +257,49 @@ def save_booking():
     #TODO status som en warchar
     insert_query = """INSERT INTO booking (booking_id, guest_id,room_id, check_in_date, check_out_date, status)
                     VALUES (%s,%s, %s,%s,%s, True)"""
-    databas.execute_insert_query(insert_query, (bookingID,result,room_id,start_date, end_date,))
+    databas.execute_insert_query(insert_query, (booking_ID,result,room_id,start_date, end_date,))
     #TODO göra en view så vi får upp booking från Databasen
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
     return render_template("k4_booking_confirmation.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email)
 
-@app.route("/option", methods=["POST"])
-def option():
-    Allinklusive = request.form.get("allinklusive")
-    extrasang = request.form.get("extrabed")
-    frukost = request.form.get("frukost")
+
+@app.route("/guest/login", methods=["GET", "POST"])
+def guest_login():
+    if request.method == "POST":
+        booking = request.form["booking_id"]
+        
+        # Kontrollera om gästen existerar i databasen baserat på e-postadressen
+        query = "SELECT * FROM booking WHERE booking_id = %s"
+        result = databas.execute_query_fetchone(query, (booking,), fetch_result=True)
+        
+        if result:
+            booking_id = result[0]
+            # Spara gästens ID i sessionen
+            session["booking_id"] = booking_id
+            # Omdirigera till dashboard-sidan efter inloggning
+            return redirect(url_for("guest_booking"))
+        
+        # Om inloggningen misslyckas, visa ett felmeddelande
+        return render_template("guest_login.html", error="Ogiltig e-postadress")
     
-    insert_query = """INSERT INTO option()"""
-    
-    
-    return result
+    return render_template("guest_login.html", error=None)
+
+
+@app.route("/guest/booking", methods=["GET"])
+def guest_booking():
+    if "booking_id" in session:
+        booking_id = session["booking_id"]
+        
+        # Hämta gästens bokningar från databasen baserat på gästens ID
+        query = "SELECT * FROM Booking WHERE booking_id = %s"
+        bookings = databas.execute_query_fetchall(query, (booking_id,), fetch_result=True)
+        
+        return render_template("guest_booking.html", bookings=bookings)
+    else:
+        # Om gästen inte är inloggad, omdirigera dem till inloggningssidan
+        return redirect(url_for("guest_login"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
