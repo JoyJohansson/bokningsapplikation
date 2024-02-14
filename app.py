@@ -254,5 +254,44 @@ def save_booking():
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
     return render_template("k4_booking_confirmation.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email)
 
+
+@app.route("/guest/login", methods=["GET", "POST"])
+def guest_login():
+    if request.method == "POST":
+        booking = request.form["booking_id"]
+        
+        # Kontrollera om gästen existerar i databasen baserat på e-postadressen
+        query = "SELECT * FROM booking WHERE booking_id = %s"
+        result = databas.execute_query_fetchone(query, (booking,), fetch_result=True)
+        
+        if result:
+            booking_id = result[0]
+            # Spara gästens ID i sessionen
+            session["booking_id"] = booking_id
+            # Omdirigera till dashboard-sidan efter inloggning
+            return redirect(url_for("guest_booking"))
+        
+        # Om inloggningen misslyckas, visa ett felmeddelande
+        return render_template("guest_login.html", error="Ogiltig e-postadress")
+    
+    return render_template("guest_login.html", error=None)
+
+
+@app.route("/guest/booking", methods=["GET"])
+def guest_booking():
+    if "booking_id" in session:
+        booking_id = session["booking_id"]
+        
+        # Hämta gästens bokningar från databasen baserat på gästens ID
+        query = "SELECT * FROM Booking WHERE booking_id = %s"
+        bookings = databas.execute_query_fetchall(query, (booking_id,), fetch_result=True)
+        
+        return render_template("guest_booking.html", bookings=bookings)
+    else:
+        # Om gästen inte är inloggad, omdirigera dem till inloggningssidan
+        return redirect(url_for("guest_login"))
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
