@@ -114,6 +114,7 @@ def generate_booking_reference():
     booking_reference = f'{timestamp}{random_string}'
     return booking_reference
 
+#
 # Admin registrering
 @app.route("/admin/register", methods=["GET"])
 def admin_register_page():
