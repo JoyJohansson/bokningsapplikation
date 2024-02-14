@@ -68,10 +68,11 @@ def k2():
     LEFT JOIN Booking b ON r.Room_ID = b.room_id
     LEFT JOIN RoomType rt ON r.RoomType_ID = rt.RoomType_ID
     LEFT JOIN Files f ON r.Room_id = f.room_ID
-    WHERE b.room_id IS NULL
-    OR NOT (b.Check_out_date >= %s AND b.Check_in_date <= %s)
+    WHERE (b.room_id IS NULL OR NOT (b.Check_out_date >= %s AND b.Check_in_date <= %s))
+    AND rt.capacity >= %s
     """
-    results = databas.execute_query_fetchall(query,(check_in_date,check_out_date,), fetch_result=True)
+    print(guests)
+    results = databas.execute_query_fetchall(query,(check_in_date,check_out_date,guests,), fetch_result=True)
     
     if results:
         converted_results = []
@@ -92,7 +93,7 @@ def k2():
             converted_results.append(converted_result)
         return render_template("k2_available_rooms.html", results=converted_results)
     else:
-        return render_template("contacts.html", error="No data found")
+        return render_template("k2_available_rooms.html", error="No data found")
 
 # email
 @app.route('/email', methods=['GET', 'POST'])
