@@ -8,9 +8,10 @@
 {% block content %}
 
 <div class="info-container" id="confirmation-container" style="display: block;">
-    <h1>Booking Confirmation</h1>
-    <p>Thank you for booking!</p>
-    <p>Your booking details:</p>
+    <div class="info-container">
+    <h1 style="text-align: center;">Booking Confirmation</h1>
+    <p style="text-align: center;">Thank you for booking!</p>
+    <p style="text-align: center;">Your booking details:</p>
     <p><strong>Room ID:</strong>{{room[0]}}</p>
     <p><strong>Room Type:</strong>{{room[1]}}</p>
     <p><strong>Price Per Night:</strong>{{room[2]}}</p>
@@ -19,6 +20,7 @@
     <p><strong>Start Date:</strong> {{start_date}}</span></p>
     <p><strong>End Date:</strong>{{end_date}} </p>
     <p><strong>Guests:</strong> {{selected_guests}}</p>
+    <div>
 </div>
 
 <script>
