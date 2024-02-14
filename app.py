@@ -233,7 +233,7 @@ def save_booking():
     start_date = session.get("start_date")
     end_date = session.get("end_date")
     selected_guests = session.get("selected_guests")
-    bookingID = generate_random_code()
+    bookingID = generate_booking_reference()
     #TODO guest_id som en autoincrementerad serial
     #TODO fixa queryn
     create_guest_query = """INSERT INTO guest_details (name, email)
@@ -254,57 +254,59 @@ def save_booking():
     return render_template("k4_booking_details.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email)
 
 
-# Hämta bokning via bokningsreferens
+# Hämta bokning via bokningsreferens och omdirigera till kundens kontrollpanel
 @app.route("/get_booking/<booking_reference>", methods=["GET"])
 def get_booking(booking_reference):
-    query = "SELECT * FROM booking WHERE booking_ID = %s"
-    result = databas.execute_query_fetchone(query, (booking_reference,), fetch_result=True)
-
+    query = "SELECT * FROM booking WHERE booking_id = %s"
+    result = databas.execute_query_fetchone(query, (booking_reference), fetch_result=True)
     if result:
-        # Returnera bokningsinformation som JSON
-        booking_info = {
-            "booking_reference": result[0],
-            "room_id": result[2],
-        }
-        return jsonify(booking_info)
+        # omdirigera till kundens kontrollpanel
+        return render_template('K8_guest_dashboard).html')
     else:
-        return jsonify({"error": "Booking not found"}), 404
+        return {"error": "Booking not found"}, 404
 
 
+
+# Avboka
 def mark_booking_as_cancelled(booking_reference):
     # Uppdatera databasen för att markera bokningen som avbokad med en timestamp
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     update_query = "UPDATE booking SET cancelled_at = %s WHERE booking_reference = %s"
     databas.execute_insert_query(update_query, (timestamp, booking_reference))
 
+# Avbokningsbekräftelse
+@app.route('/booking_cancelled')
+def booking_cancelled():
+    return render_template('booking_cancelled.html')
 
 
+# gäst_kontrollpanell
+@app.route('/guest_control_panel')
+def guest_control_panel():
+    # Hämta bokningsinformation baserat på användarens session
+    booking_reference = session.get("booking_reference")
+    query = "SELECT * FROM booking WHERE booking_ID = %s"
+    booking_info = databas.execute_query_fetchone(query, (booking_reference,), fetch_result=True)
 
+    if booking_info:
+        # Extrahera relevant information från bokningsdata
+        room_id = booking_info[2]
+        email = booking_info[3]
+        name = booking_info[4]
+        start_date = booking_info[5]
+        end_date = booking_info[6]
+        selected_guests = booking_info[7]
 
-
-# Hämta bokning via bokningsreferens
-@app.route("/get_booking/<booking_reference>", methods=["GET"])
-def get_booking(booking_reference):
-    query = "SELECT * FROM bookings WHERE booking_reference = %s"
-    result = databas.execute_query_fetchone(query, (booking_reference,), fetch_result=True)
-
-    if result:
-        # Returnera bokningsinformation som JSON
-        booking_info = {
-            "booking_reference": result[6],
-            "room_id": result[1],
-        }
-        return jsonify(booking_info)
+        return render_template('K8_guest_dashboard.html', room_id=room_id, name=name, email=email, start_date=start_date, end_date=end_date, selected_guests=selected_guests)
     else:
-        return jsonify({"error": "Booking not found"}), 404
+        return render_template('K8_guest_dashboard.html', error="Bokning inte hittad")
 
 
-def mark_booking_as_cancelled(booking_reference):
-    # Uppdatera databasen för att markera bokningen som avbokad med en timestamp
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    update_query = "UPDATE bookings SET cancelled_at = %s WHERE booking_reference = %s"
-    databas.execute_insert_query(update_query, (timestamp, booking_reference))
-
+# Logga ut
+@app.route('/logout', methods=['POST'])
+def guest_logout_page():
+    # Koden för utloggning, till exempel att rensa sessionen
+    return render_template('guest_logout_page.html')
 
 
 if __name__ == "__main__":

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Gäst Kontrollpanel{% endblock %}
+
+{% block content %}
+<div class="info-container">
+    <h1>Välkommen till Kontrollpanellen för gäster</h1>
+    
+    <p>Din bokningsinformation.</p>
+
+    <div class="info-container" id="confirmation-container" style="display: block;">
+        <h1>Booking Details</h1>
+        <p>Your booking details:</p>
+        <p><strong>Room ID:</strong> {{ room[0] }}</p>
+        <p><strong>Room Type:</strong> {{ room[1] }}</p>
+        <p><strong>Price Per Night:</strong> {{ room[2] }}</p>
+        <p><strong>Name:</strong> {{ name }}</p>
+        <p><strong>Email:</strong> {{ email }}</span></p>
+        <p><strong>Start Date:</strong> {{ start_date }}</span></p>
+        <p><strong>End Date:</strong> {{ end_date }}</p>
+        <p><strong>Guests:</strong> {{ selected_guests }}</p>
+    </div>
+
+    <form action="{{ url_for('cancel_booking') }}" method="post">
+        <button type="submit">Avboka</button>
+    </form>
+
+    <form action="{{ url_for('add_options') }}" method="get">
+        <button type="submit">Göra tillval</button>
+    </form>
+    
+    <form action="{{ url_for('logout') }}" method="post">
+        <button type="submit">Logga ut</button>
+    </form>
+</div>
+{% endblock %}

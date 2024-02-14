@@ -14,7 +14,6 @@ CREATE TABLE Guest_Details (
   PRIMARY KEY (Guest_ID)
 );
 
-<<<<<<< HEAD
 CREATE TABLE Booking (
   Booking_ID INT,
   Guest_ID INT,
