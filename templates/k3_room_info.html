@@ -3,14 +3,29 @@
 
 {% block content %}
 <div class="info-container">
-    <img src="static/img/08e5b9ba-8d64-4c2f-b31a-ba803e022655.webp" alt="Room Image" width="500">
+    <img src="static/img/08e5b9ba-8d64-4c2f-b31a-ba803e022655.webp" alt="Room Image" width="500" height="500">
     <div class="room-info">
         <h2>Room Details</h2>
+        <form action="/option" method="post" id="book-form">
+            <input type="checkbox" id="checkbox" name="allinklusive">
+            <label for="checkbox">All-inklusive</label>
+            <p></p>
+            <input type="checkbox" id="checkbox" name="extrabed">
+            <label for="checkbox">Extrasäng</label>
+            <p></p>
+            <input type="checkbox" id="checkbox" name="frukost">
+            <label for="checkbox">Frukost</label>
+            <p></p> 
+            </div>
+        </form>
         <p><strong>Room ID:</strong> {{ room[0] }}</p>
         <p><strong>Room Type:</strong> {{ room[1] }}</p>
         <p><strong>Price Per Night:</strong> {{ room[2] }}</p>
+        
 
     </div>
+    
+    
     <form action="/save_booking" method="post" id="book-form">
         <input type="hidden" name="room_id" value="{{ room[0] }}">
         <input type="hidden" name="room_type" value="{{ room[1] }}">

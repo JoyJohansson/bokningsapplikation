@@ -262,5 +262,15 @@ def save_booking():
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
     return render_template("k4_booking_confirmation.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email)
 
+@app.route("/option", methods=["POST"])
+def option():
+    Allinklusive = request.form.get("allinklusive")
+    extrasang = request.form.get("extrabed")
+    frukost = request.form.get("frukost")
+    
+    insert_query = """INSERT INTO option()"""
+    
+    
+    return result
 if __name__ == "__main__":
     app.run(debug=True)

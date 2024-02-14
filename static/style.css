@@ -92,8 +92,9 @@ body {
     grid-column-gap: 20px; /* Avstånd mellan kolumnerna */
 }
 
-.details {
-    grid-column: span 2; /* Ta upp båda kolumnerna */
+.info-option {
+    float: right;
+    width: 70%; /* Justera bredden efter behov */
 }
 
 
