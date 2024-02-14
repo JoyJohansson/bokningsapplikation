@@ -55,7 +55,6 @@ CREATE TABLE Booking (
   Check_in_date DATE,
   Check_out_date DATE,
   Status BOOLEAN,
-  Cancelled BOOLEAN,
   PRIMARY KEY (Booking_ID),
   CONSTRAINT FK_Guest_Details_Guest_ID
     FOREIGN KEY (Guest_ID)
