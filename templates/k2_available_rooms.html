@@ -9,11 +9,19 @@
 <body>
     {% block content %}
     <div class="info-container">
+        {%if error%}
+        <div class="info-container">
+            <h1 style="text-align: center;">.::Info::.</h1>
+        <p> vi har inga rum i denna storlek kontakta kundservice på telefon: 112</p>
+        </div>
+        {%endif%}
+        {%if not error%}
         <h1>Tillgängliga rum</h1>
-        
+        {%endif%}
         <div class="posts-container">
             {%for result in results%}
             <div class="info-post">
+                {{result[0]}}
                 <!-- Visa rummets bild -->
                 <img src="data:image/webp;base64,{{ result.file_content_base64 }}" alt="{{ result.filename }}" style="max-width: 200px; max-height: 200px;">
                 <div class="info-details">

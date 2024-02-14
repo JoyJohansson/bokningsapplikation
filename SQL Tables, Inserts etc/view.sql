@@ -3,4 +3,3 @@ SELECT room.room_id, roomtype.roomtype, files.filename,files.filetype,files.file
 FROM files
 JOIN room ON files.room_id = room.room_id
 JOIN roomtype ON room.roomtype_id = roomtype.roomtype_id;
-

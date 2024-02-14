@@ -14,4 +14,8 @@ INSERT INTO Room (Room_ID, Hotel_ID, RoomType_ID, PricePerNight) VALUES
 (4, 1, 1, 180.00),
 (5, 1, 1, 150.00);
 
+INSERT INTO option (option_id,name,price) VALUES
+(1, 'All-inklusive', 1000),
+(2, 'Extrsäng', 50),
+(3, 'Frukost', 100);
 
