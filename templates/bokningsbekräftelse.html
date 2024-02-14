@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<html lang="sv">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bokningsbekräftelse</title>
-  <!-- Lägg till eventuell CSS-styling här -->
-</head>
-<body>
+{% extends "base.html" %}
 
-  <h1>Bokningsbekräftelse</h1>
-  <p>Tack för din bokning!</p>
-
-  <!-- Lägg till ytterligare information om bokningen här -->
-
-</body>
-</html>
+{% block content %}
+<h1>Bokningsbekräftelse</h1>
+<p>Tack för din bokning!</p>
+<p>Din bokningsreferens är:</p> 
+<p><strong>{{ booking_ref}}</strong></p>
+{% endblock %}
