@@ -25,18 +25,6 @@
 
 <script>
     
-    document.getElementById("book-button").addEventListener("click", function() {
-        var epost1 = document.getElementById('epost1').value;
-        var epost2 = document.getElementById('epost2').value;
-
-        if (epost1 !== epost2 || !isValidEmail(epost1)) {
-            alert('E-postadresserna matchar inte eller är ogiltiga. Var god försök igen.');
-            return false;
-        } else {
-            alert('E-postadresserna matchar!');
-            return true;
-        }
-
         var roomId = document.querySelector("input[name='room_id']").value;
         var roomType = document.querySelector("input[name='room_type']").value;
         var pricePerNight = document.querySelector("input[name='price_per_night']").value;
