@@ -355,7 +355,7 @@ def cancel_booking():
         booking_id = request.args.get("booking_id")
 
         # Update the database to flag the booking as canceled
-        update_query = "UPDATE Booking SET status = 'Canceled' WHERE booking_id = %s"
+        update_query = "UPDATE booking SET status = 'False' WHERE booking_id = %s"
         databas.execute_insert_query(update_query, (booking_id,))
 
         # Optionally, you can retrieve the booking details and display a confirmation message
