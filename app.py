@@ -300,6 +300,14 @@ def guest_booking():
     else:
         # Om gästen inte är inloggad, omdirigera dem till inloggningssidan
         return redirect(url_for("guest_login"))
+    
+def final_price(start, end, price):
+    amount_of_days = (end - start)
+    total_price = (amount_of_days * price)
+    return total_price
+
+    
+
 
 
 if __name__ == "__main__":
