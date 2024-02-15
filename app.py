@@ -349,7 +349,19 @@ def final_price(start, end, price):
     return total_price
 
     
+@app.route("/cancel_booking", methods=["GET"])
+def cancel_booking():
+    if request.method == "GET":
+        booking_id = request.args.get("booking_id")
 
+        # Update the database to flag the booking as canceled
+        update_query = "UPDATE booking SET status = 'Canceled' WHERE booking_id = %s"
+        databas.execute_insert_query(update_query, (booking_id,))
+
+        # Optionally, you can retrieve the booking details and display a confirmation message
+        # e.g., fetch booking details from the database and show a confirmation message
+
+        return "Booking canceled successfully"
 
 
 if __name__ == "__main__":
