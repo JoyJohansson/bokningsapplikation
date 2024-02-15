@@ -245,6 +245,18 @@ def save_booking():
     end_date = session.get("end_date")
     selected_guests = session.get("selected_guests")
     booking_ID = generate_booking_reference()
+    
+   
+    start_date = datetime.strptime(session.get("start_date"), "%Y-%m-%d")
+    end_date = datetime.strptime(session.get("end_date"), "%Y-%m-%d")
+    room_price = float(request.form.get("price_per_night"))
+
+    
+    num_days = (end_date - start_date).days
+
+   
+    total_price = num_days * room_price
+
     #TODO guest_id som en autoincrementerad serial
     #TODO fixa queryn
     create_guest_query = """INSERT INTO guest_details (name, email)
@@ -262,7 +274,7 @@ def save_booking():
     #TODO göra en view så vi får upp booking från Databasen
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
-    return render_template("k4_booking_confirmation.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email)
+    return render_template("k4_booking_confirmation.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email,total_price=total_price)
 
 
 @app.route("/guest/login", methods=["GET", "POST"])
@@ -292,8 +304,15 @@ def guest_booking():
     if "booking_id" in session:
         booking_id = session["booking_id"]
         
-        # Hämta gästens bokningar från databasen baserat på gästens ID
-        query = "SELECT * FROM Booking WHERE booking_id = %s"
+        # Hämta gästens bokningar från databasen baserat på booking ID
+        query = """
+            SELECT Booking.*, Guest_Details.*, Room.*, RoomType.*
+            FROM Booking
+            JOIN Guest_Details ON Booking.guest_id = Guest_Details.guest_id
+            JOIN Room ON Booking.room_id = Room.Room_ID
+            JOIN RoomType ON Room.RoomType_ID = RoomType.RoomType_ID
+            WHERE Booking.booking_id = %s
+        """
         bookings = databas.execute_query_fetchall(query, (booking_id,), fetch_result=True)
         
         return render_template("guest_booking.html", bookings=bookings)
