@@ -281,14 +281,20 @@ def guest_booking():
     if "booking_id" in session:
         booking_id = session["booking_id"]
         
-        # Hämta gästens bokningar från databasen baserat på gästens ID
-        query = "SELECT * FROM Booking WHERE booking_id = %s"
+        # Hämta gästens bokningar från databasen baserat på booking ID
+        query = """
+            SELECT Booking.*, Guest_Details.*
+            FROM Booking
+            JOIN Guest_Details ON Booking.guest_id = Guest_Details.guest_id
+            WHERE Booking.booking_id = %s
+        """
         bookings = databas.execute_query_fetchall(query, (booking_id,), fetch_result=True)
         
         return render_template("guest_booking.html", bookings=bookings)
     else:
         # Om gästen inte är inloggad, omdirigera dem till inloggningssidan
         return redirect(url_for("guest_login"))
+
 
 
 
