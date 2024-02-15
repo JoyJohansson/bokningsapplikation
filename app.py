@@ -363,5 +363,19 @@ def cancel_booking():
         return jsonify(message="Booking canceled successfully", redirect_url=url_for('k1'))
         
 
+@app.route("/guest/logout", methods=["POST"])
+def guest_logout():
+    if request.method == "POST":
+        session.pop("booking_id", None)
+        return redirect(url_for('guest_logout_page'))
+    else:
+        return "Method Not Allowed", 405
+
+
+@app.route("/guest/logout_page")
+def guest_logout_page():
+    return render_template('guest_logout_page.html')
+
+
 if __name__ == "__main__":
     app.run(debug=True)
