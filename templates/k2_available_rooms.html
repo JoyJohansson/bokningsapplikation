@@ -24,14 +24,16 @@
                 {{result[0]}}
                 <!-- Visa rummets bild -->
                 <img src="data:image/webp;base64,{{ result.file_content_base64 }}" alt="{{ result.filename }}" style="max-width: 200px; max-height: 200px;">
-                <div class="info-details">
                     <!-- Visa rummets information -->
-                    <h2>{{ result.roomtype }}</h2>
-                    <div class="details">
-                        <p>Pris: {{result.pricepernight}}$</p>
+                    <div class="info-details">
+                    <div class="info-details">
+                        <h2>{{ result.roomtype }}</h2>
+                        <p></p>
+                        <p>Pris: ${{result.pricepernight}}</p>
+                        <p></p>
                         <button class="button-action" onclick="location.href='/room_info?room_id={{ result.room_id }}'" type="submit">Visa detaljer</button>
                     </div>
-                </div>
+                    </div>
             </div>
             {% endfor %}
         </div>

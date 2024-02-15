@@ -93,8 +93,7 @@ body {
 }
 
 .info-option {
-    float: right;
-    width: 70%; /* Justera bredden efter behov */
+    width: 30%; /* Justera bredden efter behov */
 }
 
 
