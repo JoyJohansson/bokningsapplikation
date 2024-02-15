@@ -49,24 +49,22 @@
                         <td>Åtgärd:</td>
                         <td>
                             <button class="avboka" onclick="cancelBooking('{{ booking[0] }}')">Avboka</button>
+
+                            <form action="{{ url_for('guest_logout') }}" method="post" style="display: inline;">
+                                <button type="submit">Logga ut</button>
+                            </form>
+
                         </td>
                     </tr>
                     
                 </tr>
+
             {% endfor %}
         </tbody>
     </table>
 </div>
 
-<script>
-    // JavaScript function to prompt for confirmation
-    function cancelBooking(bookingID) {
-        if (confirm('Are you sure you want to cancel this booking?')) {
-            // If user confirms, redirect to cancel booking endpoint
-            window.location.href = "/cancel_booking?booking_id=" + bookingID;
-        }
-    }
-</script>
+
 <script>
     function cancelBooking(bookingID) {
         if (confirm('Are you sure you want to cancel this booking?')) {
