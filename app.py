@@ -297,7 +297,8 @@ def save_booking():
             #TEST FÖR BACKEND FÖR ATT SE SÅ DEN TAR MED ALLA VARIABLAR
             print(f"Option ID för '{option_value}' hittades inte i databasen.")
     
-    return render_template("k4_booking_confirmation.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email,total_price=total_price)
+    return render_template("k4_booking_confirmation.html", booking_ID=booking_ID, room=room, start_date=start_date, end_date=end_date, selected_guests=selected_guests, name=name, email=email)
+
 
 @app.route("/guest/login", methods=["GET", "POST"])
 def guest_login():
