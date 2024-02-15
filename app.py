@@ -242,7 +242,7 @@ def save_booking():
     selected_options = request.form.getlist('options')
     booking_ID = request.form.get("booking_ID")
     room_id = request.form.get("room_id")
-    email = request.form.get("email")
+    email = request.form.get("epost1")
     name = request.form.get("name")
     start_date = session.get("start_date")
     end_date = session.get("end_date")

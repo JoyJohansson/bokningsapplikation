@@ -1,6 +1,3 @@
-
-
-
 {% extends "base.html" %}
 {% block title %}Room Details{% endblock %}
 
@@ -16,14 +13,6 @@
 
         <form action="/save_booking" method="post" onsubmit="return validateForm()">
             <input type="hidden" name="room_id" value="{{ room[0] }}">
-            <input type="checkbox" id="all_inclusive" name="options" value="All-inklusive">
-            <label for="all_inclusive">All-inklusive</label>
-            <input type="checkbox" id="extra_bed" name="options" value="Extrasäng">
-            <label for="extra_bed">Extrasäng</label>
-            <input type="checkbox" id="breakfast" name="options" value="Frukost">
-            <label for="breakfast">Frukost</label>
-            <br>
-            <br>
             <input type="hidden" name="room_type" value="{{ room[1] }}">
             <input type="hidden" name="price_per_night" value="{{ room[2] }}">
             <label for="name">Name:</label>
@@ -37,7 +26,7 @@
     </div>
 </div>
 
-<script> 
+<script>
     function validateForm() {
         var epost1 = document.getElementById('epost1').value;
         var epost2 = document.getElementById('epost2').value;
@@ -52,8 +41,7 @@
     }
 
     function isValidEmail(email) {
-        // Här kan du lägga till valideringslogik för e-postadresser om det behövs
-        return true; // För tillfället alltid returnera true, eftersom vi inte har en specifik valideringsfunktion
+        return true;
     }
 </script>
 {% endblock %}
