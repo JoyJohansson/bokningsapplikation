@@ -221,9 +221,17 @@ def room_info():
     room_id = args["room_id"]
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
+
+    start_date = datetime.strptime(session.get("start_date"), "%Y-%m-%d")
+    end_date = datetime.strptime(session.get("end_date"), "%Y-%m-%d")
+
+    num_days = (end_date - start_date).days
+
+
+    total_price = num_days * float(room[2])
     print (room)
     print(room_id)
-    return render_template("k3_room_info.html", room=room)
+    return render_template("k3_room_info.html", room=room, total_price=total_price)
 
 
 @app.route("/book", methods=["POST"])
@@ -328,6 +336,14 @@ def guest_booking():
     else:
         # Om gästen inte är inloggad, omdirigera dem till inloggningssidan
         return redirect(url_for("guest_login"))
+    
+def final_price(start, end, price):
+    amount_of_days = (end - start)
+    total_price = (amount_of_days * price)
+    return total_price
+
+    
+
 
 
 if __name__ == "__main__":
