@@ -18,72 +18,50 @@
       <p><strong>Start Date:</strong> {{start_date}}</span></p>
       <p><strong>End Date:</strong>{{end_date}} </p>
       <p><strong>Guests:</strong> {{selected_guests}}</p>
-    <div>
+    </div>
 
 
-    <form action="/email" method="post" onsubmit="return kontrolleraEpost()">
-        <label for="epost1">E-postadress:</label>
-        <input type="email" id="epost1" name="epost1" required>
+    <script>
+    
+        document.getElementById("book-button").addEventListener("click", function() {
+            var nameInput = document.getElementById("name");
+            var emailInput = document.getElementById("email");
+            
+            // Kontrollera att både namn och e-post är ifyllda
+            if (nameInput.value.trim() === "" || emailInput.value.trim() === "") {
+                alert("Please fill in both name and email.");
+                return;
+            }
 
-        <label for="epost2">Bekräfta e-postadress:</label>
-        <input type="email" id="epost2" name="epost2" required>
+            var roomId = document.querySelector("input[name='room_id']").value;
+            var roomType = document.querySelector("input[name='room_type']").value;
+            var pricePerNight = document.querySelector("input[name='price_per_night']").value;
+            var name = nameInput.value;
+            var email = emailInput.value;
 
-        <input type="submit" value="Skicka">
-    </form>
+            // Sparar bokningsdetaljer i sessionStorage
+            sessionStorage.setItem('booked-room-id', roomId);
+            sessionStorage.setItem('booked-room-type', roomType);
+            sessionStorage.setItem('booked-price-per-night', pricePerNight);
+            sessionStorage.setItem('booked-name', name);
+            sessionStorage.setItem('booked-email', email);
+
+            document.getElementById("booked-room-id").innerText = roomId;
+            document.getElementById("booked-room-type").innerText = roomType;
+            document.getElementById("booked-price-per-night").innerText = pricePerNight;
+            document.getElementById("booked-name").innerText = name;
+            document.getElementById("booked-email").innerText = email;
+
+            document.getElementById("room-info-container").style.display = "none";
+            document.getElementById("confirmation-container").style.display = "block";
+
+            // Visar sparade datumen i bokningsbekräftelsen
+            document.getElementById("booked-start-date").innerText = sessionStorage.getItem('start_date');
+            document.getElementById("booked-end-date").innerText = sessionStorage.getItem('end_date');
+            document.getElementById("booked-guests").innerText = sessionStorage.getItem('guests');
+
+        });
+    </script>
 </div>
-
-<script>
-    function kontrolleraEpost() {
-        var epost1 = document.getElementById('epost1').value;
-        var epost2 = document.getElementById('epost2').value;
-
-        if (epost1 !== epost2 || !isValidEmail(epost1)) {
-            alert('E-postadresserna matchar inte eller är ogiltiga. Var god försök igen.');
-            return false;
-        } else {
-            alert('E-postadresserna matchar!');
-            return true;
-        }
-    }
-
-    document.getElementById("book-button").addEventListener("click", function() {
-        var nameInput = document.getElementById("name");
-        var emailInput = document.getElementById("email");
-        
-        // Kontrollera att både namn och e-post är ifyllda
-        if (nameInput.value.trim() === "" || emailInput.value.trim() === "") {
-            alert("Please fill in both name and email.");
-            return;
-        }
-
-        var roomId = document.querySelector("input[name='room_id']").value;
-        var roomType = document.querySelector("input[name='room_type']").value;
-        var pricePerNight = document.querySelector("input[name='price_per_night']").value;
-        var name = nameInput.value;
-        var email = emailInput.value;
-
-        // Sparar bokningsdetaljer i sessionStorage
-        sessionStorage.setItem('booked-room-id', roomId);
-        sessionStorage.setItem('booked-room-type', roomType);
-        sessionStorage.setItem('booked-price-per-night', pricePerNight);
-        sessionStorage.setItem('booked-name', name);
-        sessionStorage.setItem('booked-email', email);
-
-        document.getElementById("booked-room-id").innerText = roomId;
-        document.getElementById("booked-room-type").innerText = roomType;
-        document.getElementById("booked-price-per-night").innerText = pricePerNight;
-        document.getElementById("booked-name").innerText = name;
-        document.getElementById("booked-email").innerText = email;
-
-        document.getElementById("room-info-container").style.display = "none";
-        document.getElementById("confirmation-container").style.display = "block";
-
-        // Visar sparade datumen i bokningsbekräftelsen
-        document.getElementById("booked-start-date").innerText = sessionStorage.getItem('start_date');
-        document.getElementById("booked-end-date").innerText = sessionStorage.getItem('end_date');
-        document.getElementById("booked-guests").innerText = sessionStorage.getItem('guests');
-
-    });
-</script>
 {% endblock %}
 

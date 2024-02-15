@@ -103,7 +103,7 @@ def email():
         epost2 = request.form['epost2']
         booking_reference = generate_booking_reference()
         return redirect(url_for('bekraftelse', booking_ref=booking_reference))
-    return render_template('k4_booking_confirmation.html')
+    return render_template('k3_room_info.html')
 
 
 # Bokningsbekräftelse
@@ -111,7 +111,7 @@ def email():
 @app.route('/bekraftelse')
 def bekraftelse():
     booking_reference = request.args.get('booking_ref')
-    return render_template('bokningsbekräftelse.html', booking_ref=booking_reference)
+    return render_template('k4_booking_confirmation.html', booking_ref=booking_reference)
 
 # Bokningsreferens
 def generate_booking_reference():

@@ -32,9 +32,32 @@
         <input type="hidden" name="price_per_night" value="{{ room[2] }}">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required><br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
-        <button id="book-button">Book This Room</button>
     </form>
+
+    <form action="/email" method="post" onsubmit="return kontrolleraEpost()">
+        <label for="epost1">E-postadress:</label>
+        <input type="email" id="epost1" name="epost1" required>
+
+        <label for="epost2">Bekräfta e-postadress:</label>
+        <input type="email" id="epost2" name="epost2" required>
+        <button id="book-button">Book This Room</button>
+
+    </form>
+</div>
+
+    <script>
+        function kontrolleraEpost() {
+            var epost1 = document.getElementById('epost1').value;
+            var epost2 = document.getElementById('epost2').value;
+
+            if (epost1 !== epost2 || !isValidEmail(epost1)) {
+                alert('E-postadresserna matchar inte eller är ogiltiga. Var god försök igen.');
+                return false;
+            } else {
+                alert('E-postadresserna matchar!');
+                return true;
+            }
+        }
+    </script>
 
 {% endblock %}
