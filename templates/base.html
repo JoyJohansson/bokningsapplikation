@@ -14,6 +14,7 @@
         <div class="nav-right">
             {%if admin_token%}
             <a class="link-button" href="{{ url_for('admin_logout_page') }}">Sign out</a>
+            <a class="link-button"href="{{ url_for('guest_login') }}">Booking</a>
             {%else%}
             <a class="link-button" href="{{ url_for('admin_login_page') }}">Admin</a>
             <a class="link-button"href="{{ url_for('guest_login') }}">Booking</a>
