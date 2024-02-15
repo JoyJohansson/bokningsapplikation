@@ -153,11 +153,11 @@ def admin_register():
 
     return render_template('admin_register_page.html', error=None)
 
-
 # Admin login
 @app.route("/admin/login", methods=["GET"])
 def admin_login_page():  
     return render_template("admin_login_page.html", error=None)
+
   
 # Admin login
 @app.route("/admin/login", methods=["POST"])
@@ -196,8 +196,9 @@ def generate_random_token():
 # efter lyckad inloggning, där admin kan utföra administrativa uppgifter.
 @app.route("/admin/dashboard")
 def admin_dashboard():
+    
     if 'admin_token' in session:
-        return render_template('admin_dashboard.html')
+        return render_template('admin_dashboard.html', admin_token=session.get('admin_token'))
     else:
         return redirect(url_for('admin_login_page'))
       

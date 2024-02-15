@@ -12,7 +12,11 @@
 
 
         <div class="nav-right">
+            {%if admin_token%}
+            <a class="link-button" href="{{ url_for('admin_logout_page') }}">Sign out</a>
+            {%else%}
             <a class="link-button" href="{{ url_for('admin_login_page') }}">Admin Login</a>
+            {%endif%}
             <a class="link-button"href="{{ url_for('guest_login') }}">Gäst Inloggning</a>
         </div>   
     </nav>
