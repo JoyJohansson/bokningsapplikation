@@ -10,6 +10,10 @@
     <button type="submit">Avboka bokning</button>
 </form>
 
+<div id="bookingNotFoundMessage" style="display: none; color: red;">
+    Booking not found. Please try again.
+</div>
+
 <script>
     async function cancelBooking() {
         var bookingReference = document.getElementById('booking_reference').value;
@@ -33,7 +37,11 @@
             if (response.ok) {
                 alert(data.message);
             } else {
-                alert(data.error || 'Fel vid avbokning.');
+                if (data.message === "Booking not found") {
+                    document.getElementById('bookingNotFoundMessage').style.display = 'block';
+                } else {
+                    alert(data.error || 'Fel vid avbokning.');
+                }
             }
         } catch (error) {
             console.error('Fel vid asynkront anrop:', error);
