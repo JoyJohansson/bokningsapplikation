@@ -67,5 +67,20 @@
         }
     }
 </script>
+<script>
+    function cancelBooking(bookingID) {
+        if (confirm('Are you sure you want to cancel this booking?')) {
+            // Send a request to cancel the booking
+            fetch(`/cancel_booking?booking_id=${bookingID}`)
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message); // Display pop-up message
+                    window.location.href = data.redirect_url; // Redirect to K1_start.html
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
+</script>
+
 
 {% endblock %}

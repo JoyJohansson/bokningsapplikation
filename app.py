@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_bcrypt import Bcrypt 
 from psycopg2 import connect, DatabaseError, pool
 from dotenv import load_dotenv
@@ -355,14 +355,13 @@ def cancel_booking():
         booking_id = request.args.get("booking_id")
 
         # Update the database to flag the booking as canceled
-        update_query = "UPDATE booking SET status = 'Canceled' WHERE booking_id = %s"
+        update_query = "UPDATE Booking SET status = 'Canceled' WHERE booking_id = %s"
         databas.execute_insert_query(update_query, (booking_id,))
 
         # Optionally, you can retrieve the booking details and display a confirmation message
         # e.g., fetch booking details from the database and show a confirmation message
-
-        return "Booking canceled successfully"
-
+        return jsonify(message="Booking canceled successfully", redirect_url=url_for('k1'))
+        
 
 if __name__ == "__main__":
     app.run(debug=True)
