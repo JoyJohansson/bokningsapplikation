@@ -2,14 +2,10 @@
 {% block title %}Gäst Dashboard{% endblock %}
 {% block content %}
 <div class="info-container">
-    <h2>Mina Bokningar</h2>
+    <h2>Välkommen {{ bookings[0][7] }}</h2>
+    <h2> Här är dina Bokningar</h2>
     <table>
-        <thead>
-            <tr>
-                <th>Information</th>
-                <th>Detaljer</th>
-            </tr>
-        </thead>
+        
         <tbody>
             {% for booking in bookings %}
                 <tr>
@@ -25,6 +21,14 @@
                     <td>{{ booking[2] }}</td>
                 </tr>
                 <tr>
+                    <td>Room Type:</td>
+                    <td>{{booking[15]}}</td>
+                </tr>
+                <tr>
+                    <td>Price Per Night:</td>
+                    <td>{{booking[13]}}</td>
+                </tr>
+                <tr>
                     <td>Incheckningsdatum:</td>
                     <td>{{ booking[3] }}</td>
                 </tr>
@@ -35,6 +39,10 @@
                 <tr>
                     <td>Status:</td>
                     <td>{{ booking[5] }}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{booking[9]}}</td>
                 </tr>
                 <tr>
                     <td>Åtgärd:</td>
