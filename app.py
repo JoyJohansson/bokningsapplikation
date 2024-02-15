@@ -256,6 +256,19 @@ def save_booking():
     end_date = session.get("end_date")
     selected_guests = session.get("selected_guests")
     booking_ID = generate_booking_reference()
+    
+    
+    start_date = datetime.strptime(session.get("start_date"), "%Y-%m-%d")
+    end_date = datetime.strptime(session.get("end_date"), "%Y-%m-%d")
+    room_price = float(request.form.get("price_per_night"))
+
+
+    num_days = (end_date - start_date).days
+
+
+    total_price = num_days * room_price
+
+    
     #Insert för att lägga till namn och emil i guest_details tabellen
     create_guest_query = """INSERT INTO guest_details (name, email)
                         VALUES (%s, %s)"""
@@ -292,7 +305,7 @@ def save_booking():
             #TEST FÖR BACKEND FÖR ATT SE SÅ DEN TAR MED ALLA VARIABLAR
             print(f"Option ID för '{option_value}' hittades inte i databasen.")
     
-    return render_template("k4_booking_confirmation.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email)
+    return render_template("k4_booking_confirmation.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email,total_price=total_price)
 
 @app.route("/guest/login", methods=["GET", "POST"])
 def guest_login():
