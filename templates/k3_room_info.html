@@ -32,11 +32,14 @@
         <input type="hidden" name="room_type" value="{{ room[1] }}">
         <input type="hidden" name="price_per_night" value="{{ room[2] }}">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
-        <p></p>
+        <input type="text" id="name" name="name" required><br><label for="epost1">E-postadress:</label>
+        <input type="email" id="epost1" name="epost1" required>
+        <label for="epost2">Bekräfta e-postadress:</label>
+        <input type="email" id="epost2" name="epost2" required>
+        <p>
+        <p>
         <button class="button-action" id="book-button">Book This Room</button>
     </form>
+
 </div>
 {% endblock %}

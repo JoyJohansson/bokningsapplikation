@@ -9,6 +9,7 @@
       
       <h1>Booking details</h1>
       <p>Your booking details:</p>
+      <p><strong>Booking reference:</strong>{{booking_ID}}</p>
       <p><strong>Room ID:</strong>{{room[0]}}</p>
       <p><strong>Room Type:</strong>{{room[1]}}</p>
       <p><strong>Price Per Night:</strong>{{room[2]}}</p>
@@ -20,20 +21,11 @@
       <p><strong>Guests:</strong> {{selected_guests}}</p>
     <div>
 
-
-    <form action="/email" method="post" onsubmit="return kontrolleraEpost()">
-        <label for="epost1">E-postadress:</label>
-        <input type="email" id="epost1" name="epost1" required>
-
-        <label for="epost2">Bekräfta e-postadress:</label>
-        <input type="email" id="epost2" name="epost2" required>
-
-        <input type="submit" value="Skicka">
-    </form>
 </div>
 
 <script>
-    function kontrolleraEpost() {
+    
+    document.getElementById("book-button").addEventListener("click", function() {
         var epost1 = document.getElementById('epost1').value;
         var epost2 = document.getElementById('epost2').value;
 
@@ -44,17 +36,6 @@
             alert('E-postadresserna matchar!');
             return true;
         }
-    }
-
-    document.getElementById("book-button").addEventListener("click", function() {
-        var nameInput = document.getElementById("name");
-        var emailInput = document.getElementById("email");
-        
-        // Kontrollera att både namn och e-post är ifyllda
-        if (nameInput.value.trim() === "" || emailInput.value.trim() === "") {
-            alert("Please fill in both name and email.");
-            return;
-        }
 
         var roomId = document.querySelector("input[name='room_id']").value;
         var roomType = document.querySelector("input[name='room_type']").value;
@@ -63,12 +44,14 @@
         var email = emailInput.value;
 
         // Sparar bokningsdetaljer i sessionStorage
+        sessionStorage.setItem('booked-booking_ID', booking_ID);
         sessionStorage.setItem('booked-room-id', roomId);
         sessionStorage.setItem('booked-room-type', roomType);
         sessionStorage.setItem('booked-price-per-night', pricePerNight);
         sessionStorage.setItem('booked-name', name);
         sessionStorage.setItem('booked-email', email);
 
+        document.getElementById("booked-booking_ID").innerText = booking_ID;
         document.getElementById("booked-room-id").innerText = roomId;
         document.getElementById("booked-room-type").innerText = roomType;
         document.getElementById("booked-price-per-night").innerText = pricePerNight;

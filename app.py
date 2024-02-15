@@ -95,15 +95,6 @@ def k2():
     else:
         return render_template("k2_available_rooms.html", error="No data found")
 
-# email
-@app.route('/email', methods=['GET', 'POST'])
-def email():
-    if request.method == 'POST':
-        epost1 = request.form['epost1']
-        epost2 = request.form['epost2']
-        booking_reference = generate_booking_reference()
-        return redirect(url_for('bekraftelse', booking_ref=booking_reference))
-    return render_template('k4_booking_confirmation.html')
 
 
 # Bokningsbekräftelse
@@ -249,6 +240,7 @@ def save_booking():
     
     #VARIABLAR från html k3_room_info.html
     selected_options = request.form.getlist('options')
+    booking_ID = request.form.get("booking_ID")
     room_id = request.form.get("room_id")
     email = request.form.get("email")
     name = request.form.get("name")
@@ -292,7 +284,8 @@ def save_booking():
             #TEST FÖR BACKEND FÖR ATT SE SÅ DEN TAR MED ALLA VARIABLAR
             print(f"Option ID för '{option_value}' hittades inte i databasen.")
     
-    return render_template("k4_booking_confirmation.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email)
+    return render_template("k4_booking_confirmation.html", booking_ID=booking_ID, room=room, start_date=start_date, end_date=end_date, selected_guests=selected_guests, name=name, email=email)
+
 
 @app.route("/guest/login", methods=["GET", "POST"])
 def guest_login():
