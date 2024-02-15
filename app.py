@@ -283,9 +283,11 @@ def guest_booking():
         
         # Hämta gästens bokningar från databasen baserat på booking ID
         query = """
-            SELECT Booking.*, Guest_Details.*
+            SELECT Booking.*, Guest_Details.*, Room.*, RoomType.*
             FROM Booking
             JOIN Guest_Details ON Booking.guest_id = Guest_Details.guest_id
+            JOIN Room ON Booking.room_id = Room.Room_ID
+            JOIN RoomType ON Room.RoomType_ID = RoomType.RoomType_ID
             WHERE Booking.booking_id = %s
         """
         bookings = databas.execute_query_fetchall(query, (booking_id,), fetch_result=True)
@@ -294,7 +296,6 @@ def guest_booking():
     else:
         # Om gästen inte är inloggad, omdirigera dem till inloggningssidan
         return redirect(url_for("guest_login"))
-
 
 
 
