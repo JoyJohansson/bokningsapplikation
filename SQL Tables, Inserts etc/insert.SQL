@@ -19,3 +19,4 @@ INSERT INTO option (option_id,name,price) VALUES
 (2, 'Extrsäng', 50),
 (3, 'Frukost', 100);
 
+SELECT * FROM option

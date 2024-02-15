@@ -6,18 +6,6 @@
     <img src="static/img/08e5b9ba-8d64-4c2f-b31a-ba803e022655.webp" alt="Room Image" width="500" height="500">
     <div class="room-info">
         <h2>Room Details</h2>
-        <form action="/option" method="post" id="book-form">
-            <input type="checkbox" id="checkbox" name="allinklusive">
-            <label for="checkbox">All-inklusive</label>
-            <p></p>
-            <input type="checkbox" id="checkbox" name="extrabed">
-            <label for="checkbox">Extrasäng</label>
-            <p></p>
-            <input type="checkbox" id="checkbox" name="frukost">
-            <label for="checkbox">Frukost</label>
-            <p></p> 
-            </div>
-        </form>
         <p><strong>Room ID:</strong> {{ room[0] }}</p>
         <p><strong>Room Type:</strong> {{ room[1] }}</p>
         <p><strong>Price Per Night:</strong> {{ room[2] }}</p>
@@ -28,6 +16,18 @@
     
     <form action="/save_booking" method="post" id="book-form">
         <input type="hidden" name="room_id" value="{{ room[0] }}">
+
+        <input type="checkbox" id="all_inclusive" name="options" value="All-inklusive">
+        <label for="all_inclusive">All-inklusive</label>
+
+        <input type="checkbox" id="extra_bed" name="options" value="Extrasäng">
+            <label for="extra_bed">Extrasäng</label>
+        
+            <input type="checkbox" id="breakfast" name="options" value="Frukost">
+            <label for="breakfast">Frukost</label>
+
+        <br>
+        <br>
         <input type="hidden" name="room_type" value="{{ room[1] }}">
         <input type="hidden" name="price_per_night" value="{{ room[2] }}">
         <label for="name">Name:</label>

@@ -238,6 +238,9 @@ def book_room():
 def save_booking():
     print("save_booking")
     print(session)
+    
+    #VARIABLAR från html k3_room_info.html
+    selected_options = request.form.getlist('options')
     room_id = request.form.get("room_id")
     email = request.form.get("email")
     name = request.form.get("name")
@@ -245,25 +248,43 @@ def save_booking():
     end_date = session.get("end_date")
     selected_guests = session.get("selected_guests")
     booking_ID = generate_booking_reference()
-    #TODO guest_id som en autoincrementerad serial
-    #TODO fixa queryn
+    #Insert för att lägga till namn och emil i guest_details tabellen
     create_guest_query = """INSERT INTO guest_details (name, email)
                         VALUES (%s, %s)"""
     guest_saved = databas.execute_insert_query(create_guest_query, (name,email))
     print(guest_saved)
-    #TODO lägg till room_id i db booking
-    #TODO få denna query att funka
+    #hämtar gästens ID
     query = "SELECT Guest_ID FROM guest_details WHERE name = %s"
     result = databas.execute_query_fetchone(query,(name,),fetch_result=True)
     #TODO status som en warchar
+    #skapar bookningen
     insert_query = """INSERT INTO booking (booking_id, guest_id,room_id, check_in_date, check_out_date, status)
                     VALUES (%s,%s, %s,%s,%s, True)"""
     databas.execute_insert_query(insert_query, (booking_ID,result,room_id,start_date, end_date,))
-    #TODO göra en view så vi får upp booking från Databasen
+
     query = "SELECT Room_ID, Roomtype, PricePerNight FROM room, RoomType WHERE room_id = %s"
     room = databas.execute_query_fetchone(query, (room_id,), fetch_result=True)
-    return render_template("k4_booking_confirmation.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email)
+    
+    print(selected_options)
+    
+    insert_query = """INSERT INTO bookingoption (booking_id, option_id) VALUES (%s,%s)"""
 
+    for option_value in selected_options:
+        
+        select_query = "SELECT option_id FROM option WHERE name = %s"
+        option_ids = databas.execute_query_fetchall(select_query, (option_value,), fetch_result=True)
+
+        
+        if option_ids:
+            
+            for option_id in option_ids:
+                
+                databas.execute_insert_query(insert_query, (booking_ID, option_id[0],))
+        else:
+            #TEST FÖR BACKEND FÖR ATT SE SÅ DEN TAR MED ALLA VARIABLAR
+            print(f"Option ID för '{option_value}' hittades inte i databasen.")
+    
+    return render_template("k4_booking_confirmation.html", room=room, start_date=start_date,end_date=end_date, selected_guests=selected_guests,name=name,email=email)
 
 @app.route("/guest/login", methods=["GET", "POST"])
 def guest_login():
