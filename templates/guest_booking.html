@@ -6,23 +6,39 @@
     <table>
         <thead>
             <tr>
-                <th>Boknings ID</th>
-                <th>Rums ID</th>
-                <th>Incheckningsdatum</th>
-                <th>Utcheckningsdatum</th>
-                <th>Status</th>
+                <th>Information</th>
+                <th>Detaljer</th>
             </tr>
         </thead>
         <tbody>
             {% for booking in bookings %}
                 <tr>
+                    <td>Boknings ID:</td>
                     <td>{{ booking[0] }}</td>
-                    <td>{{ booking[1] }}</td>
+                </tr>
+                <tr>
+                    <td>Gäst ID:</td>
+                    <td>{{booking[1]}}</td>
+                </tr>
+                <tr>
+                    <td>Rums ID:</td>
                     <td>{{ booking[2] }}</td>
+                </tr>
+                <tr>
+                    <td>Incheckningsdatum:</td>
                     <td>{{ booking[3] }}</td>
+                </tr>
+                <tr>
+                    <td>Utcheckningsdatum:</td>
                     <td>{{ booking[4] }}</td>
-                    <td> <button id="avboka">avboka</button>
-                    </td>
+                </tr>
+                <tr>
+                    <td>Status:</td>
+                    <td>{{ booking[5] }}</td>
+                </tr>
+                <tr>
+                    <td>Åtgärd:</td>
+                    <td><button class="avboka">Avboka</button></td>
                 </tr>
             {% endfor %}
         </tbody>
