@@ -1,15 +1,15 @@
 {% extends "base.html" %}
-{% block title %}Guest Inloggning{% endblock %}
+{% block title %}Bokning{% endblock %}
 {% block content %}
 <div class="info-container">
-    <h2>Gäst Inloggning</h2>
+    <h2>Se bokning</h2>
     {% if error %}
         <p style="color: red;">{{ error }}</p>
     {% endif %}
     <form action="/guest/login" method="post">
         <label for="booking reference">booking reference</label>
         <input type="booking_id" id="booking_id" name="booking_id" required>
-        <button type="submit">se bokning</button>
+        <button type="submit">Sök</button>
     </form>
 </div>
 {% endblock %}

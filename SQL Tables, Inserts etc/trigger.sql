@@ -45,11 +45,5 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-CREATE TRIGGER prevent_view_canceled_booking
-BEFORE SELECT ON Booking
-FOR EACH ROW
-EXECUTE FUNCTION check_booking_status();
-
 
 DROP FUNCTION check_booking_status; 
-DROP TRIGGER prevent_view_canceled_booking ON Booking;
