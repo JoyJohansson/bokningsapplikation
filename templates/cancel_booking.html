@@ -23,33 +23,7 @@
             return false;
         }
 
-        try {
-            const response = await fetch("/cancel_booking", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: `booking_reference=${bookingReference}`,
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                alert(data.message);
-            } else {
-                if (data.message === "Booking not found") {
-                    document.getElementById('bookingNotFoundMessage').style.display = 'block';
-                } else {
-                    alert(data.error || 'Fel vid avbokning.');
-                }
-            }
-        } catch (error) {
-            console.error('Fel vid asynkront anrop:', error);
-            alert('Något gick fel vid avbokningen.');
-        }
-
-        return false;
-    }
+       
 </script>
 
 {% endblock %}

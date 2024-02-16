@@ -324,9 +324,11 @@ def guest_login():
 
 @app.route("/guest/booking", methods=["GET"])
 def guest_booking():
+    # Kontrollera om boknings-id finns i sessionsdata
     if "booking_id" in session:
         booking_id = session["booking_id"]
         
+        # SQL-fråga för att hämta bokningsinformation från databasen
         query = """
             SELECT Booking.*, Guest_Details.*, Room.*, RoomType.*
             FROM Booking
@@ -335,16 +337,19 @@ def guest_booking():
             JOIN RoomType ON Room.RoomType_ID = RoomType.RoomType_ID
             WHERE Booking.booking_id = %s AND Booking.status = True
         """
+        # Utför SQL-frågan med boknings-id som parameter
         bookings = databas.execute_query_fetchall(query, (booking_id,), fetch_result=True)
         
+        # Om ingen bokning hittades, returnera ett meddelande och omdirigera till inloggningssidan
         if not bookings:
-            
             return jsonify(message="Booking not found", redirect_url=url_for("guest_login"))
-            
+        
+        # Om bokningen hittades, rendera sidan för gästbokningen med bokningsinformationen
         return render_template("guest_booking.html", bookings=bookings)
     else:
         # Om gästen inte är inloggad, omdirigera dem till inloggningssidan
         return redirect(url_for("guest_login"))
+
 
     
 def final_price(start, end, price):
