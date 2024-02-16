@@ -317,7 +317,7 @@ def guest_login():
             return redirect(url_for("guest_booking"))
         
         # Om inloggningen misslyckas, visa ett felmeddelande
-        return render_template("guest_login.html", error="Ogiltig e-postadress")
+        return render_template("guest_login.html", error="Ogiltig bokingsreferens")
     
     return render_template("guest_login.html", error=None)
 
@@ -342,7 +342,7 @@ def guest_booking():
         
         # Om ingen bokning hittades, returnera ett meddelande och omdirigera till inloggningssidan
         if not bookings:
-            return jsonify(message="Booking not found", redirect_url=url_for("guest_login"))
+            return render_template ("guest_login.html",error="Booking not found")
         
         # Om bokningen hittades, rendera sidan för gästbokningen med bokningsinformationen
         return render_template("guest_booking.html", bookings=bookings)
