@@ -29,3 +29,27 @@ EXECUTE FUNCTION check_room_availability();
 
 DROP FUNCTION check_room_availability;
 DROP TRIGGER prevent_double_booking ON BookingRoom;
+
+
+
+
+CREATE OR REPLACE FUNCTION check_booking_status()
+RETURNS TRIGGER AS 
+$$
+BEGIN
+    IF NOT NEW.Status THEN
+        RAISE EXCEPTION 'Cannot view canceled booking';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER prevent_view_canceled_booking
+BEFORE SELECT ON Booking
+FOR EACH ROW
+EXECUTE FUNCTION check_booking_status();
+
+
+DROP FUNCTION check_booking_status; 
+DROP TRIGGER prevent_view_canceled_booking ON Booking;

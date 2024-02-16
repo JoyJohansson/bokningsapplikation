@@ -324,24 +324,33 @@ def guest_login():
 
 @app.route("/guest/booking", methods=["GET"])
 def guest_booking():
+    # Kontrollera om boknings-id finns i sessionsdata
     if "booking_id" in session:
         booking_id = session["booking_id"]
         
-        # Hämta gästens bokningar från databasen baserat på booking ID
+        # SQL-fråga för att hämta bokningsinformation från databasen
         query = """
             SELECT Booking.*, Guest_Details.*, Room.*, RoomType.*
             FROM Booking
             JOIN Guest_Details ON Booking.guest_id = Guest_Details.guest_id
             JOIN Room ON Booking.room_id = Room.Room_ID
             JOIN RoomType ON Room.RoomType_ID = RoomType.RoomType_ID
-            WHERE Booking.booking_id = %s
+            WHERE Booking.booking_id = %s AND Booking.status = True
         """
+        # Utför SQL-frågan med boknings-id som parameter
         bookings = databas.execute_query_fetchall(query, (booking_id,), fetch_result=True)
         
+        # Om ingen bokning hittades, returnera ett meddelande och omdirigera till inloggningssidan
+        if not bookings:
+            return jsonify(message="Booking not found", redirect_url=url_for("guest_login"))
+        
+        # Om bokningen hittades, rendera sidan för gästbokningen med bokningsinformationen
         return render_template("guest_booking.html", bookings=bookings)
     else:
         # Om gästen inte är inloggad, omdirigera dem till inloggningssidan
         return redirect(url_for("guest_login"))
+
+
     
 def final_price(start, end, price):
     amount_of_days = (end - start)
@@ -354,14 +363,21 @@ def cancel_booking():
     if request.method == "GET":
         booking_id = request.args.get("booking_id")
 
-        # Update the database to flag the booking as canceled
-        update_query = "UPDATE booking SET status = 'False' WHERE booking_id = %s"
-        databas.execute_insert_query(update_query, (booking_id,))
-
-        # Optionally, you can retrieve the booking details and display a confirmation message
-        # e.g., fetch booking details from the database and show a confirmation message
-        return jsonify(message="Booking canceled successfully", redirect_url=url_for('k1'))
         
+        status_query = "SELECT status FROM booking WHERE booking_id = %s"
+        status_result = databas.execute_query_fetchone(status_query, (booking_id,), fetch_result=True)
+
+        if status_result and status_result[0]:
+            
+            update_query = "UPDATE booking SET status = False WHERE booking_id = %s"
+            databas.execute_insert_query(update_query, (booking_id,))
+
+            return jsonify(message="Booking canceled successfully", redirect_url=url_for('guest_logout_page'))
+        
+        else:
+            # If the booking is already canceled, return a message indicating it
+            return jsonify(message="This booking has already been canceled", redirect_url=url_for('k1'))
+
 
 @app.route("/guest/logout", methods=["POST"])
 def guest_logout():
