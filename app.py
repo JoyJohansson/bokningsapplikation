@@ -297,7 +297,7 @@ def save_booking():
             #TEST FÖR BACKEND FÖR ATT SE SÅ DEN TAR MED ALLA VARIABLAR
             print(f"Option ID för '{option_value}' hittades inte i databasen.")
     
-    return render_template("k4_booking_confirmation.html", booking_ID=booking_ID, room=room, start_date=start_date, end_date=end_date, selected_guests=selected_guests, name=name, email=email)
+    return render_template("k4_booking_confirmation.html", booking_ID=booking_ID, room=room, start_date=start_date, end_date=end_date, selected_guests=selected_guests, name=name, email=email, total_price=total_price)
 
 
 @app.route("/guest/login", methods=["GET", "POST"])
@@ -339,23 +339,31 @@ def guest_booking():
         """
         # Utför SQL-frågan med boknings-id som parameter
         bookings = databas.execute_query_fetchall(query, (booking_id,), fetch_result=True)
+
+
+        start_date = datetime.strptime(session.get("start_date"), "%Y-%m-%d")
+        end_date = datetime.strptime(session.get("end_date"), "%Y-%m-%d")
+        room_price = float(request.args.get("price_per_night", 0,0))
+
+
+        num_days = (end_date - start_date).days
+
+
+        total_price = num_days * room_price
         
         # Om ingen bokning hittades, returnera ett meddelande och omdirigera till inloggningssidan
         if not bookings:
             return jsonify(message="Booking not found", redirect_url=url_for("guest_login"))
         
         # Om bokningen hittades, rendera sidan för gästbokningen med bokningsinformationen
-        return render_template("guest_booking.html", bookings=bookings)
+        return render_template("guest_booking.html", bookings=bookings, total_price=total_price)
     else:
         # Om gästen inte är inloggad, omdirigera dem till inloggningssidan
         return redirect(url_for("guest_login"))
 
 
     
-def final_price(start, end, price):
-    amount_of_days = (end - start)
-    total_price = (amount_of_days * price)
-    return total_price
+
 
     
 @app.route("/cancel_booking", methods=["GET"])
