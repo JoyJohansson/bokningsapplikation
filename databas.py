@@ -5,7 +5,7 @@ import os
 
 load_dotenv()
 
-# Set up a connection pool
+
 db_pool = pool.SimpleConnectionPool(
     minconn=1,
     maxconn=10,
@@ -65,7 +65,4 @@ def execute_insert_query(query, parameter=None, fetch_result=False):
     finally:
         if connection:
             db_pool.putconn(connection)
-
-def generate_random_token():
-    return secrets.token_urlsafe()
 

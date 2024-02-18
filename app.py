@@ -1,20 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_bcrypt import Bcrypt 
-from psycopg2 import connect, DatabaseError, pool
 from dotenv import load_dotenv
-from datetime import datetime
-import os
-import base64
-import secrets 
-import random
-import databas
-
-
-load_dotenv()
-
+import authentication
 
 app = Flask(__name__)
-app.secret_key = secrets.token_urlsafe(16)
+app.secret_key = authentication.generate_secret_key()
 bcrypt = Bcrypt(app)
 
 # K1
