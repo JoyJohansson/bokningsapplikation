@@ -20,7 +20,7 @@ def guest_login():
             # Spara gästens ID i sessionen
             session["booking_id"] = booking_id
             # Omdirigera till dashboard-sidan efter inloggning
-            return redirect(url_for("guest_booking"))
+            return redirect(url_for("guest_routes.guest_booking"))
         
         # Om inloggningen misslyckas, visa ett felmeddelande
         return render_template("guest_login.html", error="Ogiltig bokingsreferens")
@@ -54,7 +54,7 @@ def guest_booking():
         return render_template("guest_booking.html", bookings=bookings)
     else:
         # Om gästen inte är inloggad, omdirigera dem till inloggningssidan
-        return redirect(url_for("guest_login"))
+        return redirect(url_for("guest_routes.guest_login"))
 
 def final_price(start, end, price):
     amount_of_days = (end - start)
@@ -65,7 +65,7 @@ def final_price(start, end, price):
 def guest_logout():
     if request.method == "POST":
         session.pop("booking_id", None)
-        return redirect(url_for('guest_logout_page'))
+        return redirect(url_for('guest_routes.guest_logout_page'))
     else:
         return "Method Not Allowed", 405
 

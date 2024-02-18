@@ -3,6 +3,7 @@ import app
 import databas
 import datetime
 import utils
+from datetime import datetime
 
 bp = Blueprint('booking_routes', __name__)
 
@@ -136,7 +137,7 @@ def guest_booking():
         return render_template("guest_booking.html", bookings=bookings)
     else:
         # Om gästen inte är inloggad, omdirigera dem till inloggningssidan
-        return redirect(url_for("guest_login"))
+        return redirect(url_for("guest_routes.guest_login"))
 
 
     
@@ -160,11 +161,11 @@ def cancel_booking():
             update_query = "UPDATE booking SET status = False WHERE booking_id = %s"
             databas.execute_insert_query(update_query, (booking_id,))
 
-            return jsonify(message="Booking canceled successfully", redirect_url=url_for('guest_logout_page'))
+            return jsonify(message="Booking canceled successfully", redirect_url=url_for('guest_routes.guest_logout_page'))
         
         else:
             # If the booking is already canceled, return a message indicating it
-            return jsonify(message="This booking has already been canceled", redirect_url=url_for('k1'))
+            return jsonify(message="This booking has already been canceled", redirect_url=url_for('K1_routes.k1'))
 
 
 
