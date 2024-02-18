@@ -30,7 +30,8 @@ def admin_register():
 
         # Sätt in admin i databasen
         insert_query = "INSERT INTO admins (username, password_hash, token) VALUES (%s, %s, %s) RETURNING id"
-        databas.admin_id = databas.execute_query_fetchall(insert_query, (username, password_hash, token), fetch_result=True)
+        databas.admin_id = databas.execute_query_fetchone(insert_query, (username, password_hash, token), fetch_result=True)
+
 
         # Sätt inloggnings-sessionen för den nya adminen
         session['admin_token'] = token
@@ -40,23 +41,22 @@ def admin_register():
     return render_template('admin_register_page.html', error=None)
 
 # Admin login
-@bp.route('/admin/login', methods=['GET', 'POST'])
+@bp.route('/admin/login', methods=['GET'])
 def admin_login_page():
-    if request.method == 'POST':
-        return redirect(url_for('admin_routes.admin_dashboard'))
     return render_template('admin_login_page.html')
 
 # Admin login
-@bp.route('/admin/login', methods=['GET', 'POST'])
+@bp.route('/admin/login', methods=['POST'])
 def admin_login():
     if request.method == 'POST':
         username = request.form.get("username")
         password = request.form.get("password")
 
         query = "SELECT * FROM admins WHERE username = %s"
-        result = databas.execute_query_fetchall(query, (username, password), fetch_result=True)
+        result = databas.execute_query_fetchone(query, (username,), fetch_result=True)
 
-        if result and bcrypt.check_password_hash(result[2], password):
+
+        if result and check_password_hash(result[2], password):
             token = generate_random_token()
             update_token_query = "UPDATE admins SET token = %s WHERE id = %s"
             databas.execute_insert_query(update_token_query, (token, result[0]))
