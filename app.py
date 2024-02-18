@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_bcrypt import Bcrypt 
-import authentication
+import authentication 
 import K1_routes
 import K2_routes
 import K3_routes
@@ -21,6 +21,7 @@ app.register_blueprint(K4_routes.bp)
 app.register_blueprint(admin_routes.bp)
 app.register_blueprint(guest_routes.bp)
 app.register_blueprint(booking_routes.bp)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
