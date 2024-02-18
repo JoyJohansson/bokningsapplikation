@@ -20,7 +20,9 @@
         <button type="submit">Registrera</button>
     </form>
 
-    <p>Har redan ett konto? <a href="{{ url_for('admin_login_page') }}">Logga in här</a></p>
+    <p>Har redan ett konto? 
+        <a href="{{ url_for('admin_routes.admin_login_page') }}">Logga in här</a>
+    </p>
 </div>
 {% endblock %}
 

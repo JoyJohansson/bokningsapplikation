@@ -20,7 +20,9 @@
         <button type="submit">Logga in</button>
     </form>
 
-    <p>Har du inget konto? <a href="{{ url_for('admin_register_page') }}">Registrera ny admin</a></p>
+    <p>Har du inget konto? 
+        <a href="{{ url_for('admin_routes.admin_register_page') }}">Registrera ny admin</a>
+    </p>
 
     {% if authenticated %}
         <p>Du är inloggad som {{ username }}.</p>
@@ -29,5 +31,6 @@
             window.location.href = "{{ admin_dashboard_url }}";
         </script>
     {% endif %}
+</div>
 {% endblock %}
-    </div>
+</div>

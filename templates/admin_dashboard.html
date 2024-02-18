@@ -11,13 +11,13 @@
 
         <form action><button type="submit">Bokade rum</button></form> 
 
-        <form action="{{url_for('k1')}}" method="get">
+        <form action="{{url_for('K1_routes.k1')}}" method="get">
             <button type="submit">Boka</button>
         </form>
-        <form action="{{ url_for('guest_login') }}" method="get">
+        <form action="{{ url_for('guest_routes.guest_login') }}" method="get">
             <button type="submit">Ändra bokning</button>
         </form>
-        <form action="{{ url_for('logout') }}" method="post">
+        <form action="{{ url_for('admin_routes.logout') }}" method="post">
             <button type="submit">Logga ut</button>
         </form>
 </div>

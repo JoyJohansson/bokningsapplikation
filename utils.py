@@ -2,6 +2,7 @@ import base64
 import random
 from datetime import datetime
 
+
 def generate_random_code():
     return random.randint(100000, 999999)
 
