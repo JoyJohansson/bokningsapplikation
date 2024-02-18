@@ -1,6 +1,8 @@
 from flask import request, render_template, session, redirect, url_for, Blueprint
 import databas
+import authentication
 import secrets
+from flask_bcrypt import generate_password_hash
 import bcrypt
 
 
@@ -21,10 +23,11 @@ def admin_register():
         password = request.form.get("password")
 
         # Hasha lösenordet med bcrypt innan du lagrar det i databasen
-        password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+        password_hash = generate_password_hash(password).decode('utf-8')
+
 
         # Generera en token för den nya adminen
-        token = generate_random_token()
+        token = authentication.secrets.token_urlsafe()
 
         # Sätt in admin i databasen
         insert_query = "INSERT INTO admins (username, password_hash, token) VALUES (%s, %s, %s) RETURNING id"
@@ -33,7 +36,7 @@ def admin_register():
         # Sätt inloggnings-sessionen för den nya adminen
         session['admin_token'] = token
 
-        return redirect(url_for('admin_dashboard'))
+        return redirect(url_for('admin_routes.admin_dashboard'))
 
     return render_template('admin_register_page.html', error=None)
 
@@ -54,33 +57,24 @@ def admin_login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        # Fråga databasen för att hämta admin med det angivna användarnamnet
         query = "SELECT * FROM admins WHERE username = %s"
         result = databas.execute_query_fetchone(query, (username,), fetch_result=True)
         print(result)
 
         if result and bcrypt.check_password_hash(result[2], password):
-            # Om lösenordet är korrekt, generera en token och lagra den i databasen
-            token = generate_random_token()
+            token = authentication.generate_random_token()
             update_token_query = "UPDATE admins SET token = %s WHERE id = %s"
             databas.execute_insert_query(update_token_query, (token, result[0]))
 
-            # Sätt inloggnings-sessionen för den nya adminen
             session['admin_token'] = token
 
-            # Sätt authenticated till True
             authenticated = True
             if authenticated:
-             return redirect(url_for('admin_dashboard'))
+                return redirect(url_for('admin_routes.admin_dashboard'))
             else:
                 return render_template('admin_login_page.html', error="Ogiltiga inloggningsuppgifter")
-        return render_template('admin_login_page.html', error=None)
+
     
-
-# implementering av funktionen generate_random_token() enligt ovan
-def generate_random_token():
-    return secrets.token_urlsafe()  # hemlig nyckel
-
 
 # efter lyckad inloggning, där admin kan utföra administrativa uppgifter.
 @bp.route("/admin/dashboard")
@@ -89,16 +83,15 @@ def admin_dashboard():
     if 'admin_token' in session:
         return render_template('admin_dashboard.html', admin_token=session.get('admin_token'))
     else:
-        return redirect(url_for('admin_login_page'))
+        return redirect(url_for('admin_routes.admin_login'))
       
 
 @bp.route("/admin/logout", methods=["GET", "POST"])
 def logout():
     if request.method == "POST":
         session.pop('admin_token', None)
-        return redirect(url_for('admin_logout_page'))
-    return redirect(url_for('admin_logout_page'))
-
+        return redirect(url_for('admin_route.admin_logout_page'))
+    
 
 @bp.route("/admin/logout_page")
 def admin_logout_page():

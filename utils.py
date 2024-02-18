@@ -1,4 +1,4 @@
-import base64
+
 import random
 from datetime import datetime
 
