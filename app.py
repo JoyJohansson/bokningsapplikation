@@ -8,7 +8,6 @@ import K4_routes
 import admin_routes
 import guest_routes
 import booking_routes
-from admin_routes import bp as admin_bp
 
 
 app = Flask(__name__)

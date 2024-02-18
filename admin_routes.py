@@ -42,7 +42,7 @@ def admin_register():
 def admin_login_page():
     if request.method == 'POST':
         return redirect(url_for('admin_routes.admin_dashboard'))
-    return render_template('admin_login.html')
+    return render_template('admin_login_page.html')
 
 
 
