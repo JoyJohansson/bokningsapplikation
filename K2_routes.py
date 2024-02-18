@@ -46,3 +46,17 @@ def k2():
     else:
         return render_template("k2_available_rooms.html", error="No data found")
 
+import pytest
+from K2_routes import app
+
+@pytest.fixture
+def client():
+    app.config['TESTING'] = True
+    with app.test_client() as client:
+        yield client
+
+def test_k2_route(client):
+    response = client.post('/available_rooms', data={'start_date': '2024-02-18', 'end_date': '2024-02-20', 'guests': 2})
+    assert response.status_code == 200
+    # Testa att se till att det returnerar sidan med tillgängliga rum
+    assert b"k2_available_rooms.html" in response.data

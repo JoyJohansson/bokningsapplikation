@@ -16,5 +16,5 @@ def K4_routes():
 @bp.route('/bekraftelse')
 def bekraftelse():
     booking_reference = request.args.get('booking_ref')
-    return render_template('bokningsbekräftelse.html', booking_ref=booking_reference)
+    return render_template('K4_booking_confirmation.html', booking_ref=booking_reference)
 
