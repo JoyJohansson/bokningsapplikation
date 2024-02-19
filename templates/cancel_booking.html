@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}Formulär för avbokning{% endblock %}
+{% block title %}cancel booking{% endblock %}
 
 {% block content %}
 <form onsubmit="return cancelBooking();">
-    <label for="booking_reference">Bokningsreferens:</label>
+    <label for="booking_reference">Booking reference:</label>
     <input type="text" id="booking_reference" name="booking_reference" required>
 
-    <button type="submit">Avboka bokning</button>
+    <button type="submit">Cancel booking</button>
 </form>
 
 <div id="bookingNotFoundMessage" style="display: none; color: red;">

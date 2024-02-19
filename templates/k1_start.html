@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-    <title>{% block title %}Bokningsapplikation{% endblock %}</title>
+    <title>{% block title %}Booking application{% endblock %}</title>
     <script>
         function saveDates() {
             var start_date = document.getElementById('start_date').value;
@@ -22,11 +22,11 @@
                     console.log(data);
                     window.location.href = '/bekraftelse';
                 } else {
-                    alert(data.error || 'Bokning hittades inte.');
+                    alert(data.error || 'Booking not found!');
                 }
             } catch (error) {
-                console.error('Fel vid asynkront anrop:', error);
-                alert('Något gick fel vid hämtning av bokningen.');
+                console.error('Error during asynchronous call:', error);
+                alert('Incorrect retrieval of the booking occurred.');
             }
             return false;
         }
@@ -45,7 +45,7 @@
             }
     
             if (selectedRooms > 3 || (selectedRooms * 2) > guests && guests > 1) {
-                alert("Du kan inte boka mer än 3 rum eller överskrida det maximala antalet gäster (6).");
+                alert("You can only book one room at a time with max 2 guest at a time.");
                 return false;
             }
     
@@ -56,8 +56,30 @@
 <body>
 {% block content %}
 <div class="info-container">
-    <h2>Välkommen till Crazy Frog Hotel </h2>
-    <h2>Ange datum för din vistelse</h2>
+
+    <h2>Welcome to Crazy Frog Hotel </h2>
+    <h2>Specify the date of your stay</h2>
+
+    <form action="/available_rooms" method="post">
+        <label for="start_date">Arrival date:</label>
+        <input class="input" type="date" id="start_date" name="start_date" required>
+
+            <label for="end_date">Departure date:</label>
+            <input class="input" type="date" id="end_date" name="end_date" required>
+
+            <label for="guests">Number of guests:</label>
+            <select id="guests" name="guests" required>
+                <option value="1">1 guest</option>
+                <option value="2">2 guests</option>
+                <option value="3">3 guests</option>
+                <option value="4">4 guests</option>
+                <option value="5">5 guests</option>
+                <option value="6">6 guests</option>
+            </select>
+
+            <button class="button-action" type="submit">See available rooms</button>
+    </form>
+
     <script>
        function checkDateRules() {
             var startDateInput = document.getElementById('start_date');

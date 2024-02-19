@@ -1,23 +1,23 @@
 {% extends "base.html" %}
-{% block title %}Gäst Dashboard{% endblock %}
+{% block title %}Guest Dashboard{% endblock %}
 {% block content %}
 <div class="info-container">
-    <h2>Välkommen {{ bookings[0][7] }}</h2>
-    <h2> Här är dina bokningsdetaljer</h2>
+    <h2>Welcome {{ bookings[0][7] }}</h2>
+    <h2> Your booking details</h2>
     <table>
         
         <tbody>
             {% for booking in bookings %}
                 <tr>
-                    <td>Boknings ID:</td>
+                    <td>Bookning ID:</td>
                     <td>{{ booking[0] }}</td>
                 </tr>
                 <tr>
-                    <td>Gäst ID:</td>
+                    <td>Guest ID:</td>
                     <td>{{booking[1]}}</td>
                 </tr>
                 <tr>
-                    <td>Rums ID:</td>
+                    <td>Room ID:</td>
                     <td>{{ booking[2] }}</td>
                 </tr>
                 <tr>
@@ -29,11 +29,11 @@
                     <td>{{booking[13]}}</td>
                 </tr>
                 <tr>
-                    <td>Incheckningsdatum:</td>
+                    <td>Check in date:</td>
                     <td>{{ booking[3] }}</td>
                 </tr>
                 <tr>
-                    <td>Utcheckningsdatum:</td>
+                    <td>Check out date:</td>
                     <td>{{ booking[4] }}</td>
                 </tr>
                 <tr>
@@ -46,12 +46,12 @@
                 </tr>
                 <tr>
                     <tr>
-                        <td>Åtgärd:</td>
+                        <td>Operation:</td>
                         <td>
-                            <button class="avboka" onclick="cancelBooking('{{ booking[0] }}')">Avboka</button>
+                            <button class="avboka" onclick="cancelBooking('{{ booking[0] }}')">Cancel booking</button>
 
                             <form action="{{ url_for('guest_routes.guest_logout') }}" method="post" style="display: inline;">
-                                <button type="submit">Logga ut</button>
+                                <button type="submit">Sign out</button>
                             </form>
 
                         </td>
