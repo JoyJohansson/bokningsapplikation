@@ -20,14 +20,17 @@
         <button type="submit">Logga in</button>
     </form>
 
-    <p>Har du inget konto? <a href="{{ url_for('admin_register_page') }}">Registrera ny admin</a></p>
+    <p>Har du inget konto? 
+        <a href="{{ url_for('admin_routes.admin_register_page') }}">Registrera ny admin</a>
+    </p>
 
     {% if authenticated %}
         <p>Du är inloggad som {{ username }}.</p>
-        {% set admin_dashboard_url = url_for('admin_dashboard') %}
+        {% set admin_dashboard_url = url_for('admin_routes.admin_dashboard') %}
         <script>
-            window.location.href = "{{ admin_dashboard_url }}";
+            window.location.href = "{{ admin_routes.admin_dashboard_url }}";
         </script>
     {% endif %}
+</div>
 {% endblock %}
-    </div>
+</div>
