@@ -14,8 +14,6 @@ CREATE TABLE Guest_Details (
   PRIMARY KEY (Guest_ID)
 );
 
-
-
 CREATE TABLE Hotel (
   Hotel_ID INT,
   Name VARCHAR(255),
@@ -100,20 +98,6 @@ CREATE TABLE BookingRoom (
       REFERENCES Booking(Booking_ID)
 );
 
-CREATE TABLE AdminUser (
-  Admin_ID SERIAL,
-  Username VARCHAR(255),
-  Password VARCHAR(255),
-  PRIMARY KEY (Admin_ID)
-);
-
-CREATE TABLE EditPermission (
-  Admin_ID INT,
-  Booking_ID VARCHAR(250),
-  CONSTRAINT FK_EditPermission_Admin_ID
-    FOREIGN KEY (Admin_ID)
-      REFERENCES AdminUser(Admin_ID)
-);
 
 CREATE TABLE IF NOT EXISTS admins (
     id SERIAL PRIMARY KEY,
@@ -121,6 +105,17 @@ CREATE TABLE IF NOT EXISTS admins (
     password_hash VARCHAR(256) NOT NULL,
     token VARCHAR(256)
 );
+
+CREATE TABLE EditPermission (
+  Admin_ID INT,
+  Booking_ID VARCHAR(250),
+  CONSTRAINT FK_EditPermission_Admin_ID
+    FOREIGN KEY (Admin_ID)
+      REFERENCES admins(id)
+);
+
+
+
 
 
 
