@@ -1,31 +1,31 @@
 {% extends "base.html" %}
 
-{% block title %}Admin Inloggning{% endblock %}
+{% block title %}Admin Login{% endblock %}
 
 {% block content %}
 <div class="info-container">
-    <h2>Admin Inloggning</h2>
+    <h2>Admin Login</h2>
 
     {% if error %}
         <p style="color: red;">{{ error }}</p>
     {% endif %}
 
     <form action="/admin/login" method="post">
-        <label for="username">Användarnamn:</label>
+        <label for="username">username:</label>
         <input type="text" id="username" name="username" required>
 
-        <label for="password">Lösenord:</label>
+        <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
 
-        <button type="submit">Logga in</button>
+        <button type="submit">login</button>
     </form>
 
-    <p>Har du inget konto? 
-        <a href="{{ url_for('admin_routes.admin_register_page') }}">Registrera ny admin</a>
+    <p>New admin? 
+        <a href="{{ url_for('admin_routes.admin_register_page') }}">Register as admin</a>
     </p>
 
     {% if authenticated %}
-        <p>Du är inloggad som {{ username }}.</p>
+        <p>You have now signed in{{ username }}.</p>
         {% set admin_dashboard_url = url_for('admin_routes.admin_dashboard') %}
         <script>
             window.location.href = "{{ admin_routes.admin_dashboard_url }}";

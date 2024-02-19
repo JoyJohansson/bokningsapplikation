@@ -4,18 +4,18 @@
 
 {% block content %}
 <div class="info-container">
-    <h1>Välkommen till Kontrollpanellen för admin</h1>
+    <h1>Admin Dashboard</h1>
     
-    <p>Detta är ett säkert område för administrativa uppgifter.</p>
+    <p>This is a secure area for administrative tasks.</p>
 
 
-        <form action><button type="submit">Bokade rum</button></form> 
+        <form action><button type="submit">Se Booking</button></form> 
 
         <form action="{{url_for('K1_routes.k1')}}" method="get">
-            <button type="submit">Boka</button>
+            <button type="submit">Book a room</button>
         </form>
         <form action="{{ url_for('guest_routes.guest_login') }}" method="get">
-            <button type="submit">Ändra bokning</button>
+            <button type="submit">Edit bookning</button>
         </form>
 </div>
 

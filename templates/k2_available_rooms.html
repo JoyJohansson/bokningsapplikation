@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Bokningsapplikation{% endblock %}</title>
+    <title>{% block title %}Booking application{% endblock %}</title>
 </head>
 <body>
     {% block content %}
@@ -12,11 +12,11 @@
         {%if error%}
         <div class="info-container">
             <h1 style="text-align: center;">.::Info::.</h1>
-        <p> vi har inga rum i denna storlek kontakta kundservice på telefon: 112</p>
+        <p> Sorry, we do not have any rooms in the size you are requiring. Please contact customer service on phone number: 112 </p>
         </div>
         {%endif%}
         {%if not error%}
-        <h1>Tillgängliga rum</h1>
+        <h1>/available rooms</h1>
         {%endif%}
         <div class="posts-container">
             {%for result in results%}
@@ -31,7 +31,7 @@
                         <p></p>
                         <p>Pris: ${{result.pricepernight}}</p>
                         <p></p>
-                        <button class="button-action" onclick="location.href='/room_info?room_id={{ result.room_id }}'" type="submit">Visa detaljer</button>
+                        <button class="button-action" onclick="location.href='/room_info?room_id={{ result.room_id }}'" type="submit">Show details</button>
                     </div>
                     </div>
             </div>

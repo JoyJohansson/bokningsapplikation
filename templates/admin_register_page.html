@@ -1,27 +1,27 @@
 {% extends "base.html" %}
 
-{% block title %}Registrera ny admin{% endblock %}
+{% block title %}Registration{% endblock %}
 
 {% block content %}
 <div class="info-container">
-    <h2>Registrera ny admin</h2>
+    <h2>Register as an new admin</h2>
 
     {% if error %}
         <p style="color: red;">{{ error }}</p>
     {% endif %}
 
     <form action="/admin/register" method="post">
-        <label for="username">Användarnamn:</label>
+        <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
 
-        <label for="password">Lösenord:</label>
+        <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
 
-        <button type="submit">Registrera</button>
+        <button type="submit">Register</button>
     </form>
 
-    <p>Har redan ett konto? 
-        <a href="{{ url_for('admin_routes.admin_login_page') }}">Logga in här</a>
+    <p>Already an admin? 
+        <a href="{{ url_for('admin_routes.admin_login_page') }}">Login</a>
     </p>
 </div>
 {% endblock %}
