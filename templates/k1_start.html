@@ -52,10 +52,11 @@
             return true;
         }
     </script>
-</head>
+    </head>
 <body>
 {% block content %}
 <div class="info-container">
+
     <h2>Welcome to Crazy Frog Hotel </h2>
     <h2>Specify the date of your stay</h2>
 
@@ -79,6 +80,48 @@
             <button class="button-action" type="submit">See available rooms</button>
     </form>
 
+    <script>
+       function checkDateRules() {
+            var startDateInput = document.getElementById('start_date');
+            var endDateInput = document.getElementById('end_date');
+            var formattedCurrentDate = new Date().toISOString().split('T')[0];
+
+            // Check if the start date is in the past
+            if (startDateInput.value < formattedCurrentDate) {
+                alert("Du måste välja ett framtida datum");
+                startDateInput.value = formattedCurrentDate;
+            }
+
+            // Check if the end date is earlier than the start date
+            if (endDateInput.value <= startDateInput.value) {
+                alert("Avresedatum måste vara senare än ankomstdatum.");
+                endDateInput.value = startDateInput.value;
+            }
+
+            // Set the min attribute for both start and end date inputs
+            startDateInput.setAttribute('min', formattedCurrentDate);
+            endDateInput.setAttribute('min', formattedCurrentDate);
+        }
+    </script>
+    <form action="/available_rooms" method="post">
+        <label for="start_date">Ankomstdatum:</label>
+        <input class="input" type="date" id="start_date" name="start_date" required onchange="checkDateRules()" value="{{ current_date }}">
+    
+        <label for="end_date">Avresedatum:</label>
+        <input class="input" type="date" id="end_date" name="end_date" required onchange="checkDateRules()">
+    
+        <label for="guests">Antal gäster:</label>
+        <select id="guests" name="guests" required>
+          <option value="1">1 gäst</option>
+          <option value="2">2 gäster</option>
+          <option value="3">3 gäster</option>
+          <option value="4">4 gäster</option>
+          <option value="5">5 gäster</option>
+          <option value="6">6 gäster</option>
+        </select>
+    
+        <button class="button-action" type="submit">Se rum</button>
+      </form>
 </div>
 {% endblock %}
 </body>
