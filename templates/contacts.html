@@ -1,37 +1,21 @@
-<!DOCTYPE html>
 {% extends "base.html" %}
-<html lang="sv">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}error{% endblock %}</title>
-</head>
-<body>
-    {% block content %}
+{% block content %}
+
     <div class="info-container">
-        <h1>Katter i hatter</h1>
+        <h1>Välkommen till {{ results[0][0] }}</h1> 
+        <h2>Hotel Information</h2>
+
         
-        <div class="posts-container">
-            {%for result in results%}
-            <div class="info-post">
-                <!-- Visa rummets bild -->
-                <img src="data:image/webp;base64,{{ result.file_content_base64 }}" alt="{{ result.filename }}" style="max-width: 200px; max-height: 200px;">
-                <div class="info-details">
-                    <!-- Visa rummets information -->
-                    <h2>{{ result.roomtype }}</h2>
-                    <div class="details">
-                        <p>Kapacitet: {{ result.room_id }}</p>
-                        <!-- Fyll i antalet sängar här -->
-                        <p>Antal sängar: </p>
-                        <p>Info: </p>
-                        <p>Pris: {{result.pricepernight}}$</p>
-                        <button class="button-action" type="submit">Boka</button>
-                    </div>
+            {% for hotel in results %}
+                <div class="hotel-info">
+                    <h3>{{ hotel[0] }}</h3>
+                    <p>Country: {{ hotel[1] }}</p>
+                    <p>City: {{ hotel[2] }}</p>
+                    <p>Address: {{ hotel[3] }}</p>
+                    <p>Email: {{ hotel[4] }}</p>
+                    <p>Phone: {{ hotel[5] }}</p>
                 </div>
-            </div>
             {% endfor %}
-        </div>
     </div>
-    {% endblock %}
-</body>
-</html>
+
+{% endblock %}
