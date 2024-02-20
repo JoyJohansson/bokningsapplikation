@@ -7,19 +7,6 @@ from datetime import datetime
 
 bp = Blueprint('booking_routes', __name__)
 
-@bp.route("/contacts", methods=["GET"])
-def get_hotell():
-    query = """
-    SELECT Name, Country, City, Address, Email, Phone
-    FROM Hotel
-    """
-    results = databas.execute_query_fetchall(query, fetch_result=True)
-    
-    if results:
-        return render_template("contacts.html", results=results)
-    else:
-        return render_template("contacts.html", error="No data found")
-      
 
 @bp.route("/book", methods=["POST"])
 def book_room():
@@ -54,7 +41,7 @@ def save_booking():
     num_days = (end_date - start_date).days
 
 
-    utils.total_price = num_days * room_price
+    total_price = num_days * room_price
 
     
     #Insert för att lägga till namn och emil i guest_details tabellen
@@ -93,7 +80,7 @@ def save_booking():
             #TEST FÖR BACKEND FÖR ATT SE SÅ DEN TAR MED ALLA VARIABLAR
             print(f"Option ID för '{option_value}' hittades inte i databasen.")
     
-    return render_template("k4_booking_confirmation.html", booking_ID=booking_ID, room=room, start_date=start_date, end_date=end_date, selected_guests=selected_guests, name=name, email=email)
+    return render_template("k4_booking_confirmation.html", booking_ID=booking_ID, room=room, start_date=start_date, end_date=end_date, selected_guests=selected_guests, name=name, email=email, total_price=total_price)
 
 @bp.route("/guest/booking", methods=["GET"])
 def guest_booking():

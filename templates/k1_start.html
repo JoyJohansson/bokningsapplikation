@@ -1,6 +1,61 @@
 {% extends "base.html" %}
 
     <title>{% block title %}Booking application{% endblock %}</title>
+    </head>
+<body>
+{% block content %}
+<div class="info-container">
+
+    <h2>Welcome to Crazy Frog Hotel </h2>
+    <h4>Specify the date of your stay</h4>
+
+    <form action="/available_rooms" method="post" onsubmit="return checkDateRules()">
+        <label for="start_date">Arrival date:</label>
+        <input class="input" type="date" id="start_date" name="start_date" min="{{ current_date }}" required>
+
+        <label for="end_date">Departure date:</label>
+        <input class="input" type="date" id="end_date" name="end_date" required>
+
+        <label for="guests">Number of guests:</label>
+        <select id="guests" name="guests" required>
+            <option value="1">1 guest</option>
+            <option value="2">2 guests</option>
+            <option value="3">3 guests</option>
+            <option value="4">4 guests</option>
+            <option value="5">5 guests</option>
+            <option value="6">6 guests</option>
+        </select>
+
+        <button class="button-action" type="submit">See available rooms</button>
+    </form>
+
+    <script>
+        function checkDateRules() {
+            var startDateInput = document.getElementById('start_date');
+            var endDateInput = document.getElementById('end_date');
+            var formattedCurrentDate = new Date().toISOString().split('T')[0];
+
+            // Check if the start date is in the past
+            if (startDateInput.value < formattedCurrentDate) {
+                alert("You need to select a date in the future.");
+                startDateInput.value = formattedCurrentDate;
+            }
+
+            // Check if the end date is earlier than the start date
+            if (endDateInput.value <= startDateInput.value) {
+                alert("Departure date cannot be earlier than arrival date.");
+                endDateInput.value = startDateInput.value;
+            }
+
+            // Set the min attribute for both start and end date inputs
+            startDateInput.setAttribute('min', formattedCurrentDate);
+            endDateInput.setAttribute('min', formattedCurrentDate);
+
+            // Additional validation logic, if any
+
+            return true; // Form will be submitted if all checks pass
+        }
+    </script>
     <script>
         function saveDates() {
             var start_date = document.getElementById('start_date').value;
@@ -32,76 +87,37 @@
         }
     </script>
     <script>
-        function validateForm() {
-            var guests = parseInt(document.getElementById('guests').value);
-            var checkboxes = document.getElementsByName('selected_prices[]');
-    
-            var selectedRooms = 0;
-    
-            for (var i = 0; i < checkboxes.length; i++) {
-                if (checkboxes[i].checked) {
-                    selectedRooms++;
-                }
-            }
-    
-            if (selectedRooms > 3 || (selectedRooms * 2) > guests && guests > 1) {
-                alert("You can only book one room at a time with max 2 guest at a time.");
-                return false;
-            }
-    
-            return true;
-        }
-    </script>
-    </head>
-<body>
-{% block content %}
-<div class="info-container">
+        document.addEventListener("DOMContentLoaded", function () {
+            var today = new Date();
 
-    <h2>Welcome to Crazy Frog Hotel </h2>
-    <h4>Specify the date of your stay</h4>
+            var formattedToday = today.toISOString().split('T')[0];
 
-    <form action="/available_rooms" method="post">
-        <label for="start_date">Arrival date:</label>
-        <input class="input" type="date" id="start_date" name="start_date" required>
+            document.getElementById('start_date').value = formattedToday;
 
-            <label for="end_date">Departure date:</label>
-            <input class="input" type="date" id="end_date" name="end_date" required>
+            var tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1);
 
-            <label for="guests">Number of guests:</label>
-            <select id="guests" name="guests" required>
-                <option value="1">1 guest</option>
-                <option value="2">2 guests</option>
-                <option value="3">3 guests</option>
-                <option value="4">4 guests</option>
-                <option value="5">5 guests</option>
-                <option value="6">6 guests</option>
-            </select>
+            var tomorrowFormatted = tomorrow.toISOString().split('T')[0];
 
-            <button class="button-action" type="submit">See available rooms</button>
-    </form>
+            document.getElementById('end_date').value = tomorrowFormatted;
+  
+            document.getElementById('end_date').min = tomorrowFormatted;
 
-    <script>
-       function checkDateRules() {
             var startDateInput = document.getElementById('start_date');
             var endDateInput = document.getElementById('end_date');
-            var formattedCurrentDate = new Date().toISOString().split('T')[0];
+    
+            startDateInput.setAttribute('min', formattedToday);
+            endDateInput.setAttribute('min', formattedToday);
 
-            // Check if the start date is in the past
-            if (startDateInput.value < formattedCurrentDate) {
+            if (startDateInput.value < formattedToday) {
                 alert("You need to select a date in the future.");
-                startDateInput.value = formattedCurrentDate;
+                startDateInput.value = formattedToday;
             }
-
-            // Check if the end date is earlier than the start date
             if (endDateInput.value <= startDateInput.value) {
                 alert("Departure date cannot be earlier than arrival date.");
-                endDateInput.value = startDateInput.value;
+                endDateInput.value = tomorrowFormatted;
             }
-
-            // Set the min attribute for both start and end date inputs
-            startDateInput.setAttribute('min', formattedCurrentDate);
-            endDateInput.setAttribute('min', formattedCurrentDate);
-        }
+        });
     </script>
 </div>
 {% endblock %}
