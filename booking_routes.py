@@ -7,19 +7,6 @@ from datetime import datetime
 
 bp = Blueprint('booking_routes', __name__)
 
-@bp.route("/contacts", methods=["GET"])
-def get_hotell():
-    query = """
-    SELECT Name, Country, City, Address, Email, Phone
-    FROM Hotel
-    """
-    results = databas.execute_query_fetchall(query, fetch_result=True)
-    
-    if results:
-        return render_template("contacts.html", results=results)
-    else:
-        return render_template("contacts.html", error="No data found")
-      
 
 @bp.route("/book", methods=["POST"])
 def book_room():
