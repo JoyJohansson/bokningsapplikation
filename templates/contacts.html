@@ -2,9 +2,8 @@
 {% block content %}
 
     <div class="info-container">
-        <h1>Välkommen till {{ results[0][0] }}</h1> 
+        <h1>Welcome to {{ results[0][0] }}</h1> 
         <h2>Hotel Information</h2>
-
         
             {% for hotel in results %}
                 <div class="hotel-info">
@@ -14,8 +13,12 @@
                     <p>Address: {{ hotel[3] }}</p>
                     <p>Email: {{ hotel[4] }}</p>
                     <p>Phone: {{ hotel[5] }}</p>
+                    
                 </div>
             {% endfor %}
+            <div class="info-details">
+                <p><iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3223.1297447725283!2d-115.1756141737539!3d36.114696706040355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sLas%20Vegas%20Boulevard%20Overpass%2C%20Las%20Vegas%2C%20NV%2C%20USA!5e0!3m2!1sen!2sse!4v1708461820264!5m2!1sen!2sse" width="350" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></p>
+            </div>
     </div>
 
 {% endblock %}
