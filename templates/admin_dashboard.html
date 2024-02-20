@@ -9,13 +9,13 @@
     <p>This is a secure area for administrative tasks.</p>
 
 
-        <form action><button type="submit">Booking overview</button></form> 
+        <form action><button class="button-action" type="submit">Booking overview</button></form> 
 
         <form action="{{url_for('K1_routes.k1')}}" method="get">
-            <button type="submit">Book a room</button>
+            <button class="button-action" type="submit">Book a room</button>
         </form>
         <form action="{{ url_for('guest_routes.guest_login') }}" method="get">
-            <button type="submit">Edit bookning</button>
+            <button class="button-action" type="submit">Edit bookning</button>
         </form>
 </div>
 

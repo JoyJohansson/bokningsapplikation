@@ -15,25 +15,30 @@
         <p> Sorry, we do not have any room that meets your requirements. For the time beeing, it is only possible to book one double room, accomondating 2 guest per booking. Please contact customer service on phone number: 112 for further assistance. </p>
         </div>
         {%endif%}
+
         {%if not error%}
-        <h1>/available rooms</h1>
+        <h1>Available rooms</h1>
         {%endif%}
+
+
         <div class="posts-container">
             {%for result in results%}
-            <div class="info-post">
-                {{result[0]}}
-                <!-- Visa rummets bild -->
-                <img src="data:image/webp;base64,{{ result.file_content_base64 }}" alt="{{ result.filename }}" style="max-width: 200px; max-height: 200px;">
-                    <!-- Visa rummets information -->
-                    <div class="info-details">
-                    <div class="info-details">
-                        <h2>{{ result.roomtype }}</h2>
-                        <p></p>
-                        <p>Pris: ${{result.pricepernight}}</p>
-                        <p></p>
-                        <button class="button-action" onclick="location.href='/room_info?room_id={{ result.room_id }}'" type="submit">Show details</button>
-                    </div>
-                    </div>
+            <div class="rooms-container">
+                <div class="info-post">
+                    {{result[0]}}
+                    <!-- Visa rummets bild -->
+                    <img src="data:image/webp;base64,{{ result.file_content_base64 }}" alt="{{ result.filename }}" style="max-width: 200px; max-height: 200px;">
+                        <!-- Visa rummets information -->
+                        <div class="info-details">
+                        <div class="info-details">
+                            <h2>{{ result.roomtype }}</h2>
+                            <p></p>
+                            <p>Pris: ${{result.pricepernight}}</p>
+                            <p></p>
+                            <button class="button-action" onclick="location.href='/room_info?room_id={{ result.room_id }}'" type="submit">Show details</button>
+                        </div>
+                        </div>
+                </div>
             </div>
             {% endfor %}
         </div>
