@@ -8,6 +8,7 @@ import K4_routes
 import admin_routes
 import guest_routes
 import booking_routes
+import contact_routes
 
 
 app = Flask(__name__)
@@ -21,6 +22,7 @@ app.register_blueprint(K4_routes.bp)
 app.register_blueprint(admin_routes.bp)
 app.register_blueprint(guest_routes.bp)
 app.register_blueprint(booking_routes.bp)
+app.register_blueprint(contact_routes.bp)   
 
 
 if __name__ == "__main__":
