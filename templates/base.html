@@ -4,7 +4,7 @@
 <head>
     <div class="banner-container"></div>
     <nav>
-
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
         <div class="nav-left">
             <a class="link-button" href="/">Home</a>
             <a class="link-button" href="/contacts">Contact</a>
@@ -29,7 +29,8 @@
 </head> 
 <div class="gray-background"></div>
     <body class="flexible-rounded-body">
-            {%block content%}
-            {%endblock%}    
+            {%block content%}  
+            {%endblock%}
+           
     </body>
 </html>
