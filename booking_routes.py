@@ -7,32 +7,16 @@ from datetime import datetime
 
 bp = Blueprint('booking_routes', __name__)
 
-@bp.route("/contacts", methods=["GET", "POST"])
-def get_room():
+@bp.route("/contacts", methods=["GET"])
+def get_hotell():
     query = """
-    SELECT room_id, roomtype, filename, filetype, file_content, capacity, pricepernight
-    FROM room_details
+    SELECT Name, Country, City, Address, Email, Phone
+    FROM Hotel
     """
     results = databas.execute_query_fetchall(query, fetch_result=True)
     
     if results:
-        converted_results = []
-        for result in results:
-            room_id, roomtype, filename, filetype, file_content, capacity, pricepernight = result
-            # Konvertera BYTEA-data till Base64-kodad sträng
-            file_content_base64 = utils.base64.b64encode(file_content).decode('utf-8')
-            # Lägg till konverterad data till resultatlistan
-            converted_result = {
-                'room_id': room_id,
-                'roomtype': roomtype,
-                'filename': filename,
-                'filetype': filetype,
-                'file_content_base64': file_content_base64,
-                'capacity': capacity,
-                'pricepernight': pricepernight
-            }
-            converted_results.append(converted_result)
-        return render_template("contacts.html", results=converted_results)
+        return render_template("contacts.html", results=results)
     else:
         return render_template("contacts.html", error="No data found")
       
