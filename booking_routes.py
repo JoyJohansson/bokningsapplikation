@@ -111,11 +111,7 @@ def guest_booking():
         return redirect(url_for("guest_routes.guest_login"))
 
 
-    
-def final_price(start, end, price):
-    amount_of_days = (end - start)
-    total_price = (amount_of_days * price)
-    return total_price
+
 
     
 @bp.route("/cancel_booking", methods=["GET"])

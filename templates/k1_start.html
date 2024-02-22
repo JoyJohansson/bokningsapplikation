@@ -45,6 +45,7 @@
             if (endDateInput.value <= startDateInput.value) {
                 alert("Departure date cannot be earlier than arrival date.");
                 endDateInput.value = startDateInput.value;
+                return false;
             }
 
             // Set the min attribute for both start and end date inputs

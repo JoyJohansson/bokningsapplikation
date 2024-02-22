@@ -44,5 +44,5 @@ def k2():
             converted_results.append(converted_result)
         return render_template("k2_available_rooms.html", results=converted_results)
     else:
-        return render_template("k2_available_rooms.html", error="No data found")
+        return render_template("k1_start.html", error="No data found")
 
