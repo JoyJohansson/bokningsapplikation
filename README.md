@@ -13,3 +13,22 @@ DB_HOST=localhost
 6. Skriv in kommandot pip install -r requirements.txt i din terminal
 7. Skriv flask run i din terminal
 Se på fan, nu är vi LIVE!
+
+Kvalitetsbeskrivning:
+Kodkvalitet: 
+Vi befömmer att koden ej alltid är skriven utefter good practice. Vi har använt kommentarer för att beskriva vad kod gör 
+och efter bästa förmåga försökt hålla oss till överenskommen kodstandard
+
+Säkerhet: 
+Vi använder tokens, password hash och session för att hantera användaruppgifter och inmatningar.
+
+
+Dokumentation: 
+En utvärdering av varje sprint har genomförts i form av retrospektiv och finns att läsa i Trello 
+I .features finns våra krav och specifikationer och story mapping.
+
+Genomfört och kvarvarande arbete: 
+Finns i Trello
+
+Teknisk skuld: 
+Finns i Trello
